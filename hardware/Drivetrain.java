@@ -11,10 +11,7 @@ import com.qualcomm.robotcore.hardware.HardwareMap;
 
 public abstract class Drivetrain {
 
-    private int gearBoxRatio; //andymark 60 motors
-    private int pulsesPerRevolution; //PPR, from the manufacturer website
-
-    
+    private Motor motorType;
 
     public abstract void setPower(double power);
 
@@ -24,19 +21,11 @@ public abstract class Drivetrain {
 
     public abstract void stopMoving();
 
-    public int getGearBoxRatio() {
-        return gearBoxRatio;
+    public void setMotorType(Motor motorType) {
+        this.motorType = motorType;
     }
 
-    public int getPulsesPerRevolution() {
-        return pulsesPerRevolution;
-    }
-
-    public void setGearBoxRatio(int gearBoxRatio) {
-        this.gearBoxRatio = gearBoxRatio;
-    }
-
-    public void setPulsesPerRevolution(int pulsesPerRevolution) {
-        this.pulsesPerRevolution = pulsesPerRevolution;
+    public Motor getMotorType() {
+        return motorType;
     }
 }

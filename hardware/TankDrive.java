@@ -15,16 +15,14 @@ public class TankDrive extends Drivetrain implements EncoderValues {
     private MotorPair rightMotors;
 
     public TankDrive(){
-        setPulsesPerRevolution(7);
-        setGearBoxRatio(40);
+        setMotorType(Motor.NEVERREST40);
     }
 
     public TankDrive(HardwareMap hardwareMap){
         leftMotors = new MotorPair(hardwareMap, "left front", "left back");
         rightMotors = new MotorPair(hardwareMap, "right front", "right back");
 
-        setPulsesPerRevolution(7);
-        setGearBoxRatio(40);
+        setMotorType(Motor.NEVERREST40);
     }
 
     public MotorPair getLeftMotors() {
