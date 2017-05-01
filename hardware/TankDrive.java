@@ -1,22 +1,30 @@
-package org.firstinspires.ftc.teamcode.hardware;
+package org.firstinspires.ftc.teamcode.robotplus.hardware;
 
 import com.qualcomm.robotcore.hardware.DcMotor;
 import com.qualcomm.robotcore.hardware.HardwareMap;
 
-import org.firstinspires.ftc.teamcode.robodata.EncoderValues;
+import org.firstinspires.ftc.teamcode.robotplus.robodata.EncoderValues;
 
 /**
  * Created by BAbel on 4/11/2017.
  */
 
-public class TankDrive implements Drivetrain, EncoderValues {
+public class TankDrive extends Drivetrain implements EncoderValues {
 
     private MotorPair leftMotors;
     private MotorPair rightMotors;
 
+    public TankDrive(){
+        setPulsesPerRevolution(7);
+        setGearBoxRatio(40);
+    }
+
     public TankDrive(HardwareMap hardwareMap){
         leftMotors = new MotorPair(hardwareMap, "left front", "left back");
         rightMotors = new MotorPair(hardwareMap, "right front", "right back");
+
+        setPulsesPerRevolution(7);
+        setGearBoxRatio(40);
     }
 
     public MotorPair getLeftMotors() {
@@ -58,8 +66,8 @@ public class TankDrive implements Drivetrain, EncoderValues {
 
     @Override
     public void setPower(double power){
-        rightMotors.setPower(power);
-        leftMotors.setPower(power);
+        rightMotors.setPowers(power);
+        leftMotors.setPowers(power);
     }
 
     @Override
@@ -76,7 +84,7 @@ public class TankDrive implements Drivetrain, EncoderValues {
 
     @Override
     public void stopMoving(){
-        leftMotors.setPower(0);
-        rightMotors.setPower(0);
+        leftMotors.setPowers(0);
+        rightMotors.setPowers(0);
     }
 }

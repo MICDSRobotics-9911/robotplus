@@ -1,4 +1,4 @@
-package org.firstinspires.ftc.teamcode.hardware;
+package org.firstinspires.ftc.teamcode.robotplus.hardware;
 
 /**
  * Created by BAbel on 4/10/2017.
@@ -8,7 +8,7 @@ import com.qualcomm.robotcore.hardware.DcMotor;
 import com.qualcomm.robotcore.hardware.DcMotorSimple;
 import com.qualcomm.robotcore.hardware.HardwareMap;
 
-public class MotorPair implements Drivetrain{
+public class MotorPair {
 
     private DcMotor motor1;
     private DcMotor motor2;
@@ -23,13 +23,11 @@ public class MotorPair implements Drivetrain{
         motor2 = hardwareMap.dcMotor.get(hardwareName2);
     }
 
-    @Override
-    public void setPower(double power){
+    public void setPowers(double power){
         motor1.setPower(power);
         motor2.setPower(power);
     }
 
-    @Override
     public void stopMoving(){
         motor1.setPower(0);
         motor2.setPower(0);
@@ -50,13 +48,11 @@ public class MotorPair implements Drivetrain{
         motor2.setDirection(direction);
     }
 
-    @Override
     public void setModes(DcMotor.RunMode runMode){
         motor1.setMode(runMode);
         motor2.setMode(runMode);
     }
 
-    @Override
     public void resetEncoders(){
         motor1.setMode(DcMotor.RunMode.STOP_AND_RESET_ENCODER);
         motor2.setMode(DcMotor.RunMode.STOP_AND_RESET_ENCODER);

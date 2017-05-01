@@ -1,4 +1,4 @@
-package org.firstinspires.ftc.teamcode.hardware;
+package org.firstinspires.ftc.teamcode.robotplus.hardware;
 
 /**
  * Created by BAbel on 4/10/2017.
@@ -9,17 +9,34 @@ import com.qualcomm.robotcore.hardware.DcMotorSimple;
 import com.qualcomm.robotcore.hardware.HardwareMap;
 
 
-public interface Drivetrain {
+public abstract class Drivetrain {
 
-    int GEAR_BOX_RATIO = 60; //andymark 60 motors
-    int PULSES_PER_ROTATION = 7; //PPR, from the manufacturer website
+    private int gearBoxRatio; //andymark 60 motors
+    private int pulsesPerRevolution; //PPR, from the manufacturer website
 
-    public void setPower(double power);
+    
 
-    public void setModes(DcMotor.RunMode runMode);
+    public abstract void setPower(double power);
 
-    public void resetEncoders();
+    public abstract void setModes(DcMotor.RunMode runMode);
 
-    public void stopMoving();
+    public abstract void resetEncoders();
 
+    public abstract void stopMoving();
+
+    public int getGearBoxRatio() {
+        return gearBoxRatio;
+    }
+
+    public int getPulsesPerRevolution() {
+        return pulsesPerRevolution;
+    }
+
+    public void setGearBoxRatio(int gearBoxRatio) {
+        this.gearBoxRatio = gearBoxRatio;
+    }
+
+    public void setPulsesPerRevolution(int pulsesPerRevolution) {
+        this.pulsesPerRevolution = pulsesPerRevolution;
+    }
 }
