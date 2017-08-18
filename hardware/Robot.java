@@ -18,41 +18,14 @@ import com.qualcomm.robotcore.hardware.OpticalDistanceSensor;
 import org.firstinspires.ftc.robotcore.external.Telemetry;
 
 public class Robot {
-
     private TankDrive tankDrive;
-    private Launcher launcher;
-    private CRServo slider;
-    private Intake intake;
-    private ColorSensor colorSensor;
-    private OpticalDistanceSensor opticalDistanceSensor;
-    private ModernRoboticsI2cGyro gyro;
-    //private Lifter lifter;
-
-    private float hsvValues[] = new float[3];
-    private int rgbValues[] = new int[3];
 
     public Robot(){
         tankDrive = null;
-        launcher = null;
-        slider = null;
-        intake = null;
-        colorSensor = null;
-        opticalDistanceSensor = null;
-        gyro = null;
-        //lifter = null;
     }
 
     public Robot(HardwareMap hardwareMap){
         tankDrive = new TankDrive(hardwareMap);
-        launcher = new Launcher(hardwareMap);
-        slider = hardwareMap.crservo.get("slider");
-        intake = new Intake(hardwareMap);
-        //lifter = new Lifter(hardwareMap);
-        colorSensor = hardwareMap.colorSensor.get("color");
-        gyro = (ModernRoboticsI2cGyro) hardwareMap.gyroSensor.get("gyro");
-
-        opticalDistanceSensor = hardwareMap.opticalDistanceSensor.get("ods");
-        opticalDistanceSensor.enableLed(true);
 
 
         tankDrive.getLeftMotors().setDirections(DcMotorSimple.Direction.FORWARD);
@@ -62,69 +35,13 @@ public class Robot {
 
     public void stopMoving(){
         tankDrive.setPower(0);
-        launcher.getLauncherMotor().setPower(0);
-        slider.setPower(0);
-        intake.getIntakeMotor().setPower(0);
-        //lifter.getLifterMotor().setPower(0);
-        colorSensor.enableLed(false);
     }
 
     public TankDrive getTankDrive() {
         return tankDrive;
     }
 
-    public Launcher getLauncher() {
-        return launcher;
-    }
-
-    public CRServo getSlider() {
-        return slider;
-    }
-
-    public Intake getIntake() { return intake; }
-
-    //public Lifter getLifter() { return lifter; }
-
     public void setDrivetrain(Drivetrain drivetrain) {
         this.tankDrive = tankDrive;
-    }
-
-    public void setLauncher(Launcher launcher) {
-        this.launcher = launcher;
-    }
-
-    public void setSlider(CRServo slider) {
-        this.slider = slider;
-    }
-
-    public ColorSensor getColorSensor() {
-        return colorSensor;
-    }
-
-    public OpticalDistanceSensor getOpticalDistanceSensor() {
-        return opticalDistanceSensor;
-    }
-
-    public void setColorSensor(ColorSensor colorSensor) {
-        this.colorSensor = colorSensor;
-    }
-
-    public void colorScan(){
-        rgbValues[0] = colorSensor.red();
-        rgbValues[1] = colorSensor.green();
-        rgbValues[2] = colorSensor.blue();
-        Color.RGBToHSV(rgbValues[0], rgbValues[1], rgbValues[2], hsvValues);
-    }
-
-    public float[] getHsvValues() {
-        return hsvValues;
-    }
-
-    public int[] getRgbValues() {
-        return rgbValues;
-    }
-
-    public ModernRoboticsI2cGyro getGyro() {
-        return gyro;
     }
 }
