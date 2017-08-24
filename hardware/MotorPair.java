@@ -18,6 +18,11 @@ public class MotorPair {
         motor2 = null;
     }
 
+    public MotorPair(DcMotor motor1, DcMotor motor2) {
+        this.motor1 = motor1;
+        this.motor2 = motor2;
+    }
+
     public MotorPair(HardwareMap hardwareMap, String hardwareName1, String hardwareName2){
         motor1 = hardwareMap.dcMotor.get(hardwareName1);
         motor2 = hardwareMap.dcMotor.get(hardwareName2);
