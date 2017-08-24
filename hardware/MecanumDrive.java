@@ -25,7 +25,7 @@ public class MecanumDrive extends Drivetrain {
         minorDiagonal = new MotorPair(minor1, minor2);
     }
 
-    public arcadeDrive(double x, double y){
+    public void arcadeDrive(double x, double y){
 
     }
 
