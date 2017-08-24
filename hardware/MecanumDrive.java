@@ -96,19 +96,34 @@ public class MecanumDrive extends Drivetrain {
         minorDiagonal.setPowers(0);
     }
 
-
+    /**
+     * Return the MotorPair for the motors going top left to bottom right
+     * @return the top left & bottom right MotorPair
+     */
     public MotorPair getMainDiagonal() {
         return mainDiagonal;
     }
 
+    /**
+     * Return the MotorPair for the motors going top right to bottom left
+     * @return the top right & bottom left MotorPair
+     */
     public MotorPair getMinorDiagonal() {
         return minorDiagonal;
     }
 
+    /**
+     * Sets the MotorPair corresponding to the motors going top left to bottom right
+     * @param mainDiagonal the top left & bottom right MotorPair
+     */
     public void setMainDiagonal(MotorPair mainDiagonal) {
         this.mainDiagonal = mainDiagonal;
     }
 
+    /**
+     * sets the MotorPair corresponding to the motors going top right to bottom left
+     * @param minorDiagonal the top right & bottom left MotorPair
+     */
     public void setMinorDiagonal(MotorPair minorDiagonal) {
         this.minorDiagonal = minorDiagonal;
     }

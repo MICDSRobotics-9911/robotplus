@@ -19,13 +19,21 @@ import org.firstinspires.ftc.robotcore.external.Telemetry;
 
 public class Robot {
 
+    //The Robot's drivetrain (can be any type)
     private Drivetrain drivetrain;
 
+    /**
+     * creates a new empty robot
+     */
     public Robot(){
         drivetrain = null;
     }
 
-    //change this to fit the default for the competition robot to use for initializing everywhere
+    /**
+     * A constructor pre set for the current competition robot (NEW SEASONS AND TEAMS WILL HAVE TO
+     * CHANGE THIS TO FIT THEIR ROBOTS!!)
+     * @param hardwareMap the HardwareMap from any of the OpModes you're using
+     */
     public Robot(HardwareMap hardwareMap){
         //tankDrive = new TankDrive(hardwareMap);
 
@@ -39,19 +47,31 @@ public class Robot {
         setDrivetrain(mecanumDrive);
 
 
-        //tankDrive.getLeftMotors().setDirections(DcMotorSimple.Direction.FORWARD);
-        //tankDrive.getRightMotors().setDirections(DcMotorSimple.Direction.REVERSE);
+        //change mecanum drive to have sides
+        main1.setDirection(DcMotorSimple.Direction.REVERSE);
+        minor1.setDirection(DcMotorSimple.Direction.REVERSE);
         mecanumDrive.setModes(DcMotor.RunMode.RUN_WITHOUT_ENCODER);
     }
 
+    /**
+     * Stops the robot completely.
+     */
     public void stopMoving(){
         drivetrain.setPower(0);
     }
 
+    /**
+     * Returns the drivetrain the robot is set to use
+     * @return The robot's drivetrain (any type)
+     */
     public Drivetrain getDrivetrain() {
         return drivetrain;
     }
 
+    /**
+     * Sets the robot's drivetrain (can be set to any type of drivetrain)
+     * @param drivetrain The drivetrain to set the robot to use
+     */
     public void setDrivetrain(Drivetrain drivetrain) {
         this.drivetrain = drivetrain;
     }
