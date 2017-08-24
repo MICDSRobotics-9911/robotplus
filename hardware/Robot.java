@@ -19,30 +19,40 @@ import org.firstinspires.ftc.robotcore.external.Telemetry;
 
 public class Robot {
 
-    private TankDrive tankDrive;
+    private Drivetrain drivetrain;
 
     public Robot(){
-        tankDrive = null;
+        drivetrain = null;
     }
 
+    //change this to fit the default for the competition robot to use for initializing everywhere
     public Robot(HardwareMap hardwareMap){
-        tankDrive = new TankDrive(hardwareMap);
+        //tankDrive = new TankDrive(hardwareMap);
+
+        DcMotor main1 = hardwareMap.dcMotor.get("main1");
+        DcMotor main2 = hardwareMap.dcMotor.get("main2");
+        DcMotor minor1 = hardwareMap.dcMotor.get("minor1");
+        DcMotor minor2 = hardwareMap.dcMotor.get("minor2");
+
+        MecanumDrive mecanumDrive = new MecanumDrive(main1, main2, minor1, minor2);
+
+        setDrivetrain(mecanumDrive);
 
 
-        tankDrive.getLeftMotors().setDirections(DcMotorSimple.Direction.FORWARD);
-        tankDrive.getRightMotors().setDirections(DcMotorSimple.Direction.REVERSE);
-        tankDrive.setModes(DcMotor.RunMode.RUN_WITHOUT_ENCODER);
+        //tankDrive.getLeftMotors().setDirections(DcMotorSimple.Direction.FORWARD);
+        //tankDrive.getRightMotors().setDirections(DcMotorSimple.Direction.REVERSE);
+        mecanumDrive.setModes(DcMotor.RunMode.RUN_WITHOUT_ENCODER);
     }
 
     public void stopMoving(){
-        tankDrive.setPower(0);
+        drivetrain.setPower(0);
     }
 
-    public TankDrive getTankDrive() {
-        return tankDrive;
+    public Drivetrain getDrivetrain() {
+        return drivetrain;
     }
 
     public void setDrivetrain(Drivetrain drivetrain) {
-        this.tankDrive = tankDrive;
+        this.drivetrain = drivetrain;
     }
 }
