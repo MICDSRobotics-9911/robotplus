@@ -22,11 +22,13 @@ import org.firstinspires.ftc.robotcore.external.Telemetry;
  */
 public class Robot {
 
-    //The Robot's drivetrain (can be any type)
+    /**
+     * the Robot's drivetrain (can be any type)
+     */
     private Drivetrain drivetrain;
 
     /**
-     * creates a new empty robot
+     * Creates a new empty robot
      */
     public Robot(){
         drivetrain = null;
@@ -38,8 +40,6 @@ public class Robot {
      * @param hardwareMap the HardwareMap from any of the OpModes you're using
      */
     public Robot(HardwareMap hardwareMap){
-        //tankDrive = new TankDrive(hardwareMap);
-
         DcMotor main1 = hardwareMap.dcMotor.get("main1");
         DcMotor main2 = hardwareMap.dcMotor.get("main2");
         DcMotor minor1 = hardwareMap.dcMotor.get("minor1");
@@ -65,7 +65,7 @@ public class Robot {
 
     /**
      * Returns the drivetrain the robot is set to use
-     * @return The robot's drivetrain (any type)
+     * @return {@link Robot#drivetrain}
      */
     public Drivetrain getDrivetrain() {
         return drivetrain;
@@ -73,7 +73,7 @@ public class Robot {
 
     /**
      * Sets the robot's drivetrain (can be set to any type of drivetrain)
-     * @param drivetrain The drivetrain to set the robot to use
+     * @param drivetrain {@link Robot#drivetrain}
      */
     public void setDrivetrain(Drivetrain drivetrain) {
         this.drivetrain = drivetrain;

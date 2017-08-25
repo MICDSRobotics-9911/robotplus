@@ -13,8 +13,16 @@ import com.qualcomm.robotcore.hardware.configuration.MotorType;
 public class MecanumDrive extends Drivetrain {
 
     //We define the motors by what orientation the wheels they're attached to
-    private MotorPair mainDiagonal; //this is the top left to bottom right motors
-    private MotorPair minorDiagonal; //this is the top right to bottom left motors
+    /**
+     * the MotorPair with mecanum wheels that point
+     * in the top left and bottom right directions
+     */
+    private MotorPair mainDiagonal;
+    /**
+     * the MotorPair with mecanum wheels that point
+     * in the top right and bottom left directions
+     */
+    private MotorPair minorDiagonal;
 
     /**
      * Creates empty Mecanum Drive (only with motor types set to 60)
@@ -101,7 +109,7 @@ public class MecanumDrive extends Drivetrain {
 
     /**
      * Return the MotorPair for the motors going top left to bottom right
-     * @return the top left & bottom right MotorPair
+     * @return {@link MecanumDrive#mainDiagonal}
      */
     public MotorPair getMainDiagonal() {
         return mainDiagonal;
@@ -109,7 +117,7 @@ public class MecanumDrive extends Drivetrain {
 
     /**
      * Return the MotorPair for the motors going top right to bottom left
-     * @return the top right & bottom left MotorPair
+     * @return {@link MecanumDrive#minorDiagonal}
      */
     public MotorPair getMinorDiagonal() {
         return minorDiagonal;
@@ -117,7 +125,7 @@ public class MecanumDrive extends Drivetrain {
 
     /**
      * Sets the MotorPair corresponding to the motors going top left to bottom right
-     * @param mainDiagonal the top left & bottom right MotorPair
+     * @param mainDiagonal {@link MecanumDrive#mainDiagonal}
      */
     public void setMainDiagonal(MotorPair mainDiagonal) {
         this.mainDiagonal = mainDiagonal;
@@ -125,7 +133,7 @@ public class MecanumDrive extends Drivetrain {
 
     /**
      * sets the MotorPair corresponding to the motors going top right to bottom left
-     * @param minorDiagonal the top right & bottom left MotorPair
+     * @param minorDiagonal {@link MecanumDrive#minorDiagonal}
      */
     public void setMinorDiagonal(MotorPair minorDiagonal) {
         this.minorDiagonal = minorDiagonal;

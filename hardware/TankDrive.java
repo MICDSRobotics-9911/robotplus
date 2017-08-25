@@ -13,9 +13,13 @@ import org.firstinspires.ftc.teamcode.robotplus.robodata.EncoderValues;
  */
 public class TankDrive extends Drivetrain implements EncoderValues {
 
-    //A pair of motors on the left side of the robot
+    /**
+     * a pair of motors on the left side of the robot
+     */
     private MotorPair leftMotors;
-    //A pair of motors on the right side of the robot
+    /**
+     *  a pair of motors on the right side of the robot
+     */
     private MotorPair rightMotors;
 
     /**
@@ -28,7 +32,7 @@ public class TankDrive extends Drivetrain implements EncoderValues {
     /**
      * A quick setup for TankDrives that correspond to the HardwareMap listings below.
      * Set the motor names to these in the config and you're done.
-     * @param hardwareMap
+     * @param hardwareMap the HardwareMap from your OpMode
      */
     public TankDrive(HardwareMap hardwareMap){
         leftMotors = new MotorPair(hardwareMap, "left front", "left back");
@@ -38,16 +42,16 @@ public class TankDrive extends Drivetrain implements EncoderValues {
     }
 
     /**
-     * Returns the left MotorPair
-     * @return the left MotorPair
+     * Returns {@link TankDrive#leftMotors}
+     * @return {@link TankDrive#leftMotors}
      */
     public MotorPair getLeftMotors() {
         return leftMotors;
     }
 
     /**
-     * Returns the right MotorPair
-     * @return the right MotorPair
+     * Returns {@link TankDrive#rightMotors}
+     * @return {@link TankDrive#rightMotors}
      */
     public MotorPair getRightMotors() {
         return rightMotors;
@@ -55,20 +59,24 @@ public class TankDrive extends Drivetrain implements EncoderValues {
 
     /**
      * Sets the MotorPair to use on the left side
-     * @param leftMotors the Motorpair to use on the left side
+     * @param leftMotors {@link TankDrive#leftMotors}
      */
     public void setLeftMotors(MotorPair leftMotors) {
         this.leftMotors = leftMotors;
     }
 
     /**
-     *
-     * @param rightMotors
+     * Sets the Motorpair to use on the right side
+     * @param rightMotors {@link TankDrive#rightMotors}
      */
     public void setRightMotors(MotorPair rightMotors) {
         this.rightMotors = rightMotors;
     }
 
+    /**
+     * Sets all motor encoders in the drivetrain to to the parameter's value
+     * @param position the requested target encoder position
+     */
     public void setTargetPosition(int position) {
         leftMotors.getMotor1().setTargetPosition(position);
         leftMotors.getMotor2().setTargetPosition(position);

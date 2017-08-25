@@ -13,7 +13,13 @@ import com.qualcomm.robotcore.hardware.HardwareMap;
  */
 public class MotorPair {
 
+    /**
+     * a motor in the pair
+     */
     private DcMotor motor1;
+    /**
+     * another motor in the pair
+     */
     private DcMotor motor2;
 
     /**
@@ -26,8 +32,8 @@ public class MotorPair {
 
     /**
      * MotorPair constructor, taking in the two motors to be linked
-     * @param motor1 one motor to be linked
-     * @param motor2 the other motor to be linked
+     * @param motor1 {@link MotorPair#motor1}
+     * @param motor2 {@link MotorPair#motor2}
      */
     public MotorPair(DcMotor motor1, DcMotor motor2) {
         this.motor1 = motor1;
@@ -117,32 +123,32 @@ public class MotorPair {
     }
 
     /**
-     * Returns the front motor (motor1)
-     * @return the front motor
+     * Returns {@link MotorPair#motor1}
+     * @return {@link MotorPair#motor1}
      */
     public DcMotor getMotor1() {
         return motor1;
     }
 
     /**
-     * Returns the back motor (motor2)
-     * @return the back motor
+     * Returns {@link MotorPair#motor2}
+     * @return {@link MotorPair#motor2}
      */
     public DcMotor getMotor2() {
         return motor2;
     }
 
     /**
-     * Sets the front motor (motor1) to the parameter
-     * @param motor1 the DcMotor to set the front motor to
+     * Sets {@link MotorPair#motor1} to the parameter
+     * @param motor1 {@link MotorPair#motor1}
      */
     public void setMotor1(DcMotor motor1) {
         this.motor1 = motor1;
     }
 
     /**
-     * sets the back motor (motor 2) to the parameter
-     * @param motor2 the DcMotor to set the back motor to
+     * Sets the {@link MotorPair#motor2} to the parameter
+     * @param motor2 {@link MotorPair#motor2}
      */
     public void setMotor2(DcMotor motor2) {
         this.motor2 = motor2;

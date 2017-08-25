@@ -12,6 +12,9 @@ import com.qualcomm.robotcore.hardware.HardwareMap;
  */
 public abstract class Drivetrain {
 
+    /**
+     * the type of motor used throughout the drivetrain
+     */
     private Motor motorType;
 
     /**
@@ -22,7 +25,7 @@ public abstract class Drivetrain {
 
     /**
      * Sets all motors in the drivetrain to one mode
-     * @param mode the mode to set the motors to
+     * @param runMode the mode to set the motors to
      */
     public abstract void setModes(DcMotor.RunMode runMode);
 
@@ -38,7 +41,7 @@ public abstract class Drivetrain {
 
     /**
      * Sets the type of motors the drivetrain is using (i.e. Neverrest 20s, 40s, etc)
-     * @param motorType the type of motor (Check Motor class)
+     * @param motorType {@link Drivetrain#motorType}
      */
     public void setMotorType(Motor motorType) {
         this.motorType = motorType;
@@ -46,7 +49,7 @@ public abstract class Drivetrain {
 
     /**
      * Returns the type of motors being used in the drivetrain
-     * @return the motor type (as the Motor enum it's linked to)
+     * @return {@link Drivetrain#motorType}
      */
     public Motor getMotorType() {
         return motorType;
