@@ -70,18 +70,6 @@ public class MecanumDrive extends Drivetrain {
 
     }
 
-    public boolean tolerate(double value, double tolerance) {
-        double max = 0 + tolerance;
-        double min = 0 - tolerance;
-
-        if (value > max || value < min) {
-            return false;
-        }
-        else {
-            return true;
-        }
-    }
-
 
     @Override
     public void setPower(double power) {

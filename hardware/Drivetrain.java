@@ -14,6 +14,7 @@ public abstract class Drivetrain {
 
     /**
      * the type of motor used throughout the drivetrain
+     * @see {@link Motor}
      */
     private Motor motorType;
 
