@@ -1,9 +1,12 @@
 package org.firstinspires.ftc.teamcode.robotplus.hardware;
 
 /**
- * Created by BAbel on 5/1/2017.
+ * Motor enumeration to help with keeping track of data used for integrated
+ * motor encoder sets. You don't have to look up the motor specs
+ * from Andymark whenever you need to use encoders now.
+ * @since 5/1/17
+ * @author Blake Abel, Alex Migala
  */
-
 public enum Motor {
     NEVERREST20 (20),
     NEVERREST40 (40),
