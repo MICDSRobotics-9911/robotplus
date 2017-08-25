@@ -4,9 +4,12 @@ import com.qualcomm.robotcore.hardware.DcMotor;
 import com.qualcomm.robotcore.hardware.configuration.MotorType;
 
 /**
- * Created by BAbel on 8/24/2017.
+ * General-use Mecanum drivetrain class for use throughout OpModes.
+ * Use if your robot is using a mecanum drivetrain, in conjunction with the robot class
+ * and other hardware classes.
+ * @since 8/24/17
+ * @author Blake Abel, Alex Migala
  */
-
 public class MecanumDrive extends Drivetrain {
 
     //We define the motors by what orientation the wheels they're attached to

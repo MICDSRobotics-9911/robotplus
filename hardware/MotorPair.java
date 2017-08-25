@@ -1,13 +1,16 @@
 package org.firstinspires.ftc.teamcode.robotplus.hardware;
 
-/**
- * Created by BAbel on 4/10/2017.
- */
-
 import com.qualcomm.robotcore.hardware.DcMotor;
 import com.qualcomm.robotcore.hardware.DcMotorSimple;
 import com.qualcomm.robotcore.hardware.HardwareMap;
 
+/**
+ * General purpose class used for effectively combining two motors,
+ * letting you treat them like one in other classes. Simplifies things more
+ * than you would think.
+ * @since 4/10/17
+ * @author Blake Abel, Alex Migala
+ */
 public class MotorPair {
 
     private DcMotor motor1;

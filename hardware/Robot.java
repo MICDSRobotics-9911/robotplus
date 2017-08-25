@@ -1,9 +1,5 @@
 package org.firstinspires.ftc.teamcode.robotplus.hardware;
 
-/**
- * Created by BAbel on 4/10/2017.
- */
-
 import android.graphics.Color;
 
 import com.qualcomm.hardware.modernrobotics.ModernRoboticsI2cGyro;
@@ -17,6 +13,13 @@ import com.qualcomm.robotcore.hardware.OpticalDistanceSensor;
 
 import org.firstinspires.ftc.robotcore.external.Telemetry;
 
+/**
+ * Class representing the entire robot for the season. It's set up so as to be modular
+ * and able to change things from outside of the class, but it's expected that teams will change
+ * this class every year to fit their robot better. It just works better.
+ * @since 4/10/17
+ * @author Blake Abel, Alex Migala
+ */
 public class Robot {
 
     //The Robot's drivetrain (can be any type)

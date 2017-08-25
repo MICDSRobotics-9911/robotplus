@@ -1,14 +1,15 @@
 package org.firstinspires.ftc.teamcode.robotplus.hardware;
 
-/**
- * Created by BAbel on 4/10/2017.
- */
-
 import com.qualcomm.robotcore.hardware.DcMotor;
 import com.qualcomm.robotcore.hardware.DcMotorSimple;
 import com.qualcomm.robotcore.hardware.HardwareMap;
 
-
+/**
+ * Abstract drivetrain class providing a base for other
+ * drivetrains and for use referencing all types in Robot.
+ * @since 4/10/17
+ * @author Blake Abel, Alex Migala
+ */
 public abstract class Drivetrain {
 
     private Motor motorType;

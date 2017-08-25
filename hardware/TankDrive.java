@@ -6,9 +6,11 @@ import com.qualcomm.robotcore.hardware.HardwareMap;
 import org.firstinspires.ftc.teamcode.robotplus.robodata.EncoderValues;
 
 /**
- * Created by BAbel on 4/11/2017.
+ * A class representing a classing TankDrive drivetrain, where there are four motors, with two
+ * on each side. No funny trickery with wheels or anything, this is the simple, "basic" drivetrain.
+ * @since 4/11/2017
+ * @author Blake Abel, Alex Migala
  */
-
 public class TankDrive extends Drivetrain implements EncoderValues {
 
     //A pair of motors on the left side of the robot
