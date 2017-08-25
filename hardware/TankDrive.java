@@ -11,13 +11,23 @@ import org.firstinspires.ftc.teamcode.robotplus.robodata.EncoderValues;
 
 public class TankDrive extends Drivetrain implements EncoderValues {
 
+    //A pair of motors on the left side of the robot
     private MotorPair leftMotors;
+    //A pair of motors on the right side of the robot
     private MotorPair rightMotors;
 
+    /**
+     * Create an empty tankdrive (with the motors automatically set to NeveRest40s)
+     */
     public TankDrive(){
         setMotorType(Motor.NEVERREST40);
     }
 
+    /**
+     * A quick setup for TankDrives that correspond to the HardwareMap listings below.
+     * Set the motor names to these in the config and you're done.
+     * @param hardwareMap
+     */
     public TankDrive(HardwareMap hardwareMap){
         leftMotors = new MotorPair(hardwareMap, "left front", "left back");
         rightMotors = new MotorPair(hardwareMap, "right front", "right back");
@@ -25,18 +35,34 @@ public class TankDrive extends Drivetrain implements EncoderValues {
         setMotorType(Motor.NEVERREST40);
     }
 
+    /**
+     * Returns the left MotorPair
+     * @return the left MotorPair
+     */
     public MotorPair getLeftMotors() {
         return leftMotors;
     }
 
+    /**
+     * Returns the right MotorPair
+     * @return the right MotorPair
+     */
     public MotorPair getRightMotors() {
         return rightMotors;
     }
 
+    /**
+     * Sets the MotorPair to use on the left side
+     * @param leftMotors the Motorpair to use on the left side
+     */
     public void setLeftMotors(MotorPair leftMotors) {
         this.leftMotors = leftMotors;
     }
 
+    /**
+     *
+     * @param rightMotors
+     */
     public void setRightMotors(MotorPair rightMotors) {
         this.rightMotors = rightMotors;
     }
@@ -61,6 +87,7 @@ public class TankDrive extends Drivetrain implements EncoderValues {
             default : break;
         }
     }
+
 
     @Override
     public void setPower(double power){
