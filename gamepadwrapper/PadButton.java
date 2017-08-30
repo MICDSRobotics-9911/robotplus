@@ -14,6 +14,10 @@ public class PadButton {
         this.isPressed = false;
     }
 
+    /**
+     * Gets the state if the button cache is pressed
+     * @return the state of the button
+     */
     public boolean isPressed() {
         return this.isPressed;
     }
