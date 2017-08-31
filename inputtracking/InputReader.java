@@ -13,6 +13,9 @@ import java.util.ArrayList;
 
 public class InputReader {
 
+    /**
+     * Creates a new input reader
+     */
     public InputReader(){}
 
     public ArrayList<Input> readJson(InputStream in) throws IOException {

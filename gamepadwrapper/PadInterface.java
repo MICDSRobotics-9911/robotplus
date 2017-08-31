@@ -14,6 +14,10 @@ public class PadInterface {
     private PadButton BButton = new PadButton();
     private String name;
 
+    /**
+     * Creates a gamepad interface with the given name
+     * @param n The interface name
+     */
     public PadInterface(String n) {
         this.name = n;
         XButton = new PadButton();
@@ -22,18 +26,30 @@ public class PadInterface {
         BButton = new PadButton();
     }
 
+    /**
+     * @return The X button of the gamepad
+     */
     public PadButton getXButton() {
         return this.XButton;
     }
 
+    /**
+     * @return The Y button of the gamepad
+     */
     public PadButton getYButton() {
         return this.YButton;
     }
 
+    /**
+     * @return The A button of the gamepad
+     */
     public PadButton getAButton() {
         return this.AButton;
     }
 
+    /**
+     * @return The B button of the gamepad
+     */
     public PadButton getBButton() {
         return this.BButton;
     }
