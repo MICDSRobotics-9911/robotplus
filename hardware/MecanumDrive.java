@@ -1,6 +1,7 @@
 package org.firstinspires.ftc.teamcode.robotplus.hardware;
 
 import com.qualcomm.robotcore.hardware.DcMotor;
+import com.qualcomm.robotcore.hardware.Gamepad;
 import com.qualcomm.robotcore.hardware.configuration.MotorType;
 
 /**
@@ -17,7 +18,7 @@ public class MecanumDrive extends Drivetrain {
      * the MotorPair with mecanum wheels that point
      * in the top left and bottom right directions
      */
-    private MotorPair mainDiagonal;
+    private MotorPair majorDiagonal;
     /**
      * the MotorPair with mecanum wheels that point
      * in the top right and bottom left directions
@@ -31,11 +32,11 @@ public class MecanumDrive extends Drivetrain {
 
     /**
      * Creates Mecanum Drive from two pairs of motors going in the same diagonals
-     * @param mainDiagonal the top left to bottom right diagonals
+     * @param majorDiagonal the top left to bottom right diagonals
      * @param minorDiagonal the top right to bottom left diagonals
      */
-    public MecanumDrive(MotorPair mainDiagonal, MotorPair minorDiagonal){
-        this.mainDiagonal = mainDiagonal;
+    public MecanumDrive(MotorPair majorDiagonal, MotorPair minorDiagonal){
+        this.majorDiagonal = majorDiagonal;
         this.minorDiagonal = minorDiagonal;
     }
 
@@ -47,7 +48,7 @@ public class MecanumDrive extends Drivetrain {
      * @param minor2 A motor in the top right to bottom left diagonal
      */
     public MecanumDrive(DcMotor main1, DcMotor main2, DcMotor minor1, DcMotor minor2){
-        mainDiagonal = new MotorPair(main1, main2);
+        majorDiagonal = new MotorPair(main1, main2);
         minorDiagonal = new MotorPair(minor1, minor2);
     }
 
@@ -65,42 +66,78 @@ public class MecanumDrive extends Drivetrain {
         mainPower = y + x;
         minorPower = y - x;
 
-        mainDiagonal.setPowers(mainPower);
+        majorDiagonal.setPowers(mainPower);
         minorDiagonal.setPowers(minorPower);
 
+    }
+
+    /**
+     * Makes the mecanum drivetrain move in the corresponding cardinal direction.
+     * @param gamepad the gamepad object to get dpad values from.
+     */
+    public void dPadDrive(Gamepad gamepad){
+        if(gamepad.dpad_up){
+            if(gamepad.dpad_left){
+                majorDiagonal.setPowers(0);
+                minorDiagonal.setPowers(1);
+            } else if (gamepad.dpad_right){
+                majorDiagonal.setPowers(1);
+                minorDiagonal.setPowers(0);
+            } else {
+                majorDiagonal.setPowers(1);
+                minorDiagonal.setPowers(1);
+            }
+        } else if (gamepad.dpad_down){
+            if(gamepad.dpad_left){
+                majorDiagonal.setPowers(-1);
+                minorDiagonal.setPowers(0);
+            } else if (gamepad.dpad_right){
+                majorDiagonal.setPowers(0);
+                minorDiagonal.setPowers(-1);
+            } else {
+                majorDiagonal.setPowers(-1);
+                minorDiagonal.setPowers(-1);
+            }
+        } else if (gamepad.dpad_left){
+            majorDiagonal.setPowers(1);
+            minorDiagonal.setPowers(-1);
+        } else if (gamepad.dpad_right){
+            majorDiagonal.setPowers(-1);
+            minorDiagonal.setPowers(1);
+        }
     }
 
 
     @Override
     public void setPower(double power) {
-        mainDiagonal.setPowers(power);
+        majorDiagonal.setPowers(power);
         minorDiagonal.setPowers(power);
     }
 
     @Override
     public void setModes(DcMotor.RunMode runMode) {
-        mainDiagonal.setModes(runMode);
+        majorDiagonal.setModes(runMode);
         minorDiagonal.setModes(runMode);
     }
 
     @Override
     public void resetEncoders() {
-        mainDiagonal.resetEncoders();
+        majorDiagonal.resetEncoders();
         minorDiagonal.resetEncoders();
     }
 
     @Override
     public void stopMoving() {
-        mainDiagonal.setPowers(0);
+        majorDiagonal.setPowers(0);
         minorDiagonal.setPowers(0);
     }
 
     /**
      * Return the MotorPair for the motors going top left to bottom right
-     * @return {@link MecanumDrive#mainDiagonal}
+     * @return {@link MecanumDrive#majorDiagonal}
      */
-    public MotorPair getMainDiagonal() {
-        return mainDiagonal;
+    public MotorPair getmajorDiagonal() {
+        return majorDiagonal;
     }
 
     /**
@@ -113,10 +150,10 @@ public class MecanumDrive extends Drivetrain {
 
     /**
      * Sets the MotorPair corresponding to the motors going top left to bottom right
-     * @param mainDiagonal {@link MecanumDrive#mainDiagonal}
+     * @param majorDiagonal {@link MecanumDrive#majorDiagonal}
      */
-    public void setMainDiagonal(MotorPair mainDiagonal) {
-        this.mainDiagonal = mainDiagonal;
+    public void setmajorDiagonal(MotorPair majorDiagonal) {
+        this.majorDiagonal = majorDiagonal;
     }
 
     /**
