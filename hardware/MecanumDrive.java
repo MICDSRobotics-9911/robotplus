@@ -1,6 +1,7 @@
 package org.firstinspires.ftc.teamcode.robotplus.hardware;
 
 import com.qualcomm.robotcore.hardware.DcMotor;
+import com.qualcomm.robotcore.hardware.Gamepad;
 import com.qualcomm.robotcore.hardware.configuration.MotorType;
 
 /**
@@ -68,6 +69,42 @@ public class MecanumDrive extends Drivetrain {
         mainDiagonal.setPowers(mainPower);
         minorDiagonal.setPowers(minorPower);
 
+    }
+
+    /**
+     * Makes the mecanum drivetrain move in the corresponding cardinal direction.
+     * @param gamepad the gamepad object to get dpad values from.
+     */
+    public void dPadDrive(Gamepad gamepad){
+        if(gamepad.dpad_up){
+            if(gamepad.dpad_left){
+                mainDiagonal.setPowers(0);
+                minorDiagonal.setPowers(1);
+            } else if (gamepad.dpad_right){
+                mainDiagonal.setPowers(1);
+                minorDiagonal.setPowers(0);
+            } else {
+                mainDiagonal.setPowers(1);
+                minorDiagonal.setPowers(1);
+            }
+        } else if (gamepad.dpad_down){
+            if(gamepad.dpad_left){
+                mainDiagonal.setPowers(-1);
+                minorDiagonal.setPowers(0);
+            } else if (gamepad.dpad_right){
+                mainDiagonal.setPowers(0);
+                minorDiagonal.setPowers(-1);
+            } else {
+                mainDiagonal.setPowers(-1);
+                minorDiagonal.setPowers(-1);
+            }
+        } else if (gamepad.dpad_left){
+            mainDiagonal.setPowers(1);
+            minorDiagonal.setPowers(-1);
+        } else if (gamepad.dpad_right){
+            mainDiagonal.setPowers(-1);
+            minorDiagonal.setPowers(1);
+        }
     }
 
 
