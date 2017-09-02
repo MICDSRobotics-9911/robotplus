@@ -21,11 +21,13 @@ public class AccessControl {
         if (isG1Primary) {
             isG1Primary = false;
             isG2Primary = true;
+            isRequesting = false;
         }
 
         else if (isG2Primary) {
             isG2Primary = false;
             isG1Primary = true;
+            isRequesting = false;
         }
     }
 
