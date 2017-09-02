@@ -8,13 +8,25 @@ import java.io.InputStreamReader;
 import java.util.ArrayList;
 
 /**
- * Created by BAbel on 4/12/2017.
+ * Class that handles parsing the json files from the phone and turning them into
+ * an ArrayList of {@link Input}s that we can use to iterate through in our autonomous OpModes.
+ * Basically it turns the input file from {@link InputWriter}into something we can work with.
+ * @since 4/12/17
+ * @author Blake Abel, Alex Migala
  */
-
 public class InputReader {
 
+    /**
+     * Creates a new input reader
+     */
     public InputReader(){}
 
+    /**
+     * Reads the input file (a json from {@link InputWriter}) and returns the iterable list.
+     * @param in the input file
+     * @return the iterable ArrayList of input values and corresponding times.
+     * @throws IOException if the file can't be read or doesn't exist.
+     */
     public ArrayList<Input> readJson(InputStream in) throws IOException {
         JsonReader reader = new JsonReader(new InputStreamReader(in, "UTF-8"));
 
@@ -26,6 +38,12 @@ public class InputReader {
 
     }
 
+    /**
+     * Handles starting the array from the json file and iterating through all the objects.
+     * @param reader the JsonReader object linked to the input file.
+     * @return the iterable ArrayList of Input objects
+     * @throws IOException if the file can't be read or doesn't exist.
+     */
     public ArrayList<Input> readInputArray(JsonReader reader) throws IOException {
         ArrayList<Input> inputs = new ArrayList<Input>();
 
@@ -38,6 +56,12 @@ public class InputReader {
         return inputs;
     }
 
+    /**
+     * Handles each object in the json file, setting each variable for the Input object.
+     * @param reader the JsonReader object linked to the input file.
+     * @return the Input object containing the gamepad state and the corresponding time.
+     * @throws IOException if the file can't be read or doesn't exist.
+     */
     public Input readInput(JsonReader reader) throws IOException {
         Input input = new Input();
 
