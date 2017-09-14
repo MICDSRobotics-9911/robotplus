@@ -12,19 +12,39 @@ import org.firstinspires.ftc.robotcore.external.navigation.VuforiaTrackables;
 /**
  * @author Alex Migala, Blake Abel, Nick Clifford
  * @since 9/9/17
+ * Sets up a Vuforia instance
  */
-public class ImageIdentifier {
+public class VuforiaWrapper {
+    /**
+     * Some random string for identification
+     */
     public static final String TAG = "Vuforia Image Identifier";
 
+    /**
+     * Camera info
+     */
     private int cameraDirection;
 
+    /**
+     * Vuforia parameters
+     */
     private VuforiaLocalizer.Parameters parameters;
 
+    /**
+     * Vuforia Instance
+     */
     private VuforiaLocalizer vuforia;
 
+    /**
+     * Tracker loader for the assets
+     */
     private TrackerLoader loader;
 
-    public ImageIdentifier(HardwareMap map) {
+    /**
+     * Give the VuforiaLocalizer context
+     * @param map HardwareMap map from OpMode
+     */
+    public VuforiaWrapper(HardwareMap map) {
         cameraDirection = map.appContext.getResources().getIdentifier("cameraMonitorViewId", "id", map.appContext.getPackageName());
         this.parameters = new VuforiaLocalizer.Parameters(this.cameraDirection);
 
@@ -34,10 +54,18 @@ public class ImageIdentifier {
         this.loader = new TrackerLoader(this.vuforia);
     }
 
+    /**
+     * Gets VuforiaLocalizer intsance
+     * @return the instance
+     */
     public VuforiaLocalizer getVuforia() {
         return this.vuforia;
     }
 
+    /**
+     * Gets the ImageLoader
+     * @return the ImageLoader
+     */
     public TrackerLoader getLoader() {
         return this.loader;
     }

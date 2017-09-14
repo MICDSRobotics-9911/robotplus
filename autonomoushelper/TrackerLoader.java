@@ -10,7 +10,7 @@ import org.firstinspires.ftc.robotcore.external.navigation.VuforiaTrackables;
 /**
  * Created by amigala on 9/9/2017.
  */
-
+//TODO: Add and load trackables
 public class TrackerLoader {
     private VuforiaLocalizer vuforia;
 
