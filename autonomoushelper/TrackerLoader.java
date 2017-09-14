@@ -1,35 +1,30 @@
 package org.firstinspires.ftc.teamcode.robotplus.autonomoushelper;
 
 import com.vuforia.Tracker;
+import com.vuforia.VuMarkTargetResult;
 import com.vuforia.Vuforia;
 
 import org.firstinspires.ftc.robotcore.external.navigation.VuforiaLocalizer;
 import org.firstinspires.ftc.robotcore.external.navigation.VuforiaTrackable;
 import org.firstinspires.ftc.robotcore.external.navigation.VuforiaTrackables;
 
-/**
- * Created by amigala on 9/9/2017.
- */
-//TODO: Add and load trackables
 public class TrackerLoader {
     private VuforiaLocalizer vuforia;
 
     private VuforiaTrackables trackables;
 
-    private VuforiaTrackable relic;
+    private VuforiaTrackable relicTemplate;
 
-    public TrackerLoader(VuforiaLocalizer v) {
+    public TrackerLoader(VuforiaLocalizer v, String asset) {
         this.vuforia = v;
+        this.trackables = this.vuforia.loadTrackablesFromAsset(asset);
 
-        // get the trackables
-        this.trackables = this.vuforia.loadTrackablesFromAsset("RelicVuMark");
-
-        initTrackables();
+        this.relicTemplate = this.trackables.get(0);
+        this.relicTemplate.setName("RelicVuMark");
     }
 
-    private void initTrackables() {
-        this.relic = this.trackables.get(0);
-        this.relic.setName("Relic Trackable");
+    public VuforiaTrackable getRelicTemplate() {
+        return this.relicTemplate;
     }
 
     public VuforiaTrackables getTrackables() {
