@@ -101,4 +101,13 @@ public class ColorSensorWrapper {
         }
         return telemetryMessage;
     }
+
+    /**
+     * Gets the RelativeLayout of the FTC app
+     * @return the RelativeLayout of the app
+     * @see View
+     */
+    public View getRelativeLayout() {
+        return this.relativeLayout;
+    }
 }
