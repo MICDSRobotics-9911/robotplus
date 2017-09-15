@@ -1,4 +1,4 @@
-package org.firstinspires.ftc.teamcode.robotplus.autonomoushelper;
+package org.firstinspires.ftc.teamcode.robotplus.autonomous;
 
 /**
  * An object that makes a goal for a specific step in an autonomous program

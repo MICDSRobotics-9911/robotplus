@@ -1,14 +1,9 @@
-package org.firstinspires.ftc.teamcode.robotplus.autonomoushelper;
+package org.firstinspires.ftc.teamcode.robotplus.autonomous;
 
-import android.media.Image;
-
-import com.qualcomm.robotcore.eventloop.opmode.LinearOpMode;
 import com.qualcomm.robotcore.hardware.HardwareMap;
-import com.vuforia.Tracker;
 
 import org.firstinspires.ftc.robotcore.external.ClassFactory;
 import org.firstinspires.ftc.robotcore.external.navigation.VuforiaLocalizer;
-import org.firstinspires.ftc.robotcore.external.navigation.VuforiaTrackables;
 
 /**
  * @author Alex Migala, Blake Abel, Nick Clifford
@@ -56,7 +51,7 @@ public class VuforiaWrapper {
     }
 
     /**
-     * Gets VuforiaLocalizer intsance
+     * Gets VuforiaLocalizer instance
      * @return the instance
      */
     public VuforiaLocalizer getVuforia() {
