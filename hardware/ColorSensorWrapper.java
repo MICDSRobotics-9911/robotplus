@@ -1,4 +1,4 @@
-package org.firstinspires.ftc.teamcode.robotplus.autonomous;
+package org.firstinspires.ftc.teamcode.robotplus.hardware;
 
 import android.app.Activity;
 import android.graphics.Color;
@@ -64,9 +64,9 @@ public class ColorSensorWrapper {
     }
 
     /**
-     * Captures the ColorSensor data
+     * Captures the ColorSensor HSV data
      */
-    public void capData() {
+    public void capHSVData() {
         Color.RGBToHSV(colorSensor.red() * 8, colorSensor.green() * 8, colorSensor.blue() * 8, this.hsvValues);
     }
 
@@ -100,6 +100,14 @@ public class ColorSensorWrapper {
             telemetryMessage += String.valueOf(f);
         }
         return telemetryMessage;
+    }
+
+    /**
+     * Gets the current rgb values from the color sensor
+     * @return an array of the colors in order of RGB
+     */
+    public float[] getRGBValues() {
+        return new float[] {this.colorSensor.red(), this.colorSensor.green(), this.colorSensor.blue()};
     }
 
     /**
