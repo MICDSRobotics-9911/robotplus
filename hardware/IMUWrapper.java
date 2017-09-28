@@ -2,31 +2,34 @@ package org.firstinspires.ftc.teamcode.robotplus.hardware;
 
 import com.qualcomm.hardware.bosch.BNO055IMU;
 import com.qualcomm.hardware.bosch.JustLoggingAccelerationIntegrator;
-import com.qualcomm.robotcore.hardware.AccelerationSensor;
 import com.qualcomm.robotcore.hardware.HardwareMap;
 
-import org.firstinspires.ftc.robotcontroller.external.samples.SensorBNO055IMU;
-import org.firstinspires.ftc.robotcore.external.navigation.Position;
-import org.firstinspires.ftc.robotcore.external.navigation.Velocity;
+import org.firstinspires.ftc.robotcore.external.navigation.AxesReference;
+import org.firstinspires.ftc.robotcore.external.navigation.Orientation;
 
 /**
- * Created by amigala on 9/28/2017.
+ * Wrapper class for the REV's onboard IMU
+ * @author Alex Migala, Nick Clifford, Blake Abel
+ * @since 9/28/17
  */
 
 public class IMUWrapper {
 
-    private BNO055IMU accel;
-
-    private HardwareMap hardwareMap;
+    private BNO055IMU imu;
 
     public IMUWrapper(HardwareMap map) {
-        this.hardwareMap = map;
-        this.accel = map.get(BNO055IMU.class, "sensor_imu");
+        BNO055IMU.Parameters params = new BNO055IMU.Parameters();
+        params.angleUnit            = BNO055IMU.AngleUnit.DEGREES;
+        params.accelUnit            = BNO055IMU.AccelUnit.METERS_PERSEC_PERSEC;
+        params.calibrationDataFile  = "BNO055IMUCalibration.json"; // see the calibration sample opmode
+        params.loggingEnabled       = true;
+        params.loggingTag           = "IMU";
+        params.accelerationIntegrationAlgorithm = new JustLoggingAccelerationIntegrator();
 
-        this.accel.startAccelerationIntegration(new Position(), new Velocity(), 1000);
+        this.imu = map.get(BNO055IMU.class, "sensor_imu");
+        this.imu.initialize(params);
     }
 
-    public BNO055IMU getAccel() {
-        return this.accel;
-    }
+    public BNO055IMU getIMU() { return this.imu; }
+
 }
