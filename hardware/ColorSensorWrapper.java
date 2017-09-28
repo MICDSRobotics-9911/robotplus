@@ -7,12 +7,15 @@ import android.view.View;
 import com.qualcomm.robotcore.hardware.ColorSensor;
 import com.qualcomm.robotcore.hardware.HardwareMap;
 
+import org.firstinspires.ftc.robotcontroller.external.samples.SensorREVColorDistance;
+
 /**
  * Wraps color sensor output to something more sensible
  * @author Alex Migala, Nick Clifford, Blake Abel
  * @since 9/14/17
  */
 public class ColorSensorWrapper {
+
     /**
      * ColorSensor instance
      * @see ColorSensor
@@ -96,8 +99,9 @@ public class ColorSensorWrapper {
         rgb[1] = this.colorSensor.green();
         rgb[2] = this.colorSensor.blue();
         String telemetryMessage = "";
+
         for (float f : rgb) {
-            telemetryMessage += String.valueOf(f);
+            telemetryMessage += String.valueOf(f) + " ";
         }
         return telemetryMessage;
     }
