@@ -4,6 +4,8 @@ import com.qualcomm.robotcore.hardware.DcMotor;
 import com.qualcomm.robotcore.hardware.Gamepad;
 import com.qualcomm.robotcore.hardware.configuration.MotorType;
 
+import org.firstinspires.ftc.robotcore.external.Telemetry;
+
 /**
  * General-use Mecanum drivetrain class for use throughout OpModes.
  * Use if your robot is using a mecanum drivetrain, in conjunction with the robot class
@@ -107,15 +109,23 @@ public class MecanumDrive extends Drivetrain {
         }
     }
 
-    public void complexDrive(Gamepad gamepad){
-        double velocityDesired = Math.sqrt(gamepad.left_stick_x*gamepad.left_stick_x + gamepad.left_stick_y*gamepad.left_stick_y);
-        double angleDesired = Math.toRadians(Math.atan(gamepad.left_stick_y / gamepad.left_stick_x));
-        double turnSpeed = 0.2; //just makes turning more or less sensitive
+    public void complexDrive(Gamepad gamepad, Telemetry telemetry){
 
-        majorDiagonal.getMotor1().setPower(velocityDesired * Math.sin(angleDesired + Math.PI/4) + turnSpeed);
-        minorDiagonal.getMotor1().setPower(velocityDesired * Math.cos(angleDesired + Math.PI/4) - turnSpeed);
-        minorDiagonal.getMotor2().setPower(velocityDesired * Math.cos(angleDesired + Math.PI/4) + turnSpeed);
-        majorDiagonal.getMotor2().setPower(velocityDesired * Math.sin(angleDesired + Math.PI/4) - turnSpeed);
+        double x = gamepad.left_stick_x;
+        double y = gamepad.left_stick_y;
+
+        double velocityDesired = Math.min(1.0, Math.sqrt(x*x + y*y));
+        //double angleDesired = Math.atan(y / x);
+        double angleDesired = (!Double.isNaN(Math.atan2(y, x))) ? Math.atan2(y, x) : 0;
+        double rotation = gamepad.right_stick_x; //just makes turning more or less sensitive
+
+        majorDiagonal.getMotor2().setPower(velocityDesired * Math.sin(angleDesired + Math.PI/4) - rotation);
+        majorDiagonal.getMotor1().setPower(velocityDesired * Math.sin(angleDesired + Math.PI/4) + rotation);
+        minorDiagonal.getMotor1().setPower(velocityDesired * Math.cos(angleDesired + Math.PI/4) - rotation);
+        minorDiagonal.getMotor2().setPower(velocityDesired * Math.cos(angleDesired + Math.PI/4) + rotation);
+
+        telemetry.addData("Arctan", angleDesired);
+
     }
 
     @Override

@@ -169,4 +169,8 @@ public class MotorPair {
     public int getTargetPositionAverage(){
         return (motor1.getTargetPosition() + motor2.getTargetPosition()) / 2;
     }
+
+    public static double clamp(double val, double min, double max) {
+        return Math.max(min, Math.min(max, val));
+    }
 }
