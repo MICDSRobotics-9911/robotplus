@@ -32,4 +32,6 @@ public class IMUWrapper {
 
     public BNO055IMU getIMU() { return this.imu; }
 
+    public Orientation getOrientation() { return this.imu.getAngularOrientation(); }
+
 }
