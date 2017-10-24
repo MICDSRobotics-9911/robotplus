@@ -119,12 +119,15 @@ public class MecanumDrive extends Drivetrain {
         double angleDesired = (!Double.isNaN(Math.atan2(y, x))) ? Math.atan2(y, x) : 0;
         double rotation = gamepad.right_stick_x; //just makes turning more or less sensitive
 
-        majorDiagonal.getMotor2().setPower(velocityDesired * Math.sin(angleDesired + Math.PI/4) - rotation);
-        majorDiagonal.getMotor1().setPower(velocityDesired * Math.sin(angleDesired + Math.PI/4) + rotation);
-        minorDiagonal.getMotor1().setPower(velocityDesired * Math.cos(angleDesired + Math.PI/4) - rotation);
+        majorDiagonal.getMotor1().setPower(velocityDesired * Math.sin(angleDesired + Math.PI/4) - rotation); //flopp?
+        minorDiagonal.getMotor1().setPower(velocityDesired * Math.cos(angleDesired + Math.PI/4) + rotation); //flopp?
         minorDiagonal.getMotor2().setPower(velocityDesired * Math.cos(angleDesired + Math.PI/4) + rotation);
+        majorDiagonal.getMotor2().setPower(velocityDesired * Math.sin(angleDesired + Math.PI/4) - rotation);
 
-        telemetry.addData("Arctan", angleDesired);
+
+        telemetry.addData("Arctan (angle desired)", angleDesired);
+        telemetry.addData("Rotation", rotation);
+        telemetry.addData("Velocity", velocityDesired);
 
     }
 
