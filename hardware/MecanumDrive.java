@@ -55,63 +55,13 @@ public class MecanumDrive extends Drivetrain {
     }
 
     /**
-     * Take in gamepad values corresponding to the direction you need the robot to move,
-     * and move in that direction without rotating. Works from joystick x and ys.
-     * @param x The x value of the joystick
-     * @param y The y value of the joystick
+     * Control the mecanum drivetrain given a gamepad (telemetry is to help troubleshoot).
+     * @param gamepad The gamepad (from an OpMode)
+     * @param telemetry The telemetry system (from an OpMode)
      */
-    public void arcadeDrive(double x, double y){
-
-        double mainPower = 0;
-        double minorPower = 0;
-
-        mainPower = y + x;
-        minorPower = y - x;
-
-        majorDiagonal.setPowers(mainPower);
-        minorDiagonal.setPowers(minorPower);
-
-    }
-
-    /**
-     * Makes the mecanum drivetrain move in the corresponding cardinal direction.
-     * @param gamepad the gamepad object to get dpad values from.
-     */
-    public void dPadDrive(Gamepad gamepad){
-        if(gamepad.dpad_up){
-            if(gamepad.dpad_left){
-                majorDiagonal.setPowers(0);
-                minorDiagonal.setPowers(1);
-            } else if (gamepad.dpad_right){
-                majorDiagonal.setPowers(1);
-                minorDiagonal.setPowers(0);
-            } else {
-                majorDiagonal.setPowers(1);
-                minorDiagonal.setPowers(1);
-            }
-        } else if (gamepad.dpad_down){
-            if(gamepad.dpad_left){
-                majorDiagonal.setPowers(-1);
-                minorDiagonal.setPowers(0);
-            } else if (gamepad.dpad_right){
-                majorDiagonal.setPowers(0);
-                minorDiagonal.setPowers(-1);
-            } else {
-                majorDiagonal.setPowers(-1);
-                minorDiagonal.setPowers(-1);
-            }
-        } else if (gamepad.dpad_left){
-            majorDiagonal.setPowers(1);
-            minorDiagonal.setPowers(-1);
-        } else if (gamepad.dpad_right){
-            majorDiagonal.setPowers(-1);
-            minorDiagonal.setPowers(1);
-        }
-    }
-
     public void complexDrive(Gamepad gamepad, Telemetry telemetry){
 
-        double x = gamepad.left_stick_x;
+        double x = -gamepad.left_stick_x; //flipping this maybe?
         double y = gamepad.left_stick_y;
 
         double velocityDesired = Math.min(1.0, Math.sqrt(x*x + y*y));
@@ -119,16 +69,28 @@ public class MecanumDrive extends Drivetrain {
         double angleDesired = (!Double.isNaN(Math.atan2(y, x))) ? Math.atan2(y, x) : 0;
         double rotation = gamepad.right_stick_x; //just makes turning more or less sensitive
 
-        majorDiagonal.getMotor1().setPower(velocityDesired * Math.sin(angleDesired + Math.PI/4) - rotation); //flopp?
-        minorDiagonal.getMotor1().setPower(velocityDesired * Math.cos(angleDesired + Math.PI/4) + rotation); //flopp?
-        minorDiagonal.getMotor2().setPower(velocityDesired * Math.cos(angleDesired + Math.PI/4) + rotation);
+        majorDiagonal.getMotor1().setPower(velocityDesired * Math.sin(angleDesired + Math.PI/4) + rotation);
+        minorDiagonal.getMotor1().setPower(velocityDesired * Math.cos(angleDesired + Math.PI/4) + rotation); //flipped from original equation
+        minorDiagonal.getMotor2().setPower(velocityDesired * Math.cos(angleDesired + Math.PI/4) - rotation); //flipped from original equation
         majorDiagonal.getMotor2().setPower(velocityDesired * Math.sin(angleDesired + Math.PI/4) - rotation);
-
 
         telemetry.addData("Arctan (angle desired)", angleDesired);
         telemetry.addData("Rotation", rotation);
         telemetry.addData("Velocity", velocityDesired);
 
+    }
+
+    /**
+     * Drive the mecanum drivetrain using a desired angle and speed. (Meant for use inside of autonomous).
+     * @param angleDesired The angle direction you want the robot to move, from 0 to 2*pi (think unit circle).
+     * @param velocityDesired The speed you want the robot to travel at. Don't make it negative, it doesn't work like that.
+     * @param rotationSpeed How fast you want it to rotate. Note: that's not general, setting this will make it rotate.
+     */
+    public void complexDrive(double angleDesired, double velocityDesired, double rotationSpeed){
+        majorDiagonal.getMotor1().setPower(velocityDesired * Math.sin(angleDesired + Math.PI/4) + rotationSpeed);
+        minorDiagonal.getMotor1().setPower(velocityDesired * Math.cos(angleDesired + Math.PI/4) + rotationSpeed); //flipped from original equation
+        minorDiagonal.getMotor2().setPower(velocityDesired * Math.cos(angleDesired + Math.PI/4) - rotationSpeed); //flipped from original equation
+        majorDiagonal.getMotor2().setPower(velocityDesired * Math.sin(angleDesired + Math.PI/4) - rotationSpeed);
     }
 
     @Override
