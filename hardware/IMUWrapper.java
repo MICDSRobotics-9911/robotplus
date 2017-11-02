@@ -6,6 +6,7 @@ import com.qualcomm.robotcore.hardware.HardwareMap;
 
 import org.firstinspires.ftc.robotcore.external.navigation.AxesReference;
 import org.firstinspires.ftc.robotcore.external.navigation.Orientation;
+import org.firstinspires.ftc.robotcore.external.navigation.Position;
 
 /**
  * Wrapper class for the REV's onboard IMU
@@ -33,5 +34,7 @@ public class IMUWrapper {
     public BNO055IMU getIMU() { return this.imu; }
 
     public Orientation getOrientation() { return this.imu.getAngularOrientation(); }
+
+    public Position getPosition() { return this.imu.getPosition(); }
 
 }
