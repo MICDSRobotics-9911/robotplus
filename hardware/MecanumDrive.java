@@ -15,6 +15,27 @@ import org.firstinspires.ftc.robotcore.external.Telemetry;
  */
 public class MecanumDrive extends Drivetrain {
 
+    /**
+     * Easy access values for use in autonomous controlling the drivetrain.
+     */
+    public enum Direction {
+
+        RIGHT (0),
+        UPRIGHT (Math.PI / 4),
+        UP (Math.PI / 2),
+        UPLEFT (3 * Math.PI /4),
+        LEFT (Math.PI),
+        DOWNLEFT (5 * Math.PI / 4),
+        DOWN (3 * Math.PI / 2),
+        DOWNRIGHT (7 * Math.PI / 4);
+
+        private final double angle;
+
+        Direction(double angle){
+            this.angle = angle;
+        }
+    }
+
     //We define the motors by what orientation the wheels they're attached to
     /**
      * the MotorPair with mecanum wheels that point
