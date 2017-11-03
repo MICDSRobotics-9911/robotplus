@@ -53,16 +53,27 @@ public class ColorSensorWrapper {
     }
 
     /**
-     * Gives values to the instance values
+     * Gives values to the instance values with a default sensor name
      * @param m the HardWareMap
      * @see HardwareMap
      * @see com.qualcomm.robotcore.eventloop.opmode.LinearOpMode
      */
     public ColorSensorWrapper(HardwareMap m) {
+        this(m, "sensor_color");
+    }
+
+    /**
+     * Gives values to the instance values
+     * @param m the HardWareMap
+     * @param name the color sensor's name
+     * @see HardwareMap
+     * @see com.qualcomm.robotcore.eventloop.opmode.LinearOpMode
+     */
+    public ColorSensorWrapper(HardwareMap m, String name) {
         this.map = m;
         this.relativeLayoutId = this.map.appContext.getResources().getIdentifier("RelativeLayout", "id", this.map.appContext.getPackageName());
         this.relativeLayout = ((Activity) this.map.appContext).findViewById(this.relativeLayoutId);
-        this.colorSensor = this.map.get(ColorSensor.class, "sensor_color");
+        this.colorSensor = this.map.get(ColorSensor.class, name);
         this.colorSensor.enableLed(true);
     }
 
