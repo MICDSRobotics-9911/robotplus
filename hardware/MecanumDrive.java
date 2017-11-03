@@ -34,6 +34,10 @@ public class MecanumDrive extends Drivetrain {
         Direction(double angle){
             this.angle = angle;
         }
+
+        public double angle(){
+            return this.angle;
+        }
     }
 
     //We define the motors by what orientation the wheels they're attached to
