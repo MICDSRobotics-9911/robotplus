@@ -2,6 +2,7 @@ package org.firstinspires.ftc.teamcode.robotplus.hardware;
 
 import com.qualcomm.hardware.bosch.BNO055IMU;
 import com.qualcomm.hardware.bosch.JustLoggingAccelerationIntegrator;
+import com.qualcomm.hardware.bosch.NaiveAccelerationIntegrator;
 import com.qualcomm.robotcore.hardware.HardwareMap;
 
 import org.firstinspires.ftc.robotcore.external.navigation.AxesReference;
@@ -25,7 +26,7 @@ public class IMUWrapper {
         params.calibrationDataFile  = "BNO055IMUCalibration.json"; // see the calibration sample opmode
         params.loggingEnabled       = true;
         params.loggingTag           = "IMU";
-        params.accelerationIntegrationAlgorithm = new JustLoggingAccelerationIntegrator();
+        params.accelerationIntegrationAlgorithm = new IMUAccelerationIntegrator();
 
         this.imu = map.get(BNO055IMU.class, "sensor_imu");
         this.imu.initialize(params);
