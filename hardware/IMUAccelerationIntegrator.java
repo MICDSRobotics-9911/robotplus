@@ -44,6 +44,7 @@ import org.firstinspires.ftc.robotcore.external.navigation.Position;
 import org.firstinspires.ftc.robotcore.external.navigation.Velocity;
 
 import static org.firstinspires.ftc.robotcore.external.navigation.NavUtil.meanIntegrate;
+import static org.firstinspires.ftc.robotcore.external.navigation.NavUtil.minus;
 import static org.firstinspires.ftc.robotcore.external.navigation.NavUtil.plus;
 import static org.firstinspires.ftc.robotcore.external.navigation.NavUtil.scale;
 
@@ -99,13 +100,13 @@ public class IMUAccelerationIntegrator implements BNO055IMU.AccelerationIntegrat
 
                 if (accelPrev.acquisitionTime != 0)
                 {
-                    Velocity deltaVelocity = simpsonApproximation(acceleration, accelPrev);
+                    Velocity deltaVelocity = recursiveSimpson(acceleration, accelPrev, 0.1);
                     velocity = plus(velocity, deltaVelocity);
                 }
 
                 if (velocityPrev.acquisitionTime != 0)
                 {
-                    Position deltaPosition = simpsonApproximation(velocity, velocityPrev);
+                    Position deltaPosition = recursiveSimpson(velocity, velocityPrev, 0.1);
                     position = plus(position, deltaPosition);
                 }
 
@@ -155,8 +156,35 @@ public class IMUAccelerationIntegrator implements BNO055IMU.AccelerationIntegrat
                 v.acquisitionTime);
     }
 
-    public Velocity adaptiveSimpson(Acceleration cur, Acceleration prev, double epsilon, double whole){
-        double middle = (cur.acquisitionTime - prev.acquisitionTime) / 6 * 1e-9;
-        return new Velocity();
+    public Velocity recursiveSimpson(Acceleration cur, Acceleration prev, double epsilon){
+        //double middle = (cur.acquisitionTime - prev.acquisitionTime) / 6 * 1e-9;
+        Acceleration middleValue = scale(plus(cur, prev), 0.5);
+
+        Velocity left = simpsonApproximation(prev, middleValue);
+        Velocity right = simpsonApproximation(middleValue, cur);
+        Velocity whole = simpsonApproximation(prev,cur);
+
+        if (Math.abs(left.xVeloc + right.xVeloc - whole.xVeloc) <= 15 * epsilon ||
+                Math.abs(left.yVeloc + right.yVeloc - whole.yVeloc) <= 15 * epsilon ||
+                Math.abs(left.zVeloc + right.zVeloc - whole.zVeloc) <= 15 * epsilon) {
+            return plus(left, plus(right, scale(plus(left, minus(right, whole)), 1 / 15)));
+        }
+        return plus(recursiveSimpson(prev, middleValue, epsilon / 2), recursiveSimpson(middleValue, cur, epsilon / 2));
+    }
+
+    public Position recursiveSimpson(Velocity cur, Velocity prev, double epsilon){
+        //double middle = (cur.acquisitionTime - prev.acquisitionTime) / 6 * 1e-9;
+        Velocity middleValue = scale(plus(cur, prev), 0.5);
+
+        Position left = simpsonApproximation(prev, middleValue);
+        Position right = simpsonApproximation(middleValue, cur);
+        Position whole = simpsonApproximation(prev,cur);
+
+        if (Math.abs(left.x + right.x - whole.x) <= 15 * epsilon ||
+                Math.abs(left.y + right.y - whole.y) <= 15 * epsilon ||
+                Math.abs(left.z + right.z - whole.z) <= 15 * epsilon) {
+            return plus(left, plus(right, scale(plus(left, minus(right, whole)), 1 / 15)));
+        }
+        return plus(recursiveSimpson(prev, middleValue, epsilon / 2), recursiveSimpson(middleValue, cur, epsilon / 2));
     }
 }
