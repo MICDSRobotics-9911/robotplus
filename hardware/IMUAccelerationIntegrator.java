@@ -130,11 +130,11 @@ public class IMUAccelerationIntegrator implements BNO055IMU.AccelerationIntegrat
     }
 
     public Position simpsonApproximation(Velocity cur, Velocity prev){
-        double intervalHooHa = (cur.acquisitionTime - prev.acquisitionTime) / 6 * 1e-9;
+        double middle = (cur.acquisitionTime - prev.acquisitionTime) / 6 * 1e-9;
         Velocity middleValue = scale(plus(cur, prev), 0.5);
         Velocity scaledMiddle = scale(middleValue, 4);
 
-        Velocity numericalApproximation = scale(plus(plus(prev, scaledMiddle), cur), intervalHooHa);
+        Velocity numericalApproximation = scale(plus(plus(prev, scaledMiddle), cur), middle);
 
         return fakeConvert(numericalApproximation);
     }
@@ -153,5 +153,10 @@ public class IMUAccelerationIntegrator implements BNO055IMU.AccelerationIntegrat
                 v.yVeloc,
                 v.zVeloc,
                 v.acquisitionTime);
+    }
+
+    public Velocity adaptiveSimpson(Acceleration cur, Acceleration prev, double epsilon, double whole){
+        double middle = (cur.acquisitionTime - prev.acquisitionTime) / 6 * 1e-9;
+        return new Velocity();
     }
 }
