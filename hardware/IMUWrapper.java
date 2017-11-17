@@ -6,8 +6,10 @@ import com.qualcomm.hardware.bosch.NaiveAccelerationIntegrator;
 import com.qualcomm.robotcore.hardware.HardwareMap;
 
 import org.firstinspires.ftc.robotcore.external.navigation.AxesReference;
+import org.firstinspires.ftc.robotcore.external.navigation.DistanceUnit;
 import org.firstinspires.ftc.robotcore.external.navigation.Orientation;
 import org.firstinspires.ftc.robotcore.external.navigation.Position;
+import org.firstinspires.ftc.robotcore.external.navigation.Velocity;
 
 /**
  * Wrapper class for the REV's onboard IMU
@@ -26,10 +28,13 @@ public class IMUWrapper {
         params.calibrationDataFile  = "BNO055IMUCalibration.json"; // see the calibration sample opmode
         params.loggingEnabled       = true;
         params.loggingTag           = "IMU";
+        //trying to just use the bad but default one [NAH]
         params.accelerationIntegrationAlgorithm = new IMUAccelerationIntegrator();
 
         this.imu = map.get(BNO055IMU.class, "sensor_imu");
         this.imu.initialize(params);
+
+        this.imu.startAccelerationIntegration(new Position(), new Velocity(),5);
     }
 
     public BNO055IMU getIMU() { return this.imu; }
