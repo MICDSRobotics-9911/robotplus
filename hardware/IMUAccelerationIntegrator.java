@@ -100,13 +100,13 @@ public class IMUAccelerationIntegrator implements BNO055IMU.AccelerationIntegrat
 
                 if (accelPrev.acquisitionTime != 0)
                 {
-                    Velocity deltaVelocity = recursiveSimpson(acceleration, accelPrev, 0.1);
+                    Velocity deltaVelocity = recursiveSimpson(acceleration, accelPrev, 0.000000001);
                     velocity = plus(velocity, deltaVelocity);
                 }
 
                 if (velocityPrev.acquisitionTime != 0)
                 {
-                    Position deltaPosition = recursiveSimpson(velocity, velocityPrev, 0.1);
+                    Position deltaPosition = recursiveSimpson(velocity, velocityPrev, 0.000000001);
                     position = plus(position, deltaPosition);
                 }
 
@@ -119,6 +119,48 @@ public class IMUAccelerationIntegrator implements BNO055IMU.AccelerationIntegrat
                 acceleration = linearAcceleration;
         }
     }
+
+    /*FTC's Mean Integrate simply takes the current value of the acceleration and multiplies it
+        with the time passed. This basically creates a big Riemann sum, but it isn't the best with
+        the noisy data that an accelerometer will produce. We can do better. So we FLEX ON THAT CALC
+        and use other methods of numerical integration that follow. We will see which work the best.
+     */
+
+    /**
+     * Changes the type from acceleration to velocity, keeping values for x, y, and z. Used for
+     * returning the correct type after integrating in other functions, *NOT* for actually
+     * converting acceleration to velocity.
+     * @param a the Acceleration to convert
+     * @return the converted Velocity
+     */
+    public Velocity fakeConvert(Acceleration a){
+        return new Velocity(a.unit,
+                a.xAccel,
+                a.yAccel,
+                a.zAccel,
+                a.acquisitionTime);
+    }
+
+    /**
+     * Changes the type from velocity to position, keeping values for x, y, and z. Used for
+     * returning the correct type after integrating in other functions, *NOT* for actually
+     * converting acceleration to velocity.
+     * @param v the Velocity to convert
+     * @return the converted Position
+     */
+    public Position fakeConvert(Velocity v){
+        return new Position(v.unit,
+                v.xVeloc,
+                v.yVeloc,
+                v.zVeloc,
+                v.acquisitionTime);
+    }
+
+    /*SIMPSON'S RULE: Creates a better approximation of the integral through creating quadratic
+        functions to integrate instead of rectangles. Best for smoother functions, but very solid
+        overall (especially only given endpoints like we are). The recursive algorithm performs
+        the approximation repeatedly on smaller intervals intil the error is below a certain point.
+    */
 
     public Velocity simpsonApproximation(Acceleration cur, Acceleration prev){
         double intervalHooHa = (cur.acquisitionTime - prev.acquisitionTime) / 6 * 1e-9;
@@ -138,22 +180,6 @@ public class IMUAccelerationIntegrator implements BNO055IMU.AccelerationIntegrat
         Velocity numericalApproximation = scale(plus(plus(prev, scaledMiddle), cur), middle);
 
         return fakeConvert(numericalApproximation);
-    }
-
-    public Velocity fakeConvert(Acceleration a){
-        return new Velocity(a.unit,
-                a.xAccel,
-                a.yAccel,
-                a.zAccel,
-                a.acquisitionTime);
-    }
-
-    public Position fakeConvert(Velocity v){
-        return new Position(v.unit,
-                v.xVeloc,
-                v.yVeloc,
-                v.zVeloc,
-                v.acquisitionTime);
     }
 
     public Velocity recursiveSimpson(Acceleration cur, Acceleration prev, double epsilon){
