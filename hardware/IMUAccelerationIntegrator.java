@@ -120,10 +120,10 @@ public class IMUAccelerationIntegrator implements BNO055IMU.AccelerationIntegrat
         }
     }
 
-    /*FTC's Mean Integrate simply takes the current value of the acceleration and multiplies it
-        with the time passed. This basically creates a big Riemann sum, but it isn't the best with
-        the noisy data that an accelerometer will produce. We can do better. So we FLEX ON THAT CALC
-        and use other methods of numerical integration that follow. We will see which work the best.
+    /* FTC's Mean Integrate simply takes the current value of the acceleration and multiplies it
+     * with the time passed. This basically creates a big Riemann sum, but it isn't the best with
+     * the noisy data that an accelerometer will produce. We can do better. So we FLEX ON THAT CALC
+     * and use other methods of numerical integration that follow. We will see which work the best.
      */
 
     /**
@@ -156,11 +156,11 @@ public class IMUAccelerationIntegrator implements BNO055IMU.AccelerationIntegrat
                 v.acquisitionTime);
     }
 
-    /*SIMPSON'S RULE: Creates a better approximation of the integral through creating quadratic
-        functions to integrate instead of rectangles. Best for smoother functions, but very solid
-        overall (especially only given endpoints like we are). The recursive algorithm performs
-        the approximation repeatedly on smaller intervals intil the error is below a certain point.
-    */
+    /* SIMPSON'S RULE: Creates a better approximation of the integral through creating quadratic
+     * functions to integrate instead of rectangles. Best for smoother functions, but very solid
+     * overall (especially only given endpoints like we are). The recursive algorithm performs
+     * the approximation repeatedly on smaller intervals intil the error is below a certain point.
+     */
 
     public Velocity simpsonApproximation(Acceleration cur, Acceleration prev){
         double intervalHooHa = (cur.acquisitionTime - prev.acquisitionTime) / 6 * 1e-9;
