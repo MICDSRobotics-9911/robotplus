@@ -119,6 +119,11 @@ public class MecanumDrive extends Drivetrain {
     }
 
     @Override
+    public void defaultDrive(Gamepad gamepad, Telemetry telemetry){
+        complexDrive(gamepad, telemetry);
+    }
+
+    @Override
     public void setPower(double power) {
         majorDiagonal.setPowers(power);
         minorDiagonal.setPowers(power);

@@ -1,8 +1,10 @@
 package org.firstinspires.ftc.teamcode.robotplus.hardware;
 
 import com.qualcomm.robotcore.hardware.DcMotor;
+import com.qualcomm.robotcore.hardware.Gamepad;
 import com.qualcomm.robotcore.hardware.HardwareMap;
 
+import org.firstinspires.ftc.robotcore.external.Telemetry;
 import org.firstinspires.ftc.teamcode.robotplus.robodata.EncoderValues;
 
 /**
@@ -96,6 +98,14 @@ public class TankDrive extends Drivetrain implements EncoderValues {
                 break;
             default : break;
         }
+    }
+
+    @Override
+    public void defaultDrive(Gamepad gamepad, Telemetry telemetry){
+        leftMotors.setPowers(gamepad.left_stick_y);
+        rightMotors.setPowers(gamepad.right_stick_y);
+        telemetry.addData("Left Side Power", "Power " + (leftMotors.getBackPower() + leftMotors.getFrontPower()) /2 );
+        telemetry.addData("Right Side Power", "Power " + (rightMotors.getBackPower() + rightMotors.getFrontPower()) /2 );
     }
 
 

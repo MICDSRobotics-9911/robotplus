@@ -2,7 +2,10 @@ package org.firstinspires.ftc.teamcode.robotplus.hardware;
 
 import com.qualcomm.robotcore.hardware.DcMotor;
 import com.qualcomm.robotcore.hardware.DcMotorSimple;
+import com.qualcomm.robotcore.hardware.Gamepad;
 import com.qualcomm.robotcore.hardware.HardwareMap;
+
+import org.firstinspires.ftc.robotcore.external.Telemetry;
 
 /**
  * Abstract drivetrain class providing a base for other
@@ -17,6 +20,8 @@ public abstract class Drivetrain {
      * @see Motor
      */
     private Motor motorType;
+
+    public abstract void defaultDrive(Gamepad gamepad, Telemetry telemetry);
 
     /**
      * Sets all motors power's to one value
