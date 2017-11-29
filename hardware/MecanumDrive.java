@@ -99,10 +99,11 @@ public class MecanumDrive extends Drivetrain {
         minorDiagonal.getMotor2().setPower(velocityDesired * Math.cos(angleDesired + Math.PI/4) - rotation); //flipped from original equation
         majorDiagonal.getMotor2().setPower(velocityDesired * Math.sin(angleDesired + Math.PI/4) - rotation);
 
-        telemetry.addData("Arctan (angle desired)", angleDesired);
-        telemetry.addData("Rotation", rotation);
-        telemetry.addData("Velocity", velocityDesired);
-
+        telemetry.addData("Mecanum Data", "Angle: %.3f, Velocity: %.3f", angleDesired, velocityDesired);
+        telemetry.addData("Drivetrain Power:", "M1: %.2f, m1: %.2f, m2: %.2f, M2: %.2f",
+                majorDiagonal.getMotor1().getPower(), minorDiagonal.getMotor1().getPower(),
+                minorDiagonal.getMotor2().getPower(), majorDiagonal.getMotor2().getPower());
+        telemetry.addLine();
     }
 
     /**
