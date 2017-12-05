@@ -101,14 +101,14 @@ public class IMUAccelerationIntegrator implements BNO055IMU.AccelerationIntegrat
                 if (accelPrev.acquisitionTime != 0)
                 {
                     //epsilon can be anything: the lower the number, the greater the accuracy, but also the worse performance.
-                    Velocity deltaVelocity = tightRecursiveSimpson(acceleration, accelPrev, 1e-9);
+                    Velocity deltaVelocity = tightRecursiveSimpson(acceleration, accelPrev, 1e-12);
                     velocity = plus(velocity, deltaVelocity);
                 }
 
                 if (velocityPrev.acquisitionTime != 0)
                 {
                     //epsilon can be anything: the lower the number, the greater the accuracy, but also the worse performance.
-                    Position deltaPosition = tightRecursiveSimpson(velocity, velocityPrev, 1e-9);
+                    Position deltaPosition = tightRecursiveSimpson(velocity, velocityPrev, 1e-12);
                     position = plus(position, deltaPosition);
                 }
 
