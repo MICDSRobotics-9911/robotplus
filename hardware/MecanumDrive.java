@@ -86,8 +86,8 @@ public class MecanumDrive extends Drivetrain {
      */
     public void complexDrive(Gamepad gamepad, Telemetry telemetry){
 
-        double x = -gamepad.left_stick_x; //flipping this maybe?
-        double y = gamepad.left_stick_y; //positive for normal bot, negative for testrobot.
+        double x = gamepad.left_stick_x; //flipping this maybe?
+        double y = -gamepad.left_stick_y; //positive for normal bot, negative for testrobot.
 
         double velocityDesired = Math.min(1.0, Math.sqrt(x*x + y*y));
         //double angleDesired = Math.atan(y / x);
