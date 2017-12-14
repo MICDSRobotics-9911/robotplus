@@ -87,7 +87,7 @@ public class MecanumDrive extends Drivetrain {
     public void complexDrive(Gamepad gamepad, Telemetry telemetry){
 
         double x = -gamepad.left_stick_x; //flipping this maybe?
-        double y = gamepad.left_stick_y;
+        double y = gamepad.left_stick_y; //positive for normal bot, negative for testrobot.
 
         double velocityDesired = Math.min(1.0, Math.sqrt(x*x + y*y));
         //double angleDesired = Math.atan(y / x);
@@ -99,6 +99,8 @@ public class MecanumDrive extends Drivetrain {
         minorDiagonal.getMotor2().setPower(velocityDesired * Math.cos(angleDesired + Math.PI/4) - rotation); //flipped from original equation
         majorDiagonal.getMotor2().setPower(velocityDesired * Math.sin(angleDesired + Math.PI/4) - rotation);
 
+        telemetry.addData("Gamepad left stick y", y);
+        telemetry.addData("Gamepad left stick x", x);
         telemetry.addData("Mecanum Data", "Angle: %.3f, Velocity: %.3f", angleDesired, velocityDesired);
         telemetry.addData("Drivetrain Power", "M1: %.2f, m1: %.2f, m2: %.2f, M2: %.2f",
                 majorDiagonal.getMotor1().getPower(), minorDiagonal.getMotor1().getPower(),
