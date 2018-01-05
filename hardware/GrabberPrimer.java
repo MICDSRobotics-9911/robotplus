@@ -21,10 +21,10 @@ public class GrabberPrimer {
     }
 
     public void grab() {
-        this.grabber.setPosition(0);
+        this.grabber.setPosition(0.1);
     }
 
     public void open() {
-        this.grabber.setPosition(1.0);
+        this.grabber.setPosition(0.9);
     }
 }
