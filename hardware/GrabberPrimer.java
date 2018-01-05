@@ -13,7 +13,8 @@ public class GrabberPrimer {
         this.grabber = grab;
     }
 
-    public void initArmSystem() {
+    public void initSystem() {
+        this.grabber.scaleRange(0.25, 1.0);
         this.grabber.setPosition(1.0);
         this.grabber.setPosition(0.8);
         this.grabber.setPosition(1.0);
