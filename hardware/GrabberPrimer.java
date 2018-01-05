@@ -23,4 +23,8 @@ public class GrabberPrimer {
     public void grab() {
         this.grabber.setPosition(0);
     }
+
+    public void open() {
+        this.grabber.setPosition(1.0);
+    }
 }
