@@ -146,4 +146,30 @@ public class Controller {
 
     }
 
+    /**
+     * Checks if a value is within a given distance from 0
+     * @param value The value to check
+     * @param tolerance The distance to use
+     * @return Whether the value is tolerated
+     */
+    public static Boolean tolerate(double value, double tolerance) {
+        double max = 0 + tolerance;
+        double min = 0 - tolerance;
+
+        if (value > max || value < min) {
+            return false; //value is not tolerated, will not be set to 0.
+        }
+        else {
+            return true; //value is tolerated, diff is so small we can just set it to 0.
+        }
+    }
+
+    public Gamepad getOriginalPad(){
+        return originalPad;
+    }
+
+    public void setOriginalPad(Gamepad gamepad){
+        this.originalPad = gamepad;
+    }
+
 }
