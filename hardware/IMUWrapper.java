@@ -43,4 +43,17 @@ public class IMUWrapper {
 
     public Position getPosition() { return this.imu.getPosition(); }
 
+    public BNO055IMU.Parameters getInitilizationParameters(){
+        BNO055IMU.Parameters params = new BNO055IMU.Parameters();
+        params.angleUnit            = BNO055IMU.AngleUnit.DEGREES;
+        params.accelUnit            = BNO055IMU.AccelUnit.METERS_PERSEC_PERSEC;
+        params.calibrationDataFile  = "BNO055IMUCalibration.json"; // see the calibration sample opmode
+        params.loggingEnabled       = true;
+        params.loggingTag           = "IMU";
+        //trying to just use the bad but default one [NAH]
+        params.accelerationIntegrationAlgorithm = new IMUAccelerationIntegrator();
+
+        return params;
+    }
+
 }

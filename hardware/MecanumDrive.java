@@ -119,6 +119,27 @@ public class MecanumDrive extends Drivetrain {
         majorDiagonal.getMotor2().setPower(velocityDesired * Math.sin(angleDesired + Math.PI/4) - rotationSpeed);
     }
 
+    public void gyroDrive(Gamepad gamepad, Telemetry telemetry, float heading){
+        double x = gamepad.left_stick_x; //flipping this maybe?
+        double y = -gamepad.left_stick_y; //positive for normal bot, negative for testrobot.
+
+        double velocityDesired = Math.min(1.0, Math.sqrt(x*x + y*y));
+        //double angleDesired = Math.atan(y / x);
+        double angleDesired = (!Double.isNaN(Math.atan2(y, x))) ? Math.atan2(y, x) + heading: 0;
+        double rotation = Math.pow(gamepad.right_stick_x, 3); //just makes turning more or less sensitive
+
+        majorDiagonal.getMotor1().setPower(velocityDesired * Math.sin(angleDesired + Math.PI/4) + rotation);
+        minorDiagonal.getMotor1().setPower(velocityDesired * Math.cos(angleDesired + Math.PI/4) + rotation); //flipped from original equation
+        minorDiagonal.getMotor2().setPower(velocityDesired * Math.cos(angleDesired + Math.PI/4) - rotation); //flipped from original equation
+        majorDiagonal.getMotor2().setPower(velocityDesired * Math.sin(angleDesired + Math.PI/4) - rotation);
+
+        telemetry.addData("Mecanum Data", "Angle: %.3f, Velocity: %.3f", angleDesired, velocityDesired);
+        telemetry.addData("Drivetrain Power", "M1: %.2f, m1: %.2f, m2: %.2f, M2: %.2f",
+                majorDiagonal.getMotor1().getPower(), minorDiagonal.getMotor1().getPower(),
+                minorDiagonal.getMotor2().getPower(), majorDiagonal.getMotor2().getPower());
+        telemetry.addLine();
+    }
+
     @Override
     public void defaultDrive(Gamepad gamepad, Telemetry telemetry){
         complexDrive(gamepad, telemetry);
