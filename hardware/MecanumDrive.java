@@ -152,7 +152,7 @@ public class MecanumDrive extends Drivetrain {
      * Return the MotorPair for the motors going top left to bottom right
      * @return {@link MecanumDrive#majorDiagonal}
      */
-    public MotorPair getmajorDiagonal() {
+    public MotorPair getMajorDiagonal() {
         return majorDiagonal;
     }
 
