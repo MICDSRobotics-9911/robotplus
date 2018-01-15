@@ -173,7 +173,7 @@ public class MecanumDrive extends Drivetrain {
      * Return the MotorPair for the motors going top left to bottom right
      * @return {@link MecanumDrive#majorDiagonal}
      */
-    public MotorPair getmajorDiagonal() {
+    public MotorPair getMajorDiagonal() {
         return majorDiagonal;
     }
 
@@ -199,5 +199,17 @@ public class MecanumDrive extends Drivetrain {
      */
     public void setMinorDiagonal(MotorPair minorDiagonal) {
         this.minorDiagonal = minorDiagonal;
+    }
+
+    /**
+     * Sets all motor encoders in the drivetrain to to the parameter's value
+     * @param position the requested target encoder position
+     * @TODO: change for mecanum stuff
+     */
+    public void setTargetPosition(int position) {
+        majorDiagonal.getMotor1().setTargetPosition(position);
+        majorDiagonal.getMotor2().setTargetPosition(position);
+        minorDiagonal.getMotor1().setTargetPosition(position);
+        minorDiagonal.getMotor2().setTargetPosition(position);
     }
 }
