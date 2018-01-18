@@ -125,7 +125,8 @@ public class MecanumDrive extends Drivetrain {
 
         double velocityDesired = Math.min(1.0, Math.sqrt(x*x + y*y));
         //double angleDesired = Math.atan(y / x);
-        double angleDesired = (!Double.isNaN(Math.atan2(y, x))) ? Math.atan2(y, x) + heading: 0;
+        telemetry.addData("Heading", heading);
+        double angleDesired = (!Double.isNaN(Math.atan2(y, x))) ? (Math.atan2(y, x) - heading): 0;
         double rotation = Math.pow(gamepad.right_stick_x, 3); //just makes turning more or less sensitive
 
         majorDiagonal.getMotor1().setPower(velocityDesired * Math.sin(angleDesired + Math.PI/4) + rotation);
