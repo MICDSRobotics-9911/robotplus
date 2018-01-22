@@ -16,7 +16,11 @@ public class Controller {
         UNHELD,
         PRESSED,
         HELD,
-        RELEASED
+        RELEASED;
+
+        public boolean isDown(){
+            return (this == PRESSED || this == HELD);
+        }
     }
 
     private Gamepad originalPad;
