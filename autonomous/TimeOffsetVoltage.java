@@ -6,7 +6,7 @@ package org.firstinspires.ftc.teamcode.robotplus.autonomous;
  * @since 1/22/18
  */
 public class TimeOffsetVoltage {
-    // function is f(x) = -301.05x^2 + 7841.1x - 50973
+    // function is f(x) = 2.7669x + 93.852
 
     /**
      * This will calculate the distance that the robot will travel in one second based on the voltage
@@ -14,7 +14,7 @@ public class TimeOffsetVoltage {
      * @return the distance
      */
     public static double calculateDistanceVoltage(double voltage) {
-        return (-301.05 * Math.pow(voltage, 2) + (7841.1 * voltage) - 50973);
+        return ((2.7669 * voltage) + 93.852);
     }
 
     /**
@@ -24,7 +24,8 @@ public class TimeOffsetVoltage {
      * @return the corrected time
      */
     public static double calculateCorrectedTime(double distance, double target) {
-        return (target/distance);
+        double factor = 1/distance;
+        return (target * factor);
     }
 
     /**
