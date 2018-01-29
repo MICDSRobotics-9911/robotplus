@@ -18,6 +18,18 @@ public class TimeOffsetVoltage {
     }
 
     /**
+     * Corrects the voltage based on the velocity of the robot; it is a primer for the DistanceVoltage function
+     * @see TimeOffsetVoltage#calculateDistanceVoltage(double)
+     * @param voltage the current voltage of the robot
+     * @param velocity the velocity of the robot
+     * @return the primed voltage
+     */
+    private static double timeVoltage(double voltage, double velocity) {
+        System.out.println(velocity * voltage);
+        return velocity * voltage;
+    }
+
+    /**
      * This will find the corrected distance
      * @param distance the distance that the robot travels in one second at a given voltage
      * @param target the target distance
@@ -34,7 +46,7 @@ public class TimeOffsetVoltage {
      * @param desiredDistance the distance (in cm) that the robot should go
      * @return the delay time in ms
      */
-    public static double calculateDistance(double voltage, double desiredDistance) {
-        return calculateCorrectedTime(calculateDistanceVoltage(voltage), desiredDistance);
+    public static double calculateDistance(double voltage, double desiredDistance, double velocity) {
+        return calculateCorrectedTime(calculateDistanceVoltage(timeVoltage(voltage, velocity)), desiredDistance);
     }
 }
