@@ -1,12 +1,14 @@
 package org.firstinspires.ftc.teamcode.robotplus.autonomous;
 
+import android.util.Log;
+
 /**
  * Calculates the delay time necessary for a given voltage
  * @author Alex M, Blake A
  * @since 1/22/18
  */
 public class TimeOffsetVoltage {
-    // function is f(x) = 2.7669x + 93.852
+    // function is f(x) = 2.7669x + 108.852
 
     /**
      * This will calculate the distance that the robot will travel in one second based on the voltage
@@ -14,7 +16,8 @@ public class TimeOffsetVoltage {
      * @return the distance
      */
     private static double calculateDistanceVoltage(double voltage) {
-        return ((2.7669 * voltage) + 93.852);
+        Log.i("[TimeTest]", "Distance Voltage: " + String.valueOf((2.7669 * voltage) + 113.852));
+        return ((2.7669 * voltage) + 113.852);
     }
 
     /**
@@ -26,6 +29,7 @@ public class TimeOffsetVoltage {
      */
     private static double timeVoltage(double voltage, double velocity) {
         System.out.println(velocity * voltage);
+        Log.i("[TimeTest]", "TimeVoltage: " + String.valueOf(velocity * voltage));
         return velocity * voltage;
     }
 
@@ -47,6 +51,7 @@ public class TimeOffsetVoltage {
      * @return the delay time in ms
      */
     public static double calculateDistance(double voltage, double desiredDistance, double velocity) {
-        return calculateCorrectedTime(calculateDistanceVoltage(timeVoltage(voltage, velocity)), desiredDistance);
+        Log.i("[TimeTest]", "Distance: " + String.valueOf(calculateCorrectedTime(calculateDistanceVoltage(timeVoltage(voltage, velocity)), desiredDistance - 10)));
+        return calculateCorrectedTime(calculateDistanceVoltage(timeVoltage(voltage, velocity)), desiredDistance - 10);
     }
 }
