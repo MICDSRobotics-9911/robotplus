@@ -2,7 +2,6 @@ package org.firstinspires.ftc.teamcode.robotplus.hardware;
 
 import com.qualcomm.robotcore.hardware.DcMotor;
 import com.qualcomm.robotcore.hardware.Gamepad;
-import com.qualcomm.robotcore.hardware.configuration.MotorType;
 
 import org.firstinspires.ftc.robotcore.external.Telemetry;
 
@@ -86,11 +85,10 @@ public class MecanumDrive extends Drivetrain {
      */
     public void complexDrive(Gamepad gamepad, Telemetry telemetry){
 
-        double x = gamepad.left_stick_x; //flipping this maybe?
-        double y = -gamepad.left_stick_y; //positive for normal bot, negative for testrobot.
+        double x = gamepad.left_stick_x;
+        double y = -gamepad.left_stick_y; //negative for normal bot, positive for omniwheels.
 
         double velocityDesired = Math.min(1.0, Math.sqrt(x*x + y*y));
-        //double angleDesired = Math.atan(y / x);
         double angleDesired = (!Double.isNaN(Math.atan2(y, x))) ? Math.atan2(y, x) : 0;
         double rotation = Math.pow(gamepad.right_stick_x, 3); //just makes turning more or less sensitive
 
@@ -119,12 +117,19 @@ public class MecanumDrive extends Drivetrain {
         majorDiagonal.getMotor2().setPower(velocityDesired * Math.sin(angleDesired + Math.PI/4) - rotationSpeed);
     }
 
+    /**
+     * Drives the mecanum drivetrain, using the the robot's heading (outputted from a gyroscope)
+     * to make correct for it's rotation. Using this, even if the robot is reversed, whatever the driver
+     * inputs with his joystick is where the robot will move.
+     * @param gamepad The gamepad (from an OpMode)
+     * @param telemetry The telemetry system (from an OpMode)
+     * @param heading the robot's rotation about it's z axis, from a gyroscope.
+     */
     public void gyroDrive(Gamepad gamepad, Telemetry telemetry, float heading){
         double x = gamepad.left_stick_x; //flipping this maybe?
         double y = -gamepad.left_stick_y; //positive for normal bot, negative for testrobot.
 
         double velocityDesired = Math.min(1.0, Math.sqrt(x*x + y*y));
-        //double angleDesired = Math.atan(y / x);
         telemetry.addData("Heading", heading);
         double angleDesired = (!Double.isNaN(Math.atan2(y, x))) ? (Math.atan2(y, x) - heading): 0;
         double rotation = Math.pow(gamepad.right_stick_x, 3); //just makes turning more or less sensitive
