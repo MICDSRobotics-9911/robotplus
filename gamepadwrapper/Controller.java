@@ -6,7 +6,9 @@ import com.qualcomm.robotcore.eventloop.opmode.Disabled;
 import com.qualcomm.robotcore.hardware.Gamepad;
 
 /**
- * Created by BAbel on 1/5/2018.
+ * Controller wrapper, creating more possibilities with buttons in teleop.
+ * @author Blake A
+ * @since 1/5/2018
  */
 
 @Disabled
