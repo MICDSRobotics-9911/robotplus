@@ -26,6 +26,7 @@ public class TimeOffsetVoltage {
      * @param voltage the current voltage of the robot
      * @param velocity the velocity of the robot
      * @return the primed voltage
+     * @deprecated this is untested
      */
     private static double timeVoltage(double voltage, double velocity) {
         System.out.println(velocity * voltage);
@@ -45,13 +46,12 @@ public class TimeOffsetVoltage {
     }
 
     /**
-     * Calculates the delay time to go at a given distance
+     * Calculates the delay time to go at a given distance. Note that it only works for a velocity of 1
      * @param voltage the voltage that the robot is currently at
      * @param desiredDistance the distance (in cm) that the robot should go
      * @return the delay time in ms
      */
-    public static double calculateDistance(double voltage, double desiredDistance, double velocity) {
-        Log.i("[TimeTest]", "Distance: " + String.valueOf(calculateCorrectedTime(calculateDistanceVoltage(timeVoltage(voltage, velocity)), desiredDistance - 10)));
-        return calculateCorrectedTime(calculateDistanceVoltage(timeVoltage(voltage, velocity)), desiredDistance - 10);
+    public static double calculateDistance(double voltage, double desiredDistance) {
+        return calculateCorrectedTime(calculateDistanceVoltage(voltage), desiredDistance - 10);
     }
 }
