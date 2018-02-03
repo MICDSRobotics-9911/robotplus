@@ -4,6 +4,7 @@ import com.qualcomm.robotcore.hardware.DcMotor;
 import com.qualcomm.robotcore.hardware.Gamepad;
 
 import org.firstinspires.ftc.robotcore.external.Telemetry;
+import org.firstinspires.ftc.robotcore.external.navigation.AngleUnit;
 
 /**
  * General-use Mecanum drivetrain class for use throughout OpModes.
@@ -144,6 +145,28 @@ public class MecanumDrive extends Drivetrain {
                 majorDiagonal.getMotor1().getPower(), minorDiagonal.getMotor1().getPower(),
                 minorDiagonal.getMotor2().getPower(), majorDiagonal.getMotor2().getPower());
         telemetry.addLine();
+    }
+
+    /**
+     * Rotates the robot the most efficient way until the heading matches the angle passed into it.
+     * @param imuWrapper the IMU on the robot, that it gets the current heading from.
+     * @param angle the desired angle (in radians) for it to rotate to. Range is (-pi, pi).
+     */
+    public void setAngle(IMUWrapper imuWrapper, float angle){
+
+        float heading = imuWrapper.getOrientation().toAngleUnit(AngleUnit.RADIANS).firstAngle;
+
+        while (!(heading > angle - 0.1 && heading < angle + 0.1 )){
+            if (heading > angle) {
+                this.complexDrive(0, 0, 0.2);
+            } else {
+                this.complexDrive(0, 0, -0.2);
+            }
+            heading = imuWrapper.getOrientation().toAngleUnit(AngleUnit.RADIANS).firstAngle;
+        }
+
+        this.stopMoving();
+
     }
 
     @Override
