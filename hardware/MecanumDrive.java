@@ -84,6 +84,32 @@ public class MecanumDrive extends Drivetrain {
      * @param gamepad The gamepad (from an OpMode)
      * @param telemetry The telemetry system (from an OpMode)
      */
+    public void complexDrive(Gamepad gamepad, Telemetry telemetry, double velocity){
+
+        double x = gamepad.left_stick_x;
+        double y = -gamepad.left_stick_y; //negative for normal bot, positive for omniwheels.
+
+        double velocityDesired = velocity*(Math.min(1.0, Math.sqrt(x*x + y*y)));
+        double angleDesired = (!Double.isNaN(Math.atan2(y, x))) ? Math.atan2(y, x) : 0;
+        double rotation = Math.pow(gamepad.right_stick_x, 3); //just makes turning more or less sensitive
+
+        majorDiagonal.getMotor1().setPower(velocityDesired * Math.sin(angleDesired + Math.PI/4) + rotation);
+        minorDiagonal.getMotor1().setPower(velocityDesired * Math.cos(angleDesired + Math.PI/4) + rotation); //flipped from original equation
+        minorDiagonal.getMotor2().setPower(velocityDesired * Math.cos(angleDesired + Math.PI/4) - rotation); //flipped from original equation
+        majorDiagonal.getMotor2().setPower(velocityDesired * Math.sin(angleDesired + Math.PI/4) - rotation);
+
+        telemetry.addData("Mecanum Data", "Angle: %.3f, Velocity: %.3f", angleDesired, velocityDesired);
+        telemetry.addData("Drivetrain Power", "M1: %.2f, m1: %.2f, m2: %.2f, M2: %.2f",
+                majorDiagonal.getMotor1().getPower(), minorDiagonal.getMotor1().getPower(),
+                minorDiagonal.getMotor2().getPower(), majorDiagonal.getMotor2().getPower());
+        telemetry.addLine();
+    }
+
+    /**
+     * Control the mecanum drivetrain given a gamepad (telemetry is to help troubleshoot).
+     * @param gamepad The gamepad (from an OpMode)
+     * @param telemetry The telemetry system (from an OpMode)
+     */
     public void complexDrive(Gamepad gamepad, Telemetry telemetry){
 
         double x = gamepad.left_stick_x;
