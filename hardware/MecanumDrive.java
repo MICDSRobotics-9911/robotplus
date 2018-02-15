@@ -80,16 +80,17 @@ public class MecanumDrive extends Drivetrain {
     }
 
     /**
-     * Control the mecanum drivetrain given a gamepad (telemetry is to help troubleshoot).
+     * Control the mecanum drivetrain given a gamepad (telemetry is to help troubleshoot), with a multiplier to slow it down.
      * @param gamepad The gamepad (from an OpMode)
      * @param telemetry The telemetry system (from an OpMode)
+     * @param velocityMultiplier The new maximum velocity to scale to.
      */
-    public void complexDrive(Gamepad gamepad, Telemetry telemetry, double velocity){
+    public void complexDrive(Gamepad gamepad, Telemetry telemetry, double velocityMultiplier){
 
         double x = gamepad.left_stick_x;
         double y = -gamepad.left_stick_y; //negative for normal bot, positive for omniwheels.
 
-        double velocityDesired = velocity*(Math.min(1.0, Math.sqrt(x*x + y*y)));
+        double velocityDesired = velocityMultiplier*(Math.min(1.0, Math.sqrt(x*x + y*y)));
         double angleDesired = (!Double.isNaN(Math.atan2(y, x))) ? Math.atan2(y, x) : 0;
         double rotation = Math.pow(gamepad.right_stick_x, 3); //just makes turning more or less sensitive
 
