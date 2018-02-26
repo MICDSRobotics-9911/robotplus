@@ -51,7 +51,7 @@ public class TimeOffsetVoltage {
      * @param desiredDistance the distance (in cm) that the robot should go
      * @return the delay time in ms
      */
-    public static double calculateDistance(double voltage, double desiredDistance) {
-        return calculateCorrectedTime(calculateDistanceVoltage(voltage), desiredDistance - 10);
+    public static long calculateDistance(double voltage, double desiredDistance) {
+        return (long)calculateCorrectedTime(calculateDistanceVoltage(voltage), desiredDistance - 10);
     }
 }
