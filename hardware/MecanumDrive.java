@@ -196,6 +196,36 @@ public class MecanumDrive extends Drivetrain {
 
     }
 
+    /* TESTING VERSION OF SETANGLE THAT DOESN'T WANT TO DIE WHEN IT GETS STUCK
+    public void setAngle(IMUWrapper imuWrapper, float angle){
+
+        float heading = imuWrapper.getOrientation().toAngleUnit(AngleUnit.RADIANS).firstAngle;
+        float lastHeading = heading;
+        int count = 0;
+
+        while (!(heading > angle - 0.1 && heading < angle + 0.1 )){
+            if (heading > angle) {
+                this.complexDrive(0, 0, 0.2);
+            } else {
+                this.complexDrive(0, 0, -0.2);
+            }
+            lastHeading = imuWrapper.getOrientation().toAngleUnit(AngleUnit.RADIANS).firstAngle;
+            if(lastHeading == heading){
+                count++;
+            }
+
+            if(count >= 1000){
+                return;
+            }
+
+            heading = imuWrapper.getOrientation().toAngleUnit(AngleUnit.RADIANS).firstAngle;
+        }
+
+        this.stopMoving();
+
+    }
+     */
+
     @Override
     public void defaultDrive(Gamepad gamepad, Telemetry telemetry){
         complexDrive(gamepad, telemetry);
