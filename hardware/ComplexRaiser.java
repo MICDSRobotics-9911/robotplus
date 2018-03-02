@@ -22,6 +22,28 @@ public class ComplexRaiser {
         this.x= map.get(Servo.class, "raiserx");
     }
 
+    public void raiseUp() {
+        this.y.setPower(1);
+    }
+
+    public void lower() {
+        this.y.setPower(-1);
+    }
+
+    public void stop() {
+        this.y.setPower(0);
+    }
+
+    public void purgeGlyph() {
+        // TODO: find the position that is optimal
+        this.x.setPosition(1);
+    }
+
+    public void retractFlipper() {
+        // TODO: find the position that sets the flipper back to a neutral position
+        this.x.setPosition(0);
+    }
+
     public DcMotor getY() {
         return this.y;
     }
