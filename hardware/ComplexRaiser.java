@@ -10,7 +10,7 @@ import com.qualcomm.robotcore.hardware.Servo;
 
 public class ComplexRaiser {
     private DcMotor y;
-    private Servo x;
+    private Outtake x;
 
     public ComplexRaiser() {
         this.y = null;
@@ -19,7 +19,7 @@ public class ComplexRaiser {
 
     public ComplexRaiser(HardwareMap map) {
         this.y = map.get(DcMotor.class, "raisery");
-        this.x= map.get(Servo.class, "raiserx");
+        this.x = new Outtake(map);
     }
 
     public void raiseUp() {
@@ -36,19 +36,19 @@ public class ComplexRaiser {
 
     public void purgeGlyph() {
         // TODO: find the position that is optimal
-        this.x.setPosition(1);
+        this.x.spitOutGlyph();
     }
 
     public void retractFlipper() {
         // TODO: find the position that sets the flipper back to a neutral position
-        this.x.setPosition(0);
+        this.x.retractOuttake();
     }
 
     public DcMotor getY() {
         return this.y;
     }
 
-    public Servo getX() {
+    public Outtake getX() {
         return this.x;
     }
 }
