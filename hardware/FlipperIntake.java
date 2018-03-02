@@ -15,6 +15,7 @@ public class FlipperIntake {
      * Servo for the flipper
      */
     private Servo rotation;
+    private DcMotor intake;
 
     /**
      * The two motors that grip the glyph
