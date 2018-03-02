@@ -24,12 +24,12 @@ public class FlipperIntake {
 
     public void flipOutIntake(){
         //TODO: find the out (extended) position of the intake servo
-        this.rotation.setPosition(0);
+        this.rotation.setPosition(0.803);
     }
 
     public void flipInIntake(){
         //TODO: find the in (retracted) position of the intake servo
-        this.rotation.setPosition(1);
+        this.rotation.setPosition(0.458);
     }
 
     public void startIntake(){
