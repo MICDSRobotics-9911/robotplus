@@ -1,5 +1,6 @@
 package org.firstinspires.ftc.teamcode.robotplus.hardware;
 
+import com.qualcomm.robotcore.hardware.DcMotor;
 import com.qualcomm.robotcore.hardware.HardwareMap;
 import com.qualcomm.robotcore.hardware.Servo;
 
@@ -9,7 +10,7 @@ import com.qualcomm.robotcore.hardware.Servo;
 
 public class FlipperIntake {
     private Servo rotation;
-    private MotorPair intake;
+    private DcMotor intake;
 
     public FlipperIntake() {
         this.rotation = null;
@@ -18,7 +19,7 @@ public class FlipperIntake {
 
     public FlipperIntake(HardwareMap hardwareMap) {
         this.rotation = hardwareMap.get(Servo.class, "intakerot");
-        this.intake = new MotorPair(hardwareMap, "intakem1", "intakem2");
+        this.intake = hardwareMap.get(DcMotor.class, "intakem");
     }
 
     public void flipOutIntake(){
@@ -33,18 +34,18 @@ public class FlipperIntake {
 
     public void startIntake(){
         //TODO: check intake motor's directions
-        this.intake.setPowers(1);
+        this.intake.setPower(1);
     }
 
     public void stopIntake(){
-        this.intake.stopMoving();
+        this.intake.setPower(0);
     }
 
     public Servo getRotation() {
         return rotation;
     }
 
-    public MotorPair getIntake() {
+    public DcMotor getIntake() {
         return intake;
     }
 }
