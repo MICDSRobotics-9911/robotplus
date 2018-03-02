@@ -5,49 +5,93 @@ import com.qualcomm.robotcore.hardware.HardwareMap;
 import com.qualcomm.robotcore.hardware.Servo;
 
 /**
- * Created by amigala on 3/1/2018.
+ * Complex raiser that can move in the x and y directions
+ * @since 3/2/18
+ * @author Alex M, Blake A, Nick C
  */
-
 public class ComplexRaiser {
+
+    /**
+     * The motor for the y direction
+     * @see DcMotor
+     */
     private DcMotor y;
+
+    /**
+     * The Outtake
+     * @see Outtake
+     */
     private Outtake x;
 
+    /**
+     * Default constructor
+     */
     public ComplexRaiser() {
         this.y = null;
         this.x = null;
     }
 
+    /**
+     * Regular constructor
+     * @param map the hardwareMap from the robot
+     * @see HardwareMap
+     */
     public ComplexRaiser(HardwareMap map) {
         this.y = map.get(DcMotor.class, "raisery");
         this.x = new Outtake(map);
     }
 
+    /**
+     * Raises the lifter up
+     */
     public void raiseUp() {
         this.y.setPower(1);
     }
 
+    /**
+     * Lowers the lifter
+     */
     public void lower() {
         this.y.setPower(-1);
     }
 
+    /**
+     * Stops the lifter
+     */
     public void stop() {
         this.y.setPower(0);
     }
 
-    public void purgeGlyph() {
+    /**
+     * Outtake will outtake glyph
+     */
+    public void outtakeGlyph() {
         // TODO: find the position that is optimal
         this.x.spitOutGlyph();
     }
 
+    /**
+     * Retracts the flipper mechanism
+     */
     public void retractFlipper() {
         // TODO: find the position that sets the flipper back to a neutral position
         this.x.retractOuttake();
     }
 
+    /**
+     * Gets the lifter-y instance
+     * @return the DcMotor instance
+     * @see DcMotor
+     */
     public DcMotor getY() {
         return this.y;
     }
 
+    /**
+     * Gets the lifter-x instance
+     * @return the Outtake instance
+     * @see Outtake
+     */
     public Outtake getX() {
         return this.x;
     }
