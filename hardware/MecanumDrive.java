@@ -272,7 +272,7 @@ public class MecanumDrive extends Drivetrain {
     /**
      * Sets all motor encoders in the drivetrain to to the parameter's value
      * @param position the requested target encoder position
-     * @TODO: change for mecanum stuff
+     * @TODO: change how this works if necessary b/c they don't go the same direction.
      */
     public void setTargetPosition(int position) {
         majorDiagonal.getMotor1().setTargetPosition(position);

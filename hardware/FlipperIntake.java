@@ -58,7 +58,6 @@ public class FlipperIntake {
      */
     public void flipOutIntake(){
         stopIntake();
-        //TODO: find the out (extended) position of the intake servo
         this.rotation.setPosition(0.95);
     }
 
@@ -67,7 +66,6 @@ public class FlipperIntake {
      */
     public void flipInIntake(){
         stopIntake();
-        //TODO: find the in (retracted) position of the intake servo
         this.rotation.setPosition(0.05);
     }
 

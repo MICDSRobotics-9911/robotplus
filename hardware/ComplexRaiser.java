@@ -66,7 +66,6 @@ public class ComplexRaiser {
      * Outtake will outtake glyph
      */
     public void outtakeGlyph() {
-        // TODO: find the position that is optimal
         this.x.spitOutGlyph();
     }
 
@@ -74,7 +73,6 @@ public class ComplexRaiser {
      * Retracts the flipper mechanism
      */
     public void retractFlipper() {
-        // TODO: find the position that sets the flipper back to a neutral position
         this.x.retractOuttake();
     }
 
