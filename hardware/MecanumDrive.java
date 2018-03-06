@@ -153,7 +153,7 @@ public class MecanumDrive extends Drivetrain {
      * @param telemetry The telemetry system (from an OpMode)
      * @param heading the robot's rotation about it's z axis, from a gyroscope.
      */
-    public void gyroDrive(Gamepad gamepad, Telemetry telemetry, float heading){
+    public void gyroDrive(Gamepad gamepad, Telemetry telemetry, double heading){
         double x = gamepad.left_stick_x; //flipping this maybe?
         double y = -gamepad.left_stick_y; //positive for normal bot, negative for testrobot.
 
@@ -179,10 +179,10 @@ public class MecanumDrive extends Drivetrain {
      * @param imuWrapper the IMU on the robot, that it gets the current heading from.
      * @param angle the desired angle (in radians) for it to rotate to. Range is (-pi, pi).
      */
-    public void setAngle(IMUWrapper imuWrapper, float angle){
+    public void setAngle(IMUWrapper imuWrapper, double angle){
 
-        float heading = imuWrapper.getOrientation().toAngleUnit(AngleUnit.RADIANS).firstAngle;
-        float lastHeading = heading;
+        double heading = imuWrapper.getOrientation().toAngleUnit(AngleUnit.RADIANS).firstAngle;
+        double lastHeading = heading;
         int count = 0;
 
         while (!(heading > angle - 0.1 && heading < angle + 0.1 )){
