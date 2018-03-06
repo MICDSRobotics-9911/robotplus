@@ -3,6 +3,7 @@ package org.firstinspires.ftc.teamcode.robotplus.hardware;
 import com.qualcomm.robotcore.hardware.DcMotor;
 import com.qualcomm.robotcore.hardware.HardwareMap;
 import com.qualcomm.robotcore.hardware.Servo;
+import com.qualcomm.robotcore.hardware.CRServo;
 
 /**
  * The FlipperIntake is an intake that can flip out and use two motors (on one connection) to take in a glyph)
@@ -24,7 +25,9 @@ public class FlipperIntake {
     /**
      * The two servos that guide the glyph into the outtake
      */
-    private CRServoPair servoPair;
+    private CRServo crServo1;
+
+    private CRServo crServo2;
 
     /**
      * Default contructor
@@ -32,7 +35,8 @@ public class FlipperIntake {
     public FlipperIntake() {
         this.rotation = null;
         this.intake = null;
-        this.servoPair = null;
+        this.crServo1 = null;
+        this.crServo2 = null;
     }
 
     /**
@@ -43,7 +47,15 @@ public class FlipperIntake {
     public FlipperIntake(HardwareMap hardwareMap) {
         this.rotation = hardwareMap.get(Servo.class, "intakerot");
         this.intake = hardwareMap.get(DcMotor.class, "intake");
-        this.servoPair = new CRServoPair(hardwareMap, "intakeservo1", "intakeservo2");
+        this.crServo1 = hardwareMap.get(CRServo.class, "intakeservo1");
+        this.crServo2 = hardwareMap.get(CRServo.class, "intakeservo2");
+
+        rotation.scaleRange(0.223, 0.803);
+    }
+
+    public void initIntake(){
+        rotation.setPosition(0.9);
+        rotation.setPosition(1.0);
     }
 
     /**
@@ -52,7 +64,7 @@ public class FlipperIntake {
     public void flipOutIntake(){
         stopIntake();
         //TODO: find the out (extended) position of the intake servo
-        this.rotation.setPosition(0.803);
+        this.rotation.setPosition(1);
     }
 
     /**
@@ -61,7 +73,7 @@ public class FlipperIntake {
     public void flipInIntake(){
         stopIntake();
         //TODO: find the in (retracted) position of the intake servo
-        this.rotation.setPosition(0.458);
+        this.rotation.setPosition(0);
     }
 
     /**
@@ -69,7 +81,8 @@ public class FlipperIntake {
      */
     public void startIntake(){
         this.intake.setPower(1);
-        this.servoPair.setPowers(1);
+        this.crServo1.setPower(1);
+        this.crServo2.setPower(-1);
     }
 
     /**
@@ -77,7 +90,8 @@ public class FlipperIntake {
      */
     public void stopIntake(){
         this.intake.setPower(0);
-        this.servoPair.stop();
+        this.crServo1.setPower(0);
+        this.crServo2.setPower(0);
     }
 
     /**
