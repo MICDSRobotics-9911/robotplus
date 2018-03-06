@@ -73,7 +73,7 @@ public class FlipperIntake {
      * Starts the motors for intaking a glyph
      */
     public void startIntake(){
-        this.intake.setPower(1);
+        this.intake.setPower(-1);
         this.crServo1.setPower(1);
         this.crServo2.setPower(-1);
     }
