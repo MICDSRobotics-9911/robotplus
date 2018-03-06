@@ -15,7 +15,7 @@ public class FlipperIntake {
     /**
      * Servo for the flipper
      */
-    private Servo rotation;
+    private DcMotor rotation;
 
     /**
      * The two motors that grip the glyph
@@ -45,12 +45,12 @@ public class FlipperIntake {
      * @see HardwareMap
      */
     public FlipperIntake(HardwareMap hardwareMap) {
-        this.rotation = hardwareMap.get(Servo.class, "intakerot");
+        this.rotation = hardwareMap.get(DcMotor.class, "intakerot");
         this.intake = hardwareMap.get(DcMotor.class, "intake");
         this.crServo1 = hardwareMap.get(CRServo.class, "intakeservo1");
         this.crServo2 = hardwareMap.get(CRServo.class, "intakeservo2");
 
-        rotation.scaleRange(0.223, 0.803);
+        this.rotation.setMode(DcMotor.RunMode.RUN_TO_POSITION);
     }
 
     /**
@@ -58,7 +58,7 @@ public class FlipperIntake {
      */
     public void flipOutIntake(){
         stopIntake();
-        this.rotation.setPosition(0.95);
+        this.rotation.setTargetPosition(1);
     }
 
     /**
@@ -66,7 +66,7 @@ public class FlipperIntake {
      */
     public void flipInIntake(){
         stopIntake();
-        this.rotation.setPosition(0.05);
+        this.rotation.setTargetPosition(500);
     }
 
     /**
@@ -90,9 +90,9 @@ public class FlipperIntake {
     /**
      * Gets the Servo for the rotation
      * @return the Servo instance
-     * @see Servo
+     * @see DcMotor
      */
-    public Servo getRotation() {
+    public DcMotor getRotation() {
         return rotation;
     }
 
