@@ -21,17 +21,12 @@ public class Outtake {
 
     public void spitOutGlyph() {
         // TODO: find the position that the outtake will spit the glyph out
-        this.servo.setPosition(0.0);
+        this.servo.setPosition(0.05);
     }
 
     public void retractOuttake() {
         // TODO: find the position that the outtake will take the glyph back in (neutral position)
-        this.servo.setPosition(1.0);
-    }
-
-    public void initOuttake() {
-        this.servo.setPosition(0.9);
-        this.servo.setPosition(1.0);
+        this.servo.setPosition(0.95);
     }
 
     public Servo getServo() {

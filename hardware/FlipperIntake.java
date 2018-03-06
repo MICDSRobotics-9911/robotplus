@@ -53,18 +53,13 @@ public class FlipperIntake {
         rotation.scaleRange(0.223, 0.803);
     }
 
-    public void initIntake(){
-        rotation.setPosition(0.9);
-        rotation.setPosition(1.0);
-    }
-
     /**
      * Flips out the intake mechanism
      */
     public void flipOutIntake(){
         stopIntake();
         //TODO: find the out (extended) position of the intake servo
-        this.rotation.setPosition(1);
+        this.rotation.setPosition(0.95);
     }
 
     /**
@@ -73,7 +68,7 @@ public class FlipperIntake {
     public void flipInIntake(){
         stopIntake();
         //TODO: find the in (retracted) position of the intake servo
-        this.rotation.setPosition(0);
+        this.rotation.setPosition(0.05);
     }
 
     /**
