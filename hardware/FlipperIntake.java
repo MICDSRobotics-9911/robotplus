@@ -82,8 +82,8 @@ public class FlipperIntake {
      */
     public void startIntake(){
         this.intake.setPower(-1);
-        this.crServo1.setPower(1);
-        this.crServo2.setPower(-1);
+        this.crServo1.setPower(-1);
+        this.crServo2.setPower(1);
     }
 
     /**
@@ -94,6 +94,15 @@ public class FlipperIntake {
         this.rotation.setPower(0);
         this.crServo1.setPower(0);
         this.crServo2.setPower(0);
+    }
+
+    /**
+     * Reverses the intake
+     */
+    public void reverseIntake() {
+        this.crServo2.setPower(-1);
+        this.crServo1.setPower(1);
+        this.intake.setPower(1);
     }
 
     /**
@@ -112,5 +121,13 @@ public class FlipperIntake {
      */
     public DcMotor getIntake() {
         return intake;
+    }
+
+    public CRServo getCrServo1() {
+        return this.crServo1;
+    }
+
+    public CRServo getCrServo2() {
+        return this.crServo2;
     }
 }
