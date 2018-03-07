@@ -50,7 +50,9 @@ public class FlipperIntake {
         this.crServo1 = hardwareMap.get(CRServo.class, "intakeservo1");
         this.crServo2 = hardwareMap.get(CRServo.class, "intakeservo2");
 
+        this.rotation.setMode(DcMotor.RunMode.STOP_AND_RESET_ENCODER);
         this.rotation.setMode(DcMotor.RunMode.RUN_TO_POSITION);
+
     }
 
     /**
@@ -58,7 +60,10 @@ public class FlipperIntake {
      */
     public void flipOutIntake(){
         stopIntake();
-        this.rotation.setTargetPosition(1);
+        this.rotation.setMode(DcMotor.RunMode.STOP_AND_RESET_ENCODER);
+        this.rotation.setMode(DcMotor.RunMode.RUN_TO_POSITION);
+        this.rotation.setTargetPosition(-70);
+        rotation.setPower(1);
     }
 
     /**
@@ -66,7 +71,10 @@ public class FlipperIntake {
      */
     public void flipInIntake(){
         stopIntake();
-        this.rotation.setTargetPosition(500);
+        this.rotation.setMode(DcMotor.RunMode.STOP_AND_RESET_ENCODER);
+        this.rotation.setMode(DcMotor.RunMode.RUN_TO_POSITION);
+        rotation.setTargetPosition(80);
+        rotation.setPower(1);
     }
 
     /**
@@ -83,6 +91,7 @@ public class FlipperIntake {
      */
     public void stopIntake(){
         this.intake.setPower(0);
+        this.rotation.setPower(0);
         this.crServo1.setPower(0);
         this.crServo2.setPower(0);
     }
