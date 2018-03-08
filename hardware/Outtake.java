@@ -16,7 +16,7 @@ public class Outtake {
 
     public Outtake(HardwareMap hardwareMap) {
         this.servo = hardwareMap.get(Servo.class, "outtake");
-        this.servo.scaleRange(0.235, 0.755);
+        this.servo.scaleRange(0.2, 0.755);
     }
 
     public void spitOutGlyph() {
