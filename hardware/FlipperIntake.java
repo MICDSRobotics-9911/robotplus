@@ -30,7 +30,7 @@ public class FlipperIntake {
     private CRServo crServo2;
 
     /**
-     * Default contructor
+     * Default constructor
      */
     public FlipperIntake() {
         this.rotation = null;
@@ -82,6 +82,14 @@ public class FlipperIntake {
      */
     public void startIntake(){
         this.intake.setPower(-1);
+        this.crServo1.setPower(-1);
+        this.crServo2.setPower(1);
+    }
+
+    /**
+     * Keeps the glyph in place by running the intake servos
+     */
+    public void keepGlyphIn() {
         this.crServo1.setPower(-1);
         this.crServo2.setPower(1);
     }

@@ -65,6 +65,11 @@ public class MecanumDrive extends Drivetrain {
     public MecanumDrive(MotorPair majorDiagonal, MotorPair minorDiagonal){
         this.majorDiagonal = majorDiagonal;
         this.minorDiagonal = minorDiagonal;
+
+        minorDiagonal.getMotor1().setZeroPowerBehavior(DcMotor.ZeroPowerBehavior.BRAKE);
+        minorDiagonal.getMotor2().setZeroPowerBehavior(DcMotor.ZeroPowerBehavior.BRAKE);
+        majorDiagonal.getMotor1().setZeroPowerBehavior(DcMotor.ZeroPowerBehavior.BRAKE);
+        majorDiagonal.getMotor2().setZeroPowerBehavior(DcMotor.ZeroPowerBehavior.BRAKE);
     }
 
     /**
@@ -77,6 +82,11 @@ public class MecanumDrive extends Drivetrain {
     public MecanumDrive(DcMotor main1, DcMotor main2, DcMotor minor1, DcMotor minor2){
         majorDiagonal = new MotorPair(main1, main2);
         minorDiagonal = new MotorPair(minor1, minor2);
+
+        minorDiagonal.getMotor1().setZeroPowerBehavior(DcMotor.ZeroPowerBehavior.BRAKE);
+        minorDiagonal.getMotor2().setZeroPowerBehavior(DcMotor.ZeroPowerBehavior.BRAKE);
+        majorDiagonal.getMotor1().setZeroPowerBehavior(DcMotor.ZeroPowerBehavior.BRAKE);
+        majorDiagonal.getMotor2().setZeroPowerBehavior(DcMotor.ZeroPowerBehavior.BRAKE);
     }
 
     /**
@@ -220,9 +230,9 @@ public class MecanumDrive extends Drivetrain {
 
         while (!(heading > angle - 0.1 && heading < angle + 0.1 )){
             if (heading > angle) {
-                this.complexDrive(0, 0, 0.2);
+                this.complexDrive(0, 0, 0.3);
             } else {
-                this.complexDrive(0, 0, -0.2);
+                this.complexDrive(0, 0, -0.3);
             }
             lastHeading = imuWrapper.getOrientation().toAngleUnit(AngleUnit.RADIANS).firstAngle;
             if(lastHeading == heading){
