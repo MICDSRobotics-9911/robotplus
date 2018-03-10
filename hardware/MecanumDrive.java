@@ -230,9 +230,9 @@ public class MecanumDrive extends Drivetrain {
 
         while (!(heading > angle - 0.1 && heading < angle + 0.1 )){
             if (heading > angle) {
-                this.complexDrive(0, 0, 0.2);
+                this.complexDrive(0, 0, 0.3);
             } else {
-                this.complexDrive(0, 0, -0.2);
+                this.complexDrive(0, 0, -0.3);
             }
             lastHeading = imuWrapper.getOrientation().toAngleUnit(AngleUnit.RADIANS).firstAngle;
             if(lastHeading == heading){
