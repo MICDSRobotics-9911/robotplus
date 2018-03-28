@@ -24,8 +24,6 @@ public class RecordingHardware extends OpMode {
     private ElapsedTime runtime = new ElapsedTime();
     private Robot robot;
 
-    private MecanumDrive drivetrain;
-
     private ArrayList<Input> inputs;
     private File directory;
     private File file;
@@ -41,7 +39,6 @@ public class RecordingHardware extends OpMode {
     public void init() {
 
         robot = new Robot(hardwareMap);
-        drivetrain = (MecanumDrive) robot.getDrivetrain();
 
         //External storage code
         /*
@@ -91,7 +88,7 @@ public class RecordingHardware extends OpMode {
         telemetry.addData("Status", "Running: " + runtime.toString());
         telemetry.addData("Gamepad", gamepad1.toString());
 
-        drivetrain.complexDrive(gamepad1, telemetry);
+        robot.getDrivetrain().defaultDrive(gamepad1, telemetry);
 
         inputs.add(new Input(gamepad1, runtime.time()));
 
