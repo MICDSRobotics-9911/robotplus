@@ -90,4 +90,8 @@ public class Input {
     public void setRightStickY(double rightStickY) {
         this.rightStickY = rightStickY;
     }
+
+    public String toString(){
+        return (String.format("Time: %f, leftStick Y: %f", currentTime, leftStickY));
+    }
 }

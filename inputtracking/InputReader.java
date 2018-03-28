@@ -2,6 +2,7 @@ package org.firstinspires.ftc.teamcode.robotplus.inputtracking;
 
 import android.util.JsonReader;
 
+import java.io.FileInputStream;
 import java.io.IOException;
 import java.io.InputStream;
 import java.io.InputStreamReader;
@@ -28,6 +29,23 @@ public class InputReader {
      * @throws IOException if the file can't be read or doesn't exist.
      */
     public ArrayList<Input> readJson(InputStream in) throws IOException {
+        JsonReader reader = new JsonReader(new InputStreamReader(in, "UTF-8"));
+
+        try{
+            return readInputArray(reader);
+        } finally {
+            reader.close();
+        }
+
+    }
+
+    /**
+     * Reads the input file (a json from {@link InputWriter}) and returns the iterable list.
+     * @param in the input file
+     * @return the iterable ArrayList of input values and corresponding times.
+     * @throws IOException if the file can't be read or doesn't exist.
+     */
+    public ArrayList<Input> readJson(FileInputStream in) throws IOException {
         JsonReader reader = new JsonReader(new InputStreamReader(in, "UTF-8"));
 
         try{
