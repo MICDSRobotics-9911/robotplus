@@ -25,6 +25,8 @@ public class Input {
      */
     private double rightStickY;
 
+    private SleepType sleepStatus;
+
     /**
      * Empty constructor
      */
@@ -37,10 +39,11 @@ public class Input {
      * @param gamepadState The gamepad object, the function will copy all of the data.
      * @param currentTime {@link Input#currentTime}
      */
-    public Input(Gamepad gamepadState, double currentTime){
+    public Input(Gamepad gamepadState, double currentTime, SleepType sleep){
         leftStickY = gamepadState.left_stick_y;
         rightStickY = gamepadState.right_stick_y;
         this.currentTime = currentTime;
+        this.sleepStatus = sleep;
     }
 
     /**
@@ -58,6 +61,8 @@ public class Input {
     public double getLeftStickY() {
         return leftStickY;
     }
+
+    public SleepType getSleepStatus() { return this.sleepStatus; }
 
     /**
      * Returns {@link Input#rightStickY}
@@ -90,6 +95,8 @@ public class Input {
     public void setRightStickY(double rightStickY) {
         this.rightStickY = rightStickY;
     }
+
+    public void setSleepStatus(SleepType status) { this.sleepStatus = status; }
 
     public String toString(){
         return (String.format("Time: %f, leftStick Y: %f", currentTime, leftStickY));

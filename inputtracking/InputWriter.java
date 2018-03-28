@@ -65,6 +65,7 @@ public class InputWriter {
         //writer.name("").value() Other objects
 
         writer.name("time").value(input.getCurrentTime());
+        writer.name("sleepstatus").value(input.getSleepStatus().toString());
 
         writer.endObject();
     }

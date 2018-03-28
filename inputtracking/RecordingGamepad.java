@@ -30,6 +30,8 @@ public class RecordingGamepad extends OpMode {
 
     private FileOutputStream outputStream;
 
+    private SleepType sleepStatus;
+
     /*
      * Code to run ONCE when the driver hits INIT
      */
@@ -84,7 +86,30 @@ public class RecordingGamepad extends OpMode {
         telemetry.addData("Status", "Running: " + runtime.toString());
         telemetry.addData("Gamepad", gamepad1.toString());
 
-        inputs.add(new Input(gamepad1, runtime.time()));
+        if (gamepad1.left_stick_y < 0.01 && gamepad1.right_stick_y < 0.01 && !this.sleepStatus.equals(SleepType.SLEEPING)) {
+            // we report this as sleeping and start recording
+            this.sleepStatus = SleepType.SLEEPSTART;
+            inputs.add(new Input(gamepad1, this.runtime.time(), this.sleepStatus));
+        }
+        else if (gamepad1.left_stick_y < 0.01 && gamepad1.right_stick_y < 0.01 && this.sleepStatus.equals(SleepType.SLEEPSTART)) {
+            // sleepstart marker has been placed and there hasn't been any activity so it is now sleeping
+            this.sleepStatus = SleepType.SLEEPING;
+            inputs.add(new Input(gamepad1, this.runtime.time(), this.sleepStatus));
+        }
+        else if ((gamepad1.left_stick_y > 0.01 || gamepad1.right_stick_y > 0.01) && (this.sleepStatus.equals(SleepType.SLEEPING))) {
+            // there has been activity so now we stop recording it as sleeping
+            this.sleepStatus = SleepType.SLEEPSTOP;
+            inputs.add(new Input(gamepad1, this.runtime.time(), this.sleepStatus));
+        }
+        else if ((this.sleepStatus.equals(SleepType.SLEEPSTOP)) && (gamepad1.left_stick_y > 0.01 && gamepad1.right_stick_y > 0.01)) {
+            // the last movement was a sleepstop and now there is motion so we can say it isn't sleeping
+            this.sleepStatus = SleepType.NOTSLEEPING;
+            inputs.add(new Input(gamepad1, this.runtime.time(), this.sleepStatus));
+        }
+        else {
+            // just record as normal without sleeps
+            inputs.add(new Input(gamepad1, this.runtime.time(), this.sleepStatus));
+        }
 
         Log.v("INPUT RECORDER", gamepad1.toString());
 

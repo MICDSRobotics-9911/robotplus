@@ -93,6 +93,8 @@ public class InputReader {
                     break;
                 case "right_stick": input.setRightStickY(reader.nextDouble());
                     break;
+                case "sleepstatus": input.setSleepStatus(SleepType.store(reader.nextString()));
+                    break;
                 default: reader.skipValue();
                     break;
             }
