@@ -6,7 +6,11 @@ import android.util.Log;
 
 import com.qualcomm.robotcore.eventloop.opmode.OpMode;
 import com.qualcomm.robotcore.eventloop.opmode.TeleOp;
+import com.qualcomm.robotcore.exception.RobotCoreException;
+import com.qualcomm.robotcore.hardware.Gamepad;
 import com.qualcomm.robotcore.util.ElapsedTime;
+
+import org.firstinspires.ftc.teamcode.robotplus.gamepadwrapper.Controller;
 
 import java.io.File;
 import java.io.FileNotFoundException;
@@ -18,15 +22,16 @@ import java.util.ArrayList;
 
 
 @TeleOp(name="Recording -- Gamepad Only", group="Recording")
-public class RecordingGamepad extends OpMode {
+public class RecordingGamepad extends OpMode implements Filename{
 
     private ElapsedTime runtime = new ElapsedTime();
+    private Controller currentButtonStates;
+    private Gamepad oldSticks;
+
 
     private ArrayList<Input> inputs;
     private File directory;
     private File file;
-
-    private String filename = "Testing.json";
 
     private FileOutputStream outputStream;
 
@@ -50,14 +55,16 @@ public class RecordingGamepad extends OpMode {
         //External Storage
         //directory = getStorageDir(hardwareMap.appContext, "Input swag");
 
-        file = new File(directory, filename);
+        file = new File(directory, FILENAME);
 
         Log.d("INPUT RECORDER - file", file.getAbsolutePath());
 
         inputs = new ArrayList<Input>();
+        currentButtonStates = new Controller(gamepad1);
 
         telemetry.addData("Status", "Initialized");
 
+        oldSticks = new Gamepad();
     }
 
     /*
@@ -84,10 +91,22 @@ public class RecordingGamepad extends OpMode {
         telemetry.addData("Status", "Running: " + runtime.toString());
         telemetry.addData("Gamepad", gamepad1.toString());
 
-        inputs.add(new Input(gamepad1, runtime.time()));
+        Controller oldState = new Controller(currentButtonStates);
+        currentButtonStates.update();
 
-        Log.v("INPUT RECORDER", gamepad1.toString());
+        if(!currentButtonStates.equals(oldState) ||
+                !(gamepad1.left_stick_y == oldSticks.left_stick_y && gamepad1.left_stick_x == oldSticks.left_stick_x
+                        && gamepad1.right_stick_x == oldSticks.right_stick_x && gamepad1.right_stick_y == oldSticks.right_stick_y
+                        && gamepad1.left_trigger == oldSticks.left_trigger && gamepad1.right_trigger == oldSticks.right_trigger)) {
+            inputs.add(new Input(gamepad1, currentButtonStates, runtime.time()));
+            Log.v("INPUT RECORDER", gamepad1.toString());
+        }
 
+        try {
+            oldSticks.copy(gamepad1);
+        } catch(RobotCoreException error){
+            Log.v("INPUT RECORDER", "Couldn't copy gamepad.");
+        }
     }
 
     /*
@@ -101,7 +120,7 @@ public class RecordingGamepad extends OpMode {
         try {
 
             //Saves the file witht he inputs from earlier, as a large json file.
-            outputStream = hardwareMap.appContext.openFileOutput(filename, Context.MODE_PRIVATE);
+            outputStream = hardwareMap.appContext.openFileOutput(FILENAME, Context.MODE_PRIVATE);
             InputWriter writer = new InputWriter();
             writer.writeJson(outputStream, inputs);
 
