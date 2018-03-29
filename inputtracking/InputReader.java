@@ -2,6 +2,8 @@ package org.firstinspires.ftc.teamcode.robotplus.inputtracking;
 
 import android.util.JsonReader;
 
+import org.firstinspires.ftc.teamcode.robotplus.gamepadwrapper.Controller;
+
 import java.io.FileInputStream;
 import java.io.IOException;
 import java.io.InputStream;
@@ -82,22 +84,40 @@ public class InputReader {
      */
     public Input readInput(JsonReader reader) throws IOException {
         Input input = new Input();
+        boolean a = false, b = false, x = false, y = false, start = false, back = false, leftBumper = false, rightBumper = false,
+                dpadUp = false, dpadRight = false, dpadDown = false, dpadLeft = false;
 
         reader.beginObject();
         while(reader.hasNext()){
             String name = reader.nextName();
             switch (name){
-                case "time": input.setCurrentTime(reader.nextDouble());
-                    break;
-                case "left_stick": input.setLeftStickY(reader.nextDouble());
-                    break;
-                case "right_stick": input.setRightStickY(reader.nextDouble());
-                    break;
+                case "time": input.setCurrentTime(reader.nextDouble()); break;
+                case "left_stick_y": input.setLeftStickY(reader.nextDouble()); break;
+                case "left_stick_x": input.setLeftStickX(reader.nextDouble()); break;
+                case "right_stick_y": input.setRightStickY(reader.nextDouble()); break;
+                case "right_stick_x": input.setRightStickX(reader.nextDouble()); break;
+                case "left_trigger": input.setLeftTrigger(reader.nextDouble()); break;
+                case "right_trigger": input.setRightTrigger(reader.nextDouble()); break;
+                case "a": a = reader.nextBoolean(); break;
+                case "b": b = reader.nextBoolean(); break;
+                case "x": x = reader.nextBoolean(); break;
+                case "y": y = reader.nextBoolean(); break;
+                case "start": start = reader.nextBoolean();  break;
+                case "back": back = reader.nextBoolean(); break;
+                case "leftBumper": leftBumper = reader.nextBoolean(); break;
+                case "rightBumper": rightBumper = reader.nextBoolean(); break;
+                case "dpadUp": dpadUp = reader.nextBoolean(); break;
+                case "dpadRight": dpadRight = reader.nextBoolean(); break;
+                case "dpadDown": dpadDown = reader.nextBoolean(); break;
+                case "dpadLeft": dpadLeft = reader.nextBoolean(); break;
                 default: reader.skipValue();
                     break;
             }
         }
         reader.endObject();
+
+        input.setButtonStates(new Controller(a, b, x, y, start, back,
+                leftBumper, rightBumper, dpadUp, dpadRight, dpadDown, dpadLeft));
 
         return input;
     }

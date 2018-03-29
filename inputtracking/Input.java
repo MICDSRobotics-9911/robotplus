@@ -2,6 +2,8 @@ package org.firstinspires.ftc.teamcode.robotplus.inputtracking;
 
 import com.qualcomm.robotcore.hardware.Gamepad;
 
+import org.firstinspires.ftc.teamcode.robotplus.gamepadwrapper.Controller;
+
 /**
  * Object class for managing writing inputs (the gamepad state every time it updates to a json file.
  * This way, you can write an autonomous program that reads those inputs back, simulating being driven
@@ -20,10 +22,23 @@ public class Input {
      * the gamepad's value for the left stick's Y position
      */
     private double leftStickY;
+
+
+    private double leftStickX;
+
     /**
      * the gamepad's value for the right stick's Y position
      */
     private double rightStickY;
+
+    private double rightStickX;
+
+    private double leftTrigger;
+
+    private double rightTrigger;
+
+    private Controller buttonStates;
+
 
     /**
      * Empty constructor
@@ -39,7 +54,28 @@ public class Input {
      */
     public Input(Gamepad gamepadState, double currentTime){
         leftStickY = gamepadState.left_stick_y;
+        leftStickX = gamepadState.left_stick_x;
         rightStickY = gamepadState.right_stick_y;
+        rightStickX = gamepadState.right_stick_x;
+        leftTrigger = gamepadState.left_trigger;
+        rightTrigger = gamepadState.right_trigger;
+        buttonStates = null;
+        this.currentTime = currentTime;
+    }
+
+    /**
+     * Makes an input from the gamepad state (time is used to keep reading consistent during playback)
+     * @param gamepadState The gamepad object, the function will copy all of the data.
+     * @param currentTime {@link Input#currentTime}
+     */
+    public Input(Gamepad gamepadState, Controller buttonStates, double currentTime){
+        leftStickY = gamepadState.left_stick_y;
+        leftStickX = gamepadState.left_stick_x;
+        rightStickY = gamepadState.right_stick_y;
+        rightStickX = gamepadState.right_stick_x;
+        leftTrigger = gamepadState.left_trigger;
+        rightTrigger = gamepadState.right_trigger;
+        this.buttonStates = buttonStates;
         this.currentTime = currentTime;
     }
 
@@ -57,6 +93,26 @@ public class Input {
      */
     public double getLeftStickY() {
         return leftStickY;
+    }
+
+    public double getLeftStickX() {
+        return leftStickX;
+    }
+
+    public double getRightStickX() {
+        return rightStickX;
+    }
+
+    public double getLeftTrigger() {
+        return leftTrigger;
+    }
+
+    public double getRightTrigger() {
+        return rightTrigger;
+    }
+
+    public Controller getButtonStates() {
+        return buttonStates;
     }
 
     /**
@@ -83,12 +139,32 @@ public class Input {
         this.leftStickY = leftStickY;
     }
 
+    public void setLeftStickX(double leftStickX) {
+        this.leftStickX = leftStickX;
+    }
+
+    public void setRightStickX(double rightStickX) {
+        this.rightStickX = rightStickX;
+    }
+
     /**
      * Sets {@link Input#rightStickY} to the parameter
      * @param rightStickY {@link Input#rightStickY}
      */
     public void setRightStickY(double rightStickY) {
         this.rightStickY = rightStickY;
+    }
+
+    public void setLeftTrigger(double leftTrigger) {
+        this.leftTrigger = leftTrigger;
+    }
+
+    public void setRightTrigger(double rightTrigger) {
+        this.rightTrigger = rightTrigger;
+    }
+
+    public void setButtonStates(Controller buttonStates) {
+        this.buttonStates = buttonStates;
     }
 
     public String toString(){
