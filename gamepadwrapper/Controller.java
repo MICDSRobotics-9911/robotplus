@@ -90,6 +90,53 @@ public class Controller {
 
     }
 
+    public Controller(Controller base){
+
+        originalPad = base.getOriginalPad();
+
+        a = base.a;
+        b = base.b;
+        x = base.x;
+        y = base.y;
+        start = base.start;
+        back = base.back;
+        leftBumper = base.leftBumper;
+        rightBumper = base.rightBumper;
+        dpadUp = base.dpadUp;
+        dpadUpRight = base.dpadUpRight;
+        dpadRight = base.dpadRight;
+        dpadDownRight = base.dpadDownRight;
+        dpadDown = base.dpadDown;
+        dpadDownLeft = base.dpadDownLeft;
+        dpadLeft = base.dpadLeft;
+        dpadUpLeft = base.dpadUpLeft;
+
+    }
+
+    //Only used for a specific c state.
+    public Controller(boolean a, boolean b, boolean x, boolean y,
+                      boolean start, boolean back, boolean leftBumper, boolean rightBumper,
+                      boolean dpadUp, boolean dpadRight, boolean dpadDown, boolean dpadLeft){
+
+        this.a = a ? Button.HELD : Button.UNHELD;
+        this.b = b ? Button.HELD : Button.UNHELD;
+        this.x = x ? Button.HELD : Button.UNHELD;
+        this.y = y ? Button.HELD : Button.UNHELD;
+        this.start = start ? Button.HELD : Button.UNHELD;
+        this.back = back ? Button.HELD : Button.UNHELD;
+        this.leftBumper = leftBumper ? Button.HELD : Button.UNHELD;
+        this.rightBumper = rightBumper ? Button.HELD : Button.UNHELD;
+        this.dpadUp = dpadUp ? Button.HELD : Button.UNHELD;
+        this.dpadRight = dpadRight ? Button.HELD : Button.UNHELD;
+        this.dpadDown = dpadDown ? Button.HELD : Button.UNHELD;
+        this.dpadLeft = dpadLeft ? Button.HELD : Button.UNHELD;
+        this.dpadUpRight = (dpadUp && dpadRight) ? Button.HELD : Button.UNHELD;
+        this.dpadDownRight = (dpadDown && dpadRight) ? Button.HELD : Button.UNHELD;
+        this.dpadDownLeft = (dpadDown && dpadLeft) ? Button.HELD : Button.UNHELD;
+        this.dpadUpLeft = (dpadUp && dpadLeft) ? Button.HELD : Button.UNHELD;
+
+    }
+
     public void update(){
 
         if(originalPad == null){
@@ -177,5 +224,11 @@ public class Controller {
     public void setOriginalPad(Gamepad gamepad){
         this.originalPad = gamepad;
     }
-
+    
+    //who needs overriding.
+    public boolean equals(Controller c){
+        return (a == c.a && b == c.b && x == c.x && y == c.y && start == c.start && back == c.back &&
+                leftBumper == c.leftBumper && rightBumper == c.rightBumper &&
+                dpadUp == c.dpadUp && dpadRight == c.dpadRight && dpadDown == c.dpadDown && dpadLeft == c.dpadLeft);
+    }
 }
