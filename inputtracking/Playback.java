@@ -64,7 +64,7 @@ import java.util.ArrayList;
  */
 
 @Autonomous(name="Playbaccc", group="Recording")
-public class Playback extends LinearOpMode {
+public class Playback extends LinearOpMode implements Filename{
 
     // Declare OpMode members.
     private ElapsedTime runtime = new ElapsedTime();
@@ -73,8 +73,6 @@ public class Playback extends LinearOpMode {
     private MecanumDrive drivetrain;
 
     private ArrayList<Input> inputs;
-
-    private String filename = "Testing.json";
 
     private FileInputStream inputStream;
     private InputReader inputReader = new InputReader();
@@ -87,7 +85,7 @@ public class Playback extends LinearOpMode {
         drivetrain = (MecanumDrive) robot.getDrivetrain();
 
         try {
-            inputStream = hardwareMap.appContext.openFileInput(filename);
+            inputStream = hardwareMap.appContext.openFileInput(FILENAME);
             Log.d("READER", "Opened file for reading");
         } catch (FileNotFoundException error){
             Log.e("READER", "Couldn't create input stream for file");
