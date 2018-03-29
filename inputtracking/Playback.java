@@ -63,7 +63,7 @@ import java.util.ArrayList;
  * Remove or comment out the @Disabled line to add this opmode to the Driver Station OpMode list
  */
 
-@Autonomous(name="Playback", group="Recording")
+@Autonomous(name="Playbaccc", group="Recording")
 public class Playback extends LinearOpMode {
 
     // Declare OpMode members.
@@ -108,7 +108,12 @@ public class Playback extends LinearOpMode {
         runtime.reset();
 
         for (Input input : inputs) {
-            Log.v("READER", input.toString() + " RUNTIME: " + runtime.toString() + "  -  " + (long)(input.getCurrentTime() - runtime.time()));
+            long catchUp = (long)((input.getCurrentTime() - runtime.time()) * 1000);
+            if(catchUp < 0){
+                catchUp = 0;
+            }
+            sleep(catchUp);
+            Log.v("READER", input.toString() + " RUNTIME: " + runtime.toString() + "  -  " + (long)((input.getCurrentTime() - runtime.time()) * 1000));
         }
 
         // run until the end of the match (driver presses STOP)
