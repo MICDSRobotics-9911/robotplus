@@ -23,6 +23,15 @@ public class Controller {
         public boolean isDown(){
             return (this == PRESSED || this == HELD);
         }
+        public String toString() {
+            switch(this){
+                case UNHELD: return "Unheld";
+                case PRESSED: return "Pressed";
+                case HELD: return "Held";
+                case RELEASED: return "Released";
+            }
+            return "";
+        }
     }
 
     private Gamepad originalPad;
@@ -230,5 +239,49 @@ public class Controller {
         return (a == c.a && b == c.b && x == c.x && y == c.y && start == c.start && back == c.back &&
                 leftBumper == c.leftBumper && rightBumper == c.rightBumper &&
                 dpadUp == c.dpadUp && dpadRight == c.dpadRight && dpadDown == c.dpadDown && dpadLeft == c.dpadLeft);
+    }
+
+    @Override
+    public String toString(){
+        String value = "";
+        if(a.isDown()){
+            value += " A";
+        }
+        if(b.isDown()){
+            value += " B";
+        }
+        if(x.isDown()){
+            value += " X";
+        }
+        if(y.isDown()){
+            value += " Y";
+        }
+        if(start.isDown()){
+            value += " Start";
+        }
+        if(back.isDown()){
+            value += " Back";
+        }
+        if(leftBumper.isDown()){
+            value += " LBump";
+        }
+        if(rightBumper.isDown()){
+            value += " RBump";
+        }
+        if(dpadUp.isDown()){
+            value += " Up";
+        }
+        if(dpadLeft.isDown()){
+            value += " Left";
+        }
+        if(dpadDown.isDown()){
+            value += " Down";
+        }
+        if(dpadRight.isDown()){
+            value += " Right";
+        }
+
+        return value;
+
     }
 }
