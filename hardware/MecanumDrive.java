@@ -155,6 +155,23 @@ public class MecanumDrive extends Drivetrain {
         majorDiagonal.getMotor2().setPower(velocityDesired * Math.sin(angleDesired + Math.PI/4) - rotationSpeed);
     }
 
+    public void complexDrive(double leftx, double lefty, double rightx, Telemetry telemetry){
+        double velocityDesired = Math.min(1.0, Math.sqrt(leftx*leftx + lefty*lefty));
+        double angleDesired = (!Double.isNaN(Math.atan2(lefty, leftx))) ? Math.atan2(lefty, leftx) : 0;
+        double rotation = Math.pow(rightx, 3); //just makes turning more or less sensitive
+
+        majorDiagonal.getMotor1().setPower(velocityDesired * Math.sin(angleDesired + Math.PI/4) + rotation);
+        minorDiagonal.getMotor1().setPower(velocityDesired * Math.cos(angleDesired + Math.PI/4) + rotation); //flipped from original equation
+        minorDiagonal.getMotor2().setPower(velocityDesired * Math.cos(angleDesired + Math.PI/4) - rotation); //flipped from original equation
+        majorDiagonal.getMotor2().setPower(velocityDesired * Math.sin(angleDesired + Math.PI/4) - rotation);
+
+        telemetry.addData("Mecanum Data", "Angle: %.3f, Velocity: %.3f", angleDesired, velocityDesired);
+        telemetry.addData("Drivetrain Power", "M1: %.2f, m1: %.2f, m2: %.2f, M2: %.2f",
+                majorDiagonal.getMotor1().getPower(), minorDiagonal.getMotor1().getPower(),
+                minorDiagonal.getMotor2().getPower(), majorDiagonal.getMotor2().getPower());
+        telemetry.addLine();
+    }
+
     /**
      * Drives the mecanum drivetrain, using the the robot's heading (outputted from a gyroscope)
      * to make correct for it's rotation. Using this, even if the robot is reversed, whatever the driver
