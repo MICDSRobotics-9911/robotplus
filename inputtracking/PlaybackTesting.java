@@ -111,7 +111,7 @@ public class PlaybackTesting extends LinearOpMode implements Filename{
                 catchUp = 0;
             }
             sleep(catchUp);
-            Log.v("READER", input.toString() + "    Runtime: " + runtime.toString() + "    Lag: " + (long)((input.getCurrentTime() - runtime.time()) * 1000));
+            Log.v("READER", input.toString() + " Runtime: " + runtime.toString() + " Lag: " + (long)((input.getCurrentTime() - runtime.time()) * 1000));
         }
 
     }
