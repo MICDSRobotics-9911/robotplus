@@ -84,8 +84,19 @@ public class InputReader {
      */
     public Input readInput(JsonReader reader) throws IOException {
         Input input = new Input();
-        boolean a = false, b = false, x = false, y = false, start = false, back = false, leftBumper = false, rightBumper = false,
-                dpadUp = false, dpadRight = false, dpadDown = false, dpadLeft = false;
+
+        Controller.Button a = Controller.Button.UNHELD,
+                b = Controller.Button.UNHELD,
+                x = Controller.Button.UNHELD,
+                y = Controller.Button.UNHELD,
+                start = Controller.Button.UNHELD,
+                back = Controller.Button.UNHELD,
+                leftBumper = Controller.Button.UNHELD,
+                rightBumper = Controller.Button.UNHELD,
+                dpadUp = Controller.Button.UNHELD,
+                dpadRight = Controller.Button.UNHELD,
+                dpadDown = Controller.Button.UNHELD,
+                dpadLeft = Controller.Button.UNHELD;
 
         reader.beginObject();
         while(reader.hasNext()){
@@ -98,18 +109,104 @@ public class InputReader {
                 case "right_stick_x": input.setRightStickX(reader.nextDouble()); break;
                 case "left_trigger": input.setLeftTrigger(reader.nextDouble()); break;
                 case "right_trigger": input.setRightTrigger(reader.nextDouble()); break;
-                case "a": a = reader.nextBoolean(); break;
-                case "b": b = reader.nextBoolean(); break;
-                case "x": x = reader.nextBoolean(); break;
-                case "y": y = reader.nextBoolean(); break;
-                case "start": start = reader.nextBoolean();  break;
-                case "back": back = reader.nextBoolean(); break;
-                case "leftBumper": leftBumper = reader.nextBoolean(); break;
-                case "rightBumper": rightBumper = reader.nextBoolean(); break;
-                case "dpadUp": dpadUp = reader.nextBoolean(); break;
-                case "dpadRight": dpadRight = reader.nextBoolean(); break;
-                case "dpadDown": dpadDown = reader.nextBoolean(); break;
-                case "dpadLeft": dpadLeft = reader.nextBoolean(); break;
+
+                case "a":
+                    switch(reader.nextString()){
+                        case "unheld":   a = Controller.Button.UNHELD; break;
+                        case "pressed":  a = Controller.Button.PRESSED; break;
+                        case "held":     a = Controller.Button.HELD; break;
+                        case "released": a = Controller.Button.RELEASED; break;
+                    }
+                    break;
+                case "b":
+                    switch(reader.nextString()){
+                        case "unheld":   b = Controller.Button.UNHELD; break;
+                        case "pressed":  b = Controller.Button.PRESSED; break;
+                        case "held":     b = Controller.Button.HELD; break;
+                        case "released": b = Controller.Button.RELEASED; break;
+                    }
+                    break;
+                case "x":
+                    switch(reader.nextString()){
+                        case "unheld":   x = Controller.Button.UNHELD; break;
+                        case "pressed":  x = Controller.Button.PRESSED; break;
+                        case "held":     x = Controller.Button.HELD; break;
+                        case "released": x = Controller.Button.RELEASED; break;
+                    }
+                    break;
+                case "y":
+                    switch(reader.nextString()){
+                        case "unheld":   y = Controller.Button.UNHELD; break;
+                        case "pressed":  y = Controller.Button.PRESSED; break;
+                        case "held":     y = Controller.Button.HELD; break;
+                        case "released": y = Controller.Button.RELEASED; break;
+                    }
+                    break;
+                case "start":
+                    switch(reader.nextString()){
+                        case "unheld":   start = Controller.Button.UNHELD; break;
+                        case "pressed":  start = Controller.Button.PRESSED; break;
+                        case "held":     start = Controller.Button.HELD; break;
+                        case "released": start = Controller.Button.RELEASED; break;
+                    }
+                    break;
+                case "back":
+                    switch(reader.nextString()){
+                        case "unheld":   back = Controller.Button.UNHELD; break;
+                        case "pressed":  back = Controller.Button.PRESSED; break;
+                        case "held":     back = Controller.Button.HELD; break;
+                        case "released": back = Controller.Button.RELEASED; break;
+                    }
+                    break;
+                case "leftBumper":
+                    switch(reader.nextString()){
+                        case "unheld":   leftBumper = Controller.Button.UNHELD; break;
+                        case "pressed":  leftBumper = Controller.Button.PRESSED; break;
+                        case "held":     leftBumper = Controller.Button.HELD; break;
+                        case "released": leftBumper = Controller.Button.RELEASED; break;
+                    }
+                    break;
+                case "rightBumper":
+                    switch(reader.nextString()){
+                        case "unheld":   rightBumper = Controller.Button.UNHELD; break;
+                        case "pressed":  rightBumper = Controller.Button.PRESSED; break;
+                        case "held":     rightBumper = Controller.Button.HELD; break;
+                        case "released": rightBumper = Controller.Button.RELEASED; break;
+                    }
+                    break;
+                case "dpadUp":
+                    switch(reader.nextString()){
+                        case "unheld":   dpadUp = Controller.Button.UNHELD; break;
+                        case "pressed":  dpadUp = Controller.Button.PRESSED; break;
+                        case "held":     dpadUp = Controller.Button.HELD; break;
+                        case "released": dpadUp = Controller.Button.RELEASED; break;
+                    }
+                    break;
+                case "dpadRight":
+                    switch(reader.nextString()){
+                        case "unheld":   dpadRight = Controller.Button.UNHELD; break;
+                        case "pressed":  dpadRight = Controller.Button.PRESSED; break;
+                        case "held":     dpadRight = Controller.Button.HELD; break;
+                        case "released": dpadRight = Controller.Button.RELEASED; break;
+                    }
+                    break;
+                case "dpadDown":
+                    switch(reader.nextString()){
+                        case "unheld":   dpadDown = Controller.Button.UNHELD; break;
+                        case "pressed":  dpadDown = Controller.Button.PRESSED; break;
+                        case "held":     dpadDown = Controller.Button.HELD; break;
+                        case "released": dpadDown = Controller.Button.RELEASED; break;
+                    }
+                    break;
+                case "dpadLeft":
+                    switch(reader.nextString()){
+                        case "unheld":   dpadLeft = Controller.Button.UNHELD; break;
+                        case "pressed":  dpadLeft = Controller.Button.PRESSED; break;
+                        case "held":     dpadLeft = Controller.Button.HELD; break;
+                        case "released": dpadLeft = Controller.Button.RELEASED; break;
+                    }
+                    break;
+
                 default: reader.skipValue();
                     break;
             }

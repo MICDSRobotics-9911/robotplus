@@ -67,18 +67,18 @@ public class InputWriter {
         writer.name("left_trigger").value(input.getLeftTrigger());
         writer.name("right_trigger").value(input.getRightTrigger());
 
-        writer.name("a").value(input.getButtonStates().a.isDown());
-        writer.name("b").value(input.getButtonStates().b.isDown());
-        writer.name("x").value(input.getButtonStates().x.isDown());
-        writer.name("y").value(input.getButtonStates().y.isDown());
-        writer.name("start").value(input.getButtonStates().start.isDown());
-        writer.name("back").value(input.getButtonStates().back.isDown());
-        writer.name("leftBumper").value(input.getButtonStates().leftBumper.isDown());
-        writer.name("rightBumper").value(input.getButtonStates().rightBumper.isDown());
-        writer.name("dpadUp").value(input.getButtonStates().dpadUp.isDown());
-        writer.name("dpadRight").value(input.getButtonStates().dpadRight.isDown());
-        writer.name("dpadDown").value(input.getButtonStates().dpadDown.isDown());
-        writer.name("dpadLeft").value(input.getButtonStates().dpadLeft.isDown());
+        writer.name("a").value(input.getButtonStates().a.toString());
+        writer.name("b").value(input.getButtonStates().b.toString());
+        writer.name("x").value(input.getButtonStates().x.toString());
+        writer.name("y").value(input.getButtonStates().y.toString());
+        writer.name("start").value(input.getButtonStates().start.toString());
+        writer.name("back").value(input.getButtonStates().back.toString());
+        writer.name("leftBumper").value(input.getButtonStates().leftBumper.toString());
+        writer.name("rightBumper").value(input.getButtonStates().rightBumper.toString());
+        writer.name("dpadUp").value(input.getButtonStates().dpadUp.toString());
+        writer.name("dpadRight").value(input.getButtonStates().dpadRight.toString());
+        writer.name("dpadDown").value(input.getButtonStates().dpadDown.toString());
+        writer.name("dpadLeft").value(input.getButtonStates().dpadLeft.toString());
 
         //writer.name("").value() Other objects
 
