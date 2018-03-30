@@ -32,17 +32,12 @@ package org.firstinspires.ftc.teamcode.robotplus.inputtracking;
 import android.util.Log;
 
 import com.qualcomm.robotcore.eventloop.opmode.Autonomous;
-import com.qualcomm.robotcore.eventloop.opmode.Disabled;
 import com.qualcomm.robotcore.eventloop.opmode.LinearOpMode;
-import com.qualcomm.robotcore.eventloop.opmode.TeleOp;
-import com.qualcomm.robotcore.hardware.DcMotor;
 import com.qualcomm.robotcore.util.ElapsedTime;
-import com.qualcomm.robotcore.util.Range;
 
+import org.firstinspires.ftc.robotcore.external.Telemetry;
 import org.firstinspires.ftc.teamcode.robotplus.hardware.MecanumDrive;
 import org.firstinspires.ftc.teamcode.robotplus.hardware.Robot;
-import org.firstinspires.ftc.teamcode.robotplus.inputtracking.Input;
-import org.firstinspires.ftc.teamcode.robotplus.inputtracking.InputReader;
 
 import java.io.FileInputStream;
 import java.io.FileNotFoundException;
@@ -63,8 +58,8 @@ import java.util.ArrayList;
  * Remove or comment out the @Disabled line to add this opmode to the Driver Station OpMode list
  */
 
-@Autonomous(name="Playback Testing", group="Recording")
-public class PlaybackTesting extends LinearOpMode implements Filename{
+@Autonomous(name="Playback", group="Recording")
+public class Playback extends LinearOpMode implements Filename{
 
     // Declare OpMode members.
     private ElapsedTime runtime = new ElapsedTime();
@@ -111,14 +106,9 @@ public class PlaybackTesting extends LinearOpMode implements Filename{
                 catchUp = 0;
             }
             sleep(catchUp);
-            Log.v("READER", input.toString() + "    Runtime: " + runtime.toString() + "    Lag: " + (long)((input.getCurrentTime() - runtime.time()) * 1000));
-        }
-
-        // run until the end of the match (driver presses STOP)
-        while (opModeIsActive()) {
-            // Show the elapsed game time and wheel power.
-            telemetry.addData("Status", "Run Time: " + runtime.toString());
+            telemetry.addData("Status", "%s\tLag (ms):%d", input.toString(), (long)((input.getCurrentTime() - runtime.time()) * 1000));
             telemetry.update();
         }
+
     }
 }
