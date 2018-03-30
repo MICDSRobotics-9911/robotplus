@@ -114,11 +114,5 @@ public class PlaybackTesting extends LinearOpMode implements Filename{
             Log.v("READER", input.toString() + "    Runtime: " + runtime.toString() + "    Lag: " + (long)((input.getCurrentTime() - runtime.time()) * 1000));
         }
 
-        // run until the end of the match (driver presses STOP)
-        while (opModeIsActive()) {
-            // Show the elapsed game time and wheel power.
-            telemetry.addData("Status", "Run Time: " + runtime.toString());
-            telemetry.update();
-        }
     }
 }
