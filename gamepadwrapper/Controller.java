@@ -25,10 +25,10 @@ public class Controller {
         }
         public String toString() {
             switch(this){
-                case UNHELD: return "Unheld";
-                case PRESSED: return "Pressed";
-                case HELD: return "Held";
-                case RELEASED: return "Released";
+                case UNHELD: return "unheld";
+                case PRESSED: return "pressed";
+                case HELD: return "held";
+                case RELEASED: return "released";
             }
             return "";
         }
@@ -146,6 +146,30 @@ public class Controller {
 
     }
 
+    //Only useed for a specific button state
+    public Controller(Button a, Button b, Button x, Button y,
+                      Button start, Button back, Button leftBumper, Button rightBumper,
+                      Button dpadUp, Button dpadRight, Button dpadDown, Button dpadLeft){
+
+        this.a = a;
+        this.b = b;
+        this.x = x;
+        this.y = y;
+        this.start = start;
+        this.back = back;
+        this.leftBumper = leftBumper;
+        this.rightBumper = rightBumper;
+        this.dpadUp = dpadUp;
+        this.dpadRight = dpadRight;
+        this.dpadDown = dpadDown;
+        this.dpadLeft = dpadLeft;
+        this.dpadUpRight = (dpadUp.isDown() && dpadRight.isDown()) ? Button.HELD : Button.UNHELD;
+        this.dpadDownRight = (dpadDown.isDown() && dpadRight.isDown()) ? Button.HELD : Button.UNHELD;
+        this.dpadDownLeft = (dpadDown.isDown() && dpadLeft.isDown()) ? Button.HELD : Button.UNHELD;
+        this.dpadUpLeft = (dpadUp.isDown() && dpadLeft.isDown()) ? Button.HELD : Button.UNHELD;
+
+    }
+
     public void update(){
 
         if(originalPad == null){
@@ -244,40 +268,75 @@ public class Controller {
     @Override
     public String toString(){
         String value = "";
-        if(a.isDown()){
+        if(a == Button.PRESSED){
+            value += " a";
+        } else if (a == Button.HELD){
             value += " A";
         }
-        if(b.isDown()){
-            value += " B";
+        
+        if(b == Button.PRESSED) {
+            value += " b";
+        } else if (b == Button.HELD){
+                value += " B"; 
         }
-        if(x.isDown()){
+
+        if(x == Button.PRESSED) {
+            value += " x";
+        } else if (x == Button.HELD){
             value += " X";
         }
-        if(y.isDown()){
+
+        if(y == Button.PRESSED) {
+            value += " y";
+        } else if (y == Button.HELD){
             value += " Y";
         }
-        if(start.isDown()){
+
+        if(start == Button.PRESSED) {
+            value += " start";
+        } else if (start == Button.HELD){
             value += " Start";
         }
-        if(back.isDown()){
+
+        if(back == Button.PRESSED) {
+            value += " back";
+        } else if (back == Button.HELD){
             value += " Back";
         }
-        if(leftBumper.isDown()){
-            value += " LBump";
+
+        if(leftBumper == Button.PRESSED) {
+            value += " lb";
+        } else if (leftBumper == Button.HELD){
+            value += " LB";
         }
-        if(rightBumper.isDown()){
-            value += " RBump";
+
+        if(rightBumper == Button.PRESSED) {
+            value += " rb";
+        } else if (rightBumper == Button.HELD){
+            value += " RB";
         }
-        if(dpadUp.isDown()){
+
+        if(dpadUp == Button.PRESSED) {
+            value += " up";
+        } else if (dpadUp == Button.HELD){
             value += " Up";
         }
-        if(dpadLeft.isDown()){
+
+        if(dpadLeft == Button.PRESSED) {
+            value += " left";
+        } else if (dpadLeft == Button.HELD){
             value += " Left";
         }
-        if(dpadDown.isDown()){
+
+        if(dpadDown == Button.PRESSED) {
+            value += " down";
+        } else if (dpadDown == Button.HELD){
             value += " Down";
         }
-        if(dpadRight.isDown()){
+
+        if(dpadRight == Button.PRESSED) {
+            value += " right";
+        } else if (dpadRight == Button.HELD){
             value += " Right";
         }
 
