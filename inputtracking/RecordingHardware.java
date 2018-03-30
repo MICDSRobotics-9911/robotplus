@@ -6,8 +6,15 @@ import android.util.Log;
 
 import com.qualcomm.robotcore.eventloop.opmode.OpMode;
 import com.qualcomm.robotcore.eventloop.opmode.TeleOp;
+import com.qualcomm.robotcore.exception.RobotCoreException;
+import com.qualcomm.robotcore.hardware.Gamepad;
+import com.qualcomm.robotcore.hardware.Servo;
 import com.qualcomm.robotcore.util.ElapsedTime;
 
+import org.firstinspires.ftc.teamcode.robotplus.gamepadwrapper.Controller;
+import org.firstinspires.ftc.teamcode.robotplus.hardware.ComplexRaiser;
+import org.firstinspires.ftc.teamcode.robotplus.hardware.FlipperIntake;
+import org.firstinspires.ftc.teamcode.robotplus.hardware.IMUWrapper;
 import org.firstinspires.ftc.teamcode.robotplus.hardware.MecanumDrive;
 import org.firstinspires.ftc.teamcode.robotplus.hardware.Robot;
 
@@ -17,18 +24,35 @@ import java.io.FileOutputStream;
 import java.io.IOException;
 import java.util.ArrayList;
 
+import static org.firstinspires.ftc.teamcode.robotplus.gamepadwrapper.Controller.Button.PRESSED;
+
 
 @TeleOp(name="Recording", group="Recording")
 public class RecordingHardware extends OpMode implements Filename {
 
     private ElapsedTime runtime = new ElapsedTime();
-    private Robot robot;
+    private Controller currentButtonStates;
+    private Gamepad oldSticks;
 
     private ArrayList<Input> inputs;
     private File directory;
     private File file;
 
     private FileOutputStream outputStream;
+
+    //Robot hardware
+    private Robot robot;
+
+    private MecanumDrive drivetrain;
+
+    private ComplexRaiser raiser;
+    private FlipperIntake intake;
+    private IMUWrapper imuWrapper;
+
+    private Servo armRotator;
+    private Servo armExtender;
+
+    private boolean intakeToggle;
 
     /*
      * Code to run ONCE when the driver hits INIT
@@ -37,6 +61,19 @@ public class RecordingHardware extends OpMode implements Filename {
     public void init() {
 
         robot = new Robot(hardwareMap);
+        drivetrain = (MecanumDrive) robot.getDrivetrain();
+
+        raiser = new ComplexRaiser(hardwareMap);
+        intake = new FlipperIntake(hardwareMap);
+        imuWrapper = new IMUWrapper(hardwareMap);
+
+        armRotator = hardwareMap.servo.get("armRotator");
+        armExtender = hardwareMap.servo.get("armExtender");
+
+        armRotator.scaleRange(0.158, 0.7);
+        armExtender.scaleRange(0.16, 0.95);
+
+        intakeToggle = false;
 
         //External storage code
         /*
@@ -57,8 +94,11 @@ public class RecordingHardware extends OpMode implements Filename {
         Log.d("INPUT RECORDER - file", file.getAbsolutePath());
 
         inputs = new ArrayList<Input>();
+        currentButtonStates = new Controller(gamepad1);
 
         telemetry.addData("Status", "Initialized");
+
+        oldSticks = new Gamepad();
 
     }
 
@@ -84,13 +124,89 @@ public class RecordingHardware extends OpMode implements Filename {
     @Override
     public void loop() {
         telemetry.addData("Status", "Running: " + runtime.toString());
-        telemetry.addData("Gamepad", gamepad1.toString());
 
-        robot.getDrivetrain().defaultDrive(gamepad1, telemetry);
+        Controller oldState = new Controller(currentButtonStates);
+        currentButtonStates.update();
 
-        inputs.add(new Input(gamepad1, runtime.time()));
+        if(!currentButtonStates.equals(oldState) ||
+                !(gamepad1.left_stick_y == oldSticks.left_stick_y && gamepad1.left_stick_x == oldSticks.left_stick_x
+                        && gamepad1.right_stick_x == oldSticks.right_stick_x && gamepad1.right_stick_y == oldSticks.right_stick_y
+                        && gamepad1.left_trigger == oldSticks.left_trigger && gamepad1.right_trigger == oldSticks.right_trigger)) {
+            Input input = new Input(gamepad1, new Controller(currentButtonStates), runtime.time());
+            inputs.add(input);
 
-        Log.v("INPUT RECORDER", gamepad1.toString());
+            //TELEOP CODE HERE
+            
+            drivetrain.complexDrive(input.getLeftStickX(), input.getLeftStickY(), input.getRightStickX(), telemetry);
+
+            //Raise outtake while the y button is held, lower it when a it held
+            if(input.getButtonStates().a.isDown()){
+                raiser.raiseUp();
+            } else if (input.getButtonStates().b.isDown()) {
+                raiser.lower();
+            } else {
+                raiser.stop();
+            }
+
+            //Set arm rotation servo positions
+            if(input.getButtonStates().dpadLeft.isDown()){
+                armRotator.setPosition(Math.min(1, armRotator.getPosition() + 0.01));
+            } else if (input.getButtonStates().dpadRight.isDown()){
+                armRotator.setPosition(Math.max(0, armRotator.getPosition() - 0.01));
+            }
+
+            //Set arm extender servo positions
+            if(input.getButtonStates().dpadUp.isDown()){
+                armExtender.setPosition(Math.min(1, armExtender.getPosition() + 0.01));
+            } else if(input.getButtonStates().dpadDown.equals(Controller.Button.HELD)){
+                armExtender.setPosition(Math.max(0, armExtender.getPosition() - 0.01));
+            }
+
+            if(input.getButtonStates().y.isDown()){
+
+                // outtake stuff
+                if (input.getButtonStates().leftBumper.isDown()) {
+                    raiser.retractFlipper();
+                }
+                if (input.getButtonStates().rightBumper.isDown()) {
+                    raiser.outtakeGlyph();
+                }
+
+                // clear intake if in bad situation
+                if (input.getButtonStates().x.isDown()) {
+                    this.intake.reverseIntake();
+                }
+
+            } else {
+
+                // intake stuff
+                if (input.getButtonStates().leftBumper == PRESSED) {
+                    if (intakeToggle) { // TODO: fix the current position
+                        intake.flipOutIntake();
+                    } else {
+                        intake.flipInIntake();
+                    }
+                    intakeToggle = !intakeToggle;
+                }
+                if (input.getButtonStates().rightBumper == PRESSED) {
+                    if (intake.getIntake().getPower() >= 0) {
+                        intake.startIntake();
+                    } else {
+                        intake.stopIntake();
+                    }
+                }
+
+            }
+
+            telemetry.addData("Input", input.toString());
+        }
+        telemetry.update();
+
+        try {
+            oldSticks.copy(gamepad1);
+        } catch(RobotCoreException error){
+            Log.v("INPUT RECORDER", "Couldn't copy gamepad.");
+        }
     }
 
     /*

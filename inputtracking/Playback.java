@@ -33,9 +33,14 @@ import android.util.Log;
 
 import com.qualcomm.robotcore.eventloop.opmode.Autonomous;
 import com.qualcomm.robotcore.eventloop.opmode.LinearOpMode;
+import com.qualcomm.robotcore.hardware.Servo;
 import com.qualcomm.robotcore.util.ElapsedTime;
 
 import org.firstinspires.ftc.robotcore.external.Telemetry;
+import org.firstinspires.ftc.teamcode.robotplus.gamepadwrapper.Controller;
+import org.firstinspires.ftc.teamcode.robotplus.hardware.ComplexRaiser;
+import org.firstinspires.ftc.teamcode.robotplus.hardware.FlipperIntake;
+import org.firstinspires.ftc.teamcode.robotplus.hardware.IMUWrapper;
 import org.firstinspires.ftc.teamcode.robotplus.hardware.MecanumDrive;
 import org.firstinspires.ftc.teamcode.robotplus.hardware.Robot;
 
@@ -43,6 +48,8 @@ import java.io.FileInputStream;
 import java.io.FileNotFoundException;
 import java.io.IOException;
 import java.util.ArrayList;
+
+import static org.firstinspires.ftc.teamcode.robotplus.gamepadwrapper.Controller.Button.PRESSED;
 
 
 /**
@@ -61,23 +68,45 @@ import java.util.ArrayList;
 @Autonomous(name="Playback", group="Recording")
 public class Playback extends LinearOpMode implements Filename{
 
-    // Declare OpMode members.
+    // File tools
     private ElapsedTime runtime = new ElapsedTime();
-    private Robot robot;
-
-    private MecanumDrive drivetrain;
 
     private ArrayList<Input> inputs;
 
     private FileInputStream inputStream;
     private InputReader inputReader = new InputReader();
 
+    //Robot hardware
+    private Robot robot;
+
+    private MecanumDrive drivetrain;
+
+    private ComplexRaiser raiser;
+    private FlipperIntake intake;
+    private IMUWrapper imuWrapper;
+
+    private Servo armRotator;
+    private Servo armExtender;
+
+    private boolean intakeToggle;
 
     @Override
     public void runOpMode() {
 
         robot = new Robot(hardwareMap);
         drivetrain = (MecanumDrive) robot.getDrivetrain();
+
+        raiser = new ComplexRaiser(hardwareMap);
+        intake = new FlipperIntake(hardwareMap);
+        imuWrapper = new IMUWrapper(hardwareMap);
+
+        armRotator = hardwareMap.servo.get("armRotator");
+        armExtender = hardwareMap.servo.get("armExtender");
+
+        armRotator.scaleRange(0.158, 0.7);
+        armExtender.scaleRange(0.16, 0.95);
+
+        intakeToggle = false;
 
         try {
             inputStream = hardwareMap.appContext.openFileInput(FILENAME);
@@ -110,6 +139,67 @@ public class Playback extends LinearOpMode implements Filename{
             telemetry.update();
 
             //TELEOP CODE GOES HERE
+
+            drivetrain.complexDrive(input.getLeftStickX(), input.getLeftStickY(), input.getRightStickX(), telemetry);
+
+            //Raise outtake while the y button is held, lower it when a it held
+            if(input.getButtonStates().a.isDown()){
+                raiser.raiseUp();
+            } else if (input.getButtonStates().b.isDown()) {
+                raiser.lower();
+            } else {
+                raiser.stop();
+            }
+
+            //Set arm rotation servo positions
+            if(input.getButtonStates().dpadLeft.isDown()){
+                armRotator.setPosition(Math.min(1, armRotator.getPosition() + 0.01));
+            } else if (input.getButtonStates().dpadRight.isDown()){
+                armRotator.setPosition(Math.max(0, armRotator.getPosition() - 0.01));
+            }
+
+            //Set arm extender servo positions
+            if(input.getButtonStates().dpadUp.isDown()){
+                armExtender.setPosition(Math.min(1, armExtender.getPosition() + 0.01));
+            } else if(input.getButtonStates().dpadDown.equals(Controller.Button.HELD)){
+                armExtender.setPosition(Math.max(0, armExtender.getPosition() - 0.01));
+            }
+
+            if(input.getButtonStates().y.isDown()){
+
+                // outtake stuff
+                if (input.getButtonStates().leftBumper.isDown()) {
+                    raiser.retractFlipper();
+                }
+                if (input.getButtonStates().rightBumper.isDown()) {
+                    raiser.outtakeGlyph();
+                }
+
+                // clear intake if in bad situation
+                if (input.getButtonStates().x.isDown()) {
+                    this.intake.reverseIntake();
+                }
+
+            } else {
+
+                // intake stuff
+                if (input.getButtonStates().leftBumper == PRESSED) {
+                    if (intakeToggle) { // TODO: fix the current position
+                        intake.flipOutIntake();
+                    } else {
+                        intake.flipInIntake();
+                    }
+                    intakeToggle = !intakeToggle;
+                }
+                if (input.getButtonStates().rightBumper == PRESSED) {
+                    if (intake.getIntake().getPower() >= 0) {
+                        intake.startIntake();
+                    } else {
+                        intake.stopIntake();
+                    }
+                }
+
+            }
 
         }
 
