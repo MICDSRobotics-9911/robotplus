@@ -25,7 +25,9 @@ public class Input {
      */
     private double leftStickY;
 
-
+    /**
+     * the gamepad's value for the left stick's X position
+     */
     private double leftStickX;
 
     /**
@@ -33,12 +35,24 @@ public class Input {
      */
     private double rightStickY;
 
+    /**
+     * the gamepad's value for the right stick's X position
+     */
     private double rightStickX;
 
+    /**
+     * the gamepad's value for the left trigger's position
+     */
     private double leftTrigger;
 
+    /**
+     * the gamepad's value for the right trigger's position
+     */
     private double rightTrigger;
 
+    /**
+     * A Controller object storing the values of all the buttons on the gamepad.
+     */
     private Controller buttonStates;
 
 
@@ -97,22 +111,42 @@ public class Input {
         return leftStickY;
     }
 
+    /**
+     * Returns {@link Input#leftStickX}
+     * @return {@link Input#leftStickX}
+     */
     public double getLeftStickX() {
         return leftStickX;
     }
 
+    /**
+     * Returns {@link Input#rightStickX}
+     * @return {@link Input#rightStickX}
+     */
     public double getRightStickX() {
         return rightStickX;
     }
 
+    /**
+     * Returns {@link Input#leftTrigger}
+     * @return {@link Input#leftTrigger}
+     */
     public double getLeftTrigger() {
         return leftTrigger;
     }
 
+    /**
+     * Returns {@link Input#rightTrigger}
+     * @return {@link Input#rightTrigger}
+     */
     public double getRightTrigger() {
         return rightTrigger;
     }
 
+    /**
+     * Returns {@link Input#buttonStates}
+     * @return {@link Input#buttonStates}
+     */
     public Controller getButtonStates() {
         return buttonStates;
     }
@@ -141,10 +175,18 @@ public class Input {
         this.leftStickY = leftStickY;
     }
 
+    /**
+     * Sets {@link Input#leftStickX} to the parameter
+     * @param leftStickX {@link Input#leftStickX}
+     */
     public void setLeftStickX(double leftStickX) {
         this.leftStickX = leftStickX;
     }
 
+    /**
+     * Sets {@link Input#rightStickX} to the parameter
+     * @param rightStickX {@link Input#rightStickX}
+     */
     public void setRightStickX(double rightStickX) {
         this.rightStickX = rightStickX;
     }
@@ -157,20 +199,32 @@ public class Input {
         this.rightStickY = rightStickY;
     }
 
+    /**
+     * Sets {@link Input#leftTrigger} to the parameter
+     * @param leftTrigger {@link Input#leftTrigger}
+     */
     public void setLeftTrigger(double leftTrigger) {
         this.leftTrigger = leftTrigger;
     }
 
+    /**
+     * Sets {@link Input#rightTrigger} to the parameter
+     * @param rightTrigger {@link Input#rightTrigger}
+     */
     public void setRightTrigger(double rightTrigger) {
         this.rightTrigger = rightTrigger;
     }
 
+    /**
+     * Sets {@link Input#buttonStates} to the parameter
+     * @param buttonStates {@link Input#buttonStates}
+     */
     public void setButtonStates(Controller buttonStates) {
         this.buttonStates = buttonStates;
     }
 
     @Override
     public String toString(){
-        return (String.format(Locale.US, "Time: %5.2f, LY: %5.2f, LX: %5.2f, RY: %5.2f, RX:%5.2f %s", currentTime, leftStickY, leftStickX, rightStickY, rightStickX, buttonStates.toString()));
+        return (String.format(Locale.US, "Time: %5.2f, LY: %5.2f, LX: %5.2f, RY: %5.2f, RX:%5.2f %-20s", currentTime, leftStickY, leftStickX, rightStickY, rightStickX, buttonStates.toString()));
     }
 }
