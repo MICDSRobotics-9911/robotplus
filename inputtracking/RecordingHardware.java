@@ -19,7 +19,7 @@ import java.util.ArrayList;
 
 
 @TeleOp(name="Recording", group="Recording")
-public class RecordingHardware extends OpMode {
+public class RecordingHardware extends OpMode implements Filename {
 
     private ElapsedTime runtime = new ElapsedTime();
     private Robot robot;
@@ -28,11 +28,7 @@ public class RecordingHardware extends OpMode {
     private File directory;
     private File file;
 
-    private String filename = "Testing.json";
-
     private FileOutputStream outputStream;
-
-    private SleepType sleepStatus;
 
     /*
      * Code to run ONCE when the driver hits INIT
@@ -56,14 +52,13 @@ public class RecordingHardware extends OpMode {
         //External Storage
         //directory = getStorageDir(hardwareMap.appContext, "Input swag");
 
-        file = new File(directory, filename);
+        file = new File(directory, FILENAME);
 
         Log.d("INPUT RECORDER - file", file.getAbsolutePath());
 
         inputs = new ArrayList<Input>();
 
         telemetry.addData("Status", "Initialized");
-        this.sleepStatus = SleepType.NOTSLEEPING;
     }
 
     /*
@@ -92,7 +87,7 @@ public class RecordingHardware extends OpMode {
 
         robot.getDrivetrain().defaultDrive(gamepad1, telemetry);
 
-        inputs.add(new Input(gamepad1, runtime.time(), this.sleepStatus));
+        inputs.add(new Input(gamepad1, runtime.time()));
 
         Log.v("INPUT RECORDER", gamepad1.toString());
     }
@@ -110,7 +105,7 @@ public class RecordingHardware extends OpMode {
         try {
 
             //Saves the file witht he inputs from earlier, as a large json file.
-            outputStream = hardwareMap.appContext.openFileOutput(filename, Context.MODE_PRIVATE);
+            outputStream = hardwareMap.appContext.openFileOutput(FILENAME, Context.MODE_PRIVATE);
             InputWriter writer = new InputWriter();
             writer.writeJson(outputStream, inputs);
 

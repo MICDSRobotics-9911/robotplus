@@ -23,6 +23,15 @@ public class Controller {
         public boolean isDown(){
             return (this == PRESSED || this == HELD);
         }
+        public String toString() {
+            switch(this){
+                case UNHELD: return "Unheld";
+                case PRESSED: return "Pressed";
+                case HELD: return "Held";
+                case RELEASED: return "Released";
+            }
+            return "";
+        }
     }
 
     private Gamepad originalPad;
@@ -87,6 +96,53 @@ public class Controller {
         dpadDownLeft = Button.UNHELD;
         dpadLeft = Button.UNHELD;
         dpadUpLeft = Button.UNHELD;
+
+    }
+
+    public Controller(Controller base){
+
+        originalPad = base.getOriginalPad();
+
+        a = base.a;
+        b = base.b;
+        x = base.x;
+        y = base.y;
+        start = base.start;
+        back = base.back;
+        leftBumper = base.leftBumper;
+        rightBumper = base.rightBumper;
+        dpadUp = base.dpadUp;
+        dpadUpRight = base.dpadUpRight;
+        dpadRight = base.dpadRight;
+        dpadDownRight = base.dpadDownRight;
+        dpadDown = base.dpadDown;
+        dpadDownLeft = base.dpadDownLeft;
+        dpadLeft = base.dpadLeft;
+        dpadUpLeft = base.dpadUpLeft;
+
+    }
+
+    //Only used for a specific c state.
+    public Controller(boolean a, boolean b, boolean x, boolean y,
+                      boolean start, boolean back, boolean leftBumper, boolean rightBumper,
+                      boolean dpadUp, boolean dpadRight, boolean dpadDown, boolean dpadLeft){
+
+        this.a = a ? Button.HELD : Button.UNHELD;
+        this.b = b ? Button.HELD : Button.UNHELD;
+        this.x = x ? Button.HELD : Button.UNHELD;
+        this.y = y ? Button.HELD : Button.UNHELD;
+        this.start = start ? Button.HELD : Button.UNHELD;
+        this.back = back ? Button.HELD : Button.UNHELD;
+        this.leftBumper = leftBumper ? Button.HELD : Button.UNHELD;
+        this.rightBumper = rightBumper ? Button.HELD : Button.UNHELD;
+        this.dpadUp = dpadUp ? Button.HELD : Button.UNHELD;
+        this.dpadRight = dpadRight ? Button.HELD : Button.UNHELD;
+        this.dpadDown = dpadDown ? Button.HELD : Button.UNHELD;
+        this.dpadLeft = dpadLeft ? Button.HELD : Button.UNHELD;
+        this.dpadUpRight = (dpadUp && dpadRight) ? Button.HELD : Button.UNHELD;
+        this.dpadDownRight = (dpadDown && dpadRight) ? Button.HELD : Button.UNHELD;
+        this.dpadDownLeft = (dpadDown && dpadLeft) ? Button.HELD : Button.UNHELD;
+        this.dpadUpLeft = (dpadUp && dpadLeft) ? Button.HELD : Button.UNHELD;
 
     }
 
@@ -177,5 +233,55 @@ public class Controller {
     public void setOriginalPad(Gamepad gamepad){
         this.originalPad = gamepad;
     }
+    
+    //who needs overriding.
+    public boolean equals(Controller c){
+        return (a == c.a && b == c.b && x == c.x && y == c.y && start == c.start && back == c.back &&
+                leftBumper == c.leftBumper && rightBumper == c.rightBumper &&
+                dpadUp == c.dpadUp && dpadRight == c.dpadRight && dpadDown == c.dpadDown && dpadLeft == c.dpadLeft);
+    }
 
+    @Override
+    public String toString(){
+        String value = "";
+        if(a.isDown()){
+            value += " A";
+        }
+        if(b.isDown()){
+            value += " B";
+        }
+        if(x.isDown()){
+            value += " X";
+        }
+        if(y.isDown()){
+            value += " Y";
+        }
+        if(start.isDown()){
+            value += " Start";
+        }
+        if(back.isDown()){
+            value += " Back";
+        }
+        if(leftBumper.isDown()){
+            value += " LBump";
+        }
+        if(rightBumper.isDown()){
+            value += " RBump";
+        }
+        if(dpadUp.isDown()){
+            value += " Up";
+        }
+        if(dpadLeft.isDown()){
+            value += " Left";
+        }
+        if(dpadDown.isDown()){
+            value += " Down";
+        }
+        if(dpadRight.isDown()){
+            value += " Right";
+        }
+
+        return value;
+
+    }
 }

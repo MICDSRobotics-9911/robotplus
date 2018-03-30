@@ -6,7 +6,11 @@ import android.util.Log;
 
 import com.qualcomm.robotcore.eventloop.opmode.OpMode;
 import com.qualcomm.robotcore.eventloop.opmode.TeleOp;
+import com.qualcomm.robotcore.exception.RobotCoreException;
+import com.qualcomm.robotcore.hardware.Gamepad;
 import com.qualcomm.robotcore.util.ElapsedTime;
+
+import org.firstinspires.ftc.teamcode.robotplus.gamepadwrapper.Controller;
 
 import java.io.File;
 import java.io.FileNotFoundException;
@@ -18,19 +22,18 @@ import java.util.ArrayList;
 
 
 @TeleOp(name="Recording -- Gamepad Only", group="Recording")
-public class RecordingGamepad extends OpMode {
+public class RecordingGamepad extends OpMode implements Filename{
 
     private ElapsedTime runtime = new ElapsedTime();
+    private Controller currentButtonStates;
+    private Gamepad oldSticks;
+
 
     private ArrayList<Input> inputs;
     private File directory;
     private File file;
 
-    private String filename = "Testing.json";
-
     private FileOutputStream outputStream;
-
-    private SleepType sleepStatus;
 
     /*
      * Code to run ONCE when the driver hits INIT
@@ -52,14 +55,16 @@ public class RecordingGamepad extends OpMode {
         //External Storage
         //directory = getStorageDir(hardwareMap.appContext, "Input swag");
 
-        file = new File(directory, filename);
+        file = new File(directory, FILENAME);
 
         Log.d("INPUT RECORDER - file", file.getAbsolutePath());
 
         inputs = new ArrayList<Input>();
+        currentButtonStates = new Controller(gamepad1);
 
         telemetry.addData("Status", "Initialized");
 
+        oldSticks = new Gamepad();
     }
 
     /*
@@ -86,33 +91,23 @@ public class RecordingGamepad extends OpMode {
         telemetry.addData("Status", "Running: " + runtime.toString());
         telemetry.addData("Gamepad", gamepad1.toString());
 
-        if (gamepad1.left_stick_y < 0.01 && gamepad1.right_stick_y < 0.01 && !this.sleepStatus.equals(SleepType.SLEEPING)) {
-            // we report this as sleeping and start recording
-            this.sleepStatus = SleepType.SLEEPSTART;
-            inputs.add(new Input(gamepad1, this.runtime.time(), this.sleepStatus));
-        }
-        else if (gamepad1.left_stick_y < 0.01 && gamepad1.right_stick_y < 0.01 && this.sleepStatus.equals(SleepType.SLEEPSTART)) {
-            // sleepstart marker has been placed and there hasn't been any activity so it is now sleeping
-            this.sleepStatus = SleepType.SLEEPING;
-            inputs.add(new Input(gamepad1, this.runtime.time(), this.sleepStatus));
-        }
-        else if ((gamepad1.left_stick_y > 0.01 || gamepad1.right_stick_y > 0.01) && (this.sleepStatus.equals(SleepType.SLEEPING))) {
-            // there has been activity so now we stop recording it as sleeping
-            this.sleepStatus = SleepType.SLEEPSTOP;
-            inputs.add(new Input(gamepad1, this.runtime.time(), this.sleepStatus));
-        }
-        else if ((this.sleepStatus.equals(SleepType.SLEEPSTOP)) && (gamepad1.left_stick_y > 0.01 && gamepad1.right_stick_y > 0.01)) {
-            // the last movement was a sleepstop and now there is motion so we can say it isn't sleeping
-            this.sleepStatus = SleepType.NOTSLEEPING;
-            inputs.add(new Input(gamepad1, this.runtime.time(), this.sleepStatus));
-        }
-        else {
-            // just record as normal without sleeps
-            inputs.add(new Input(gamepad1, this.runtime.time(), this.sleepStatus));
+        Controller oldState = new Controller(currentButtonStates);
+        currentButtonStates.update();
+
+        if(!currentButtonStates.equals(oldState) ||
+                !(gamepad1.left_stick_y == oldSticks.left_stick_y && gamepad1.left_stick_x == oldSticks.left_stick_x
+                        && gamepad1.right_stick_x == oldSticks.right_stick_x && gamepad1.right_stick_y == oldSticks.right_stick_y
+                        && gamepad1.left_trigger == oldSticks.left_trigger && gamepad1.right_trigger == oldSticks.right_trigger)) {
+            Input input = new Input(gamepad1, new Controller(currentButtonStates), runtime.time());
+            inputs.add(input);
+            Log.v("INPUT RECORDER", input.toString());
         }
 
-        Log.v("INPUT RECORDER", gamepad1.toString());
-
+        try {
+            oldSticks.copy(gamepad1);
+        } catch(RobotCoreException error){
+            Log.v("INPUT RECORDER", "Couldn't copy gamepad.");
+        }
     }
 
     /*
@@ -126,7 +121,7 @@ public class RecordingGamepad extends OpMode {
         try {
 
             //Saves the file witht he inputs from earlier, as a large json file.
-            outputStream = hardwareMap.appContext.openFileOutput(filename, Context.MODE_PRIVATE);
+            outputStream = hardwareMap.appContext.openFileOutput(FILENAME, Context.MODE_PRIVATE);
             InputWriter writer = new InputWriter();
             writer.writeJson(outputStream, inputs);
 
@@ -143,7 +138,7 @@ public class RecordingGamepad extends OpMode {
 
 
     /**
-     *
+     * Gets a directory in external storage to save the files in. More accessible here, but also less dependable.
      * @param context The app context this is being called from. For this, it's probably gotten from hardwareMap.
      * @param fileName The name of the file to save.
      * @return The file that will be used for this.

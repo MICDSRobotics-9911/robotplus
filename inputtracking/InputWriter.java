@@ -60,12 +60,29 @@ public class InputWriter {
     public void writeInput(JsonWriter writer, Input input) throws IOException{
 
         writer.beginObject();
-        writer.name("left_stick").value(input.getLeftStickY());
-        writer.name("right_stick").value(input.getRightStickY());
+        writer.name("left_stick_y").value(input.getLeftStickY());
+        writer.name("left_stick_x").value(input.getLeftStickX());
+        writer.name("right_stick_y").value(input.getRightStickY());
+        writer.name("right_stick_x").value(input.getRightStickX());
+        writer.name("left_trigger").value(input.getLeftTrigger());
+        writer.name("right_trigger").value(input.getRightTrigger());
+
+        writer.name("a").value(input.getButtonStates().a.isDown());
+        writer.name("b").value(input.getButtonStates().b.isDown());
+        writer.name("x").value(input.getButtonStates().x.isDown());
+        writer.name("y").value(input.getButtonStates().y.isDown());
+        writer.name("start").value(input.getButtonStates().start.isDown());
+        writer.name("back").value(input.getButtonStates().back.isDown());
+        writer.name("leftBumper").value(input.getButtonStates().leftBumper.isDown());
+        writer.name("rightBumper").value(input.getButtonStates().rightBumper.isDown());
+        writer.name("dpadUp").value(input.getButtonStates().dpadUp.isDown());
+        writer.name("dpadRight").value(input.getButtonStates().dpadRight.isDown());
+        writer.name("dpadDown").value(input.getButtonStates().dpadDown.isDown());
+        writer.name("dpadLeft").value(input.getButtonStates().dpadLeft.isDown());
+
         //writer.name("").value() Other objects
 
         writer.name("time").value(input.getCurrentTime());
-        writer.name("sleepstatus").value(input.getSleepStatus().toString());
 
         writer.endObject();
     }
