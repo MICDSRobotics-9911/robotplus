@@ -108,6 +108,9 @@ public class Playback extends LinearOpMode implements Filename{
             sleep(catchUp);
             telemetry.addData("Status", "%s\tLag (ms):%d", input.toString(), (long)((input.getCurrentTime() - runtime.time()) * 1000));
             telemetry.update();
+
+            //TELEOP CODE GOES HERE
+
         }
 
     }
