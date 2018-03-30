@@ -4,6 +4,8 @@ import com.qualcomm.robotcore.hardware.Gamepad;
 
 import org.firstinspires.ftc.teamcode.robotplus.gamepadwrapper.Controller;
 
+import java.util.Locale;
+
 /**
  * Object class for managing writing inputs (the gamepad state every time it updates to a json file.
  * This way, you can write an autonomous program that reads those inputs back, simulating being driven
@@ -167,7 +169,8 @@ public class Input {
         this.buttonStates = buttonStates;
     }
 
+    @Override
     public String toString(){
-        return (String.format("Time: %f, leftStick Y: %f", currentTime, leftStickY));
+        return (String.format(Locale.US, "Time: %5.2f, LY: %5.2f, LX: %5.2f, RY: %5.2f, RX:%5.2f %s", currentTime, leftStickY, leftStickX, rightStickY, rightStickX, buttonStates.toString()));
     }
 }
