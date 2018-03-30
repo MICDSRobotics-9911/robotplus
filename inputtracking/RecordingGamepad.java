@@ -98,9 +98,9 @@ public class RecordingGamepad extends OpMode implements Filename{
                 !(gamepad1.left_stick_y == oldSticks.left_stick_y && gamepad1.left_stick_x == oldSticks.left_stick_x
                         && gamepad1.right_stick_x == oldSticks.right_stick_x && gamepad1.right_stick_y == oldSticks.right_stick_y
                         && gamepad1.left_trigger == oldSticks.left_trigger && gamepad1.right_trigger == oldSticks.right_trigger)) {
-            inputs.add(new Input(gamepad1, currentButtonStates, runtime.time()));
-            Log.v("INPUT RECORDER", gamepad1.toString() + currentButtonStates.toString());
-            //telemetry.addData("A", currentButtonStates.a.toString());
+            Input input = new Input(gamepad1, new Controller(currentButtonStates), runtime.time());
+            inputs.add(input);
+            Log.v("INPUT RECORDER", input.toString());
         }
 
         try {
@@ -138,7 +138,7 @@ public class RecordingGamepad extends OpMode implements Filename{
 
 
     /**
-     *
+     * Gets a directory in external storage to save the files in. More accessible here, but also less dependable.
      * @param context The app context this is being called from. For this, it's probably gotten from hardwareMap.
      * @param fileName The name of the file to save.
      * @return The file that will be used for this.
