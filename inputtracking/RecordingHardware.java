@@ -32,6 +32,8 @@ public class RecordingHardware extends OpMode {
 
     private FileOutputStream outputStream;
 
+    private SleepType sleepStatus;
+
     /*
      * Code to run ONCE when the driver hits INIT
      */
@@ -61,7 +63,7 @@ public class RecordingHardware extends OpMode {
         inputs = new ArrayList<Input>();
 
         telemetry.addData("Status", "Initialized");
-
+        this.sleepStatus = SleepType.NOTSLEEPING;
     }
 
     /*
@@ -90,7 +92,7 @@ public class RecordingHardware extends OpMode {
 
         robot.getDrivetrain().defaultDrive(gamepad1, telemetry);
 
-        inputs.add(new Input(gamepad1, runtime.time()));
+        inputs.add(new Input(gamepad1, runtime.time(), this.sleepStatus));
 
         Log.v("INPUT RECORDER", gamepad1.toString());
     }
