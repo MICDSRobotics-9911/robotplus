@@ -20,7 +20,14 @@ import java.io.InputStream;
 import java.io.InputStreamReader;
 import java.util.ArrayList;
 
-
+/**
+ * Opmode for recording the file to be used via {@link Playback} or {@link PlaybackTesting}.
+ * Unlike {@link RecordingHardware}, this OpMode logs the controller values to the computer and
+ * doesn't move any hardware. It should be used for checking the values of any inputs or
+ * recording without the robot physically present. 
+ * @since 3/27/18
+ * @author Blake Abel
+ */
 @TeleOp(name="Recording -- Gamepad Only", group="Recording")
 public class RecordingGamepad extends OpMode implements Filename{
 

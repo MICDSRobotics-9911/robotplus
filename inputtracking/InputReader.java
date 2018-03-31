@@ -102,6 +102,7 @@ public class InputReader {
         while(reader.hasNext()){
             String name = reader.nextName();
             switch (name){
+                //Setting all the doubles in the file back into their input
                 case "time": input.setCurrentTime(reader.nextDouble()); break;
                 case "left_stick_y": input.setLeftStickY(reader.nextDouble()); break;
                 case "left_stick_x": input.setLeftStickX(reader.nextDouble()); break;
@@ -110,6 +111,7 @@ public class InputReader {
                 case "left_trigger": input.setLeftTrigger(reader.nextDouble()); break;
                 case "right_trigger": input.setRightTrigger(reader.nextDouble()); break;
 
+                //Setting each button to their matching state
                 case "a":
                     switch(reader.nextString()){
                         case "unheld":   a = Controller.Button.UNHELD; break;

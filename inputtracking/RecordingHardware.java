@@ -26,7 +26,14 @@ import java.util.ArrayList;
 
 import static org.firstinspires.ftc.teamcode.robotplus.gamepadwrapper.Controller.Button.PRESSED;
 
-
+/**
+ * Opmode for recording the file to be used via {@link Playback} or {@link PlaybackTesting} that
+ * moves the robot in the way indicated by the inputs during recording.
+ * The teleop & robot hardware portions of this code WILL need to be updated for different years
+ * competitions and robots, but the concept and base code can remain the same.
+ * @since 3/27/18
+ * @author Blake Abel
+ */
 @TeleOp(name="Recording", group="Recording")
 public class RecordingHardware extends OpMode implements Filename {
 
