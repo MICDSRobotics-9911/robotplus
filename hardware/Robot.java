@@ -53,6 +53,11 @@ public class Robot {
         //change mecanum drive to have sides
         main2.setDirection(DcMotorSimple.Direction.REVERSE);
         minor2.setDirection(DcMotorSimple.Direction.REVERSE);
+
+        main1.setZeroPowerBehavior(DcMotor.ZeroPowerBehavior.BRAKE);
+        main2.setZeroPowerBehavior(DcMotor.ZeroPowerBehavior.BRAKE);
+        minor1.setZeroPowerBehavior(DcMotor.ZeroPowerBehavior.BRAKE);
+        minor2.setZeroPowerBehavior(DcMotor.ZeroPowerBehavior.BRAKE);
         //minor1.setDirection(DcMotorSimple.Direction.REVERSE); for some reason after changing the motor this isn't needed
 
         mecanumDrive.setModes(DcMotor.RunMode.RUN_WITHOUT_ENCODER);
