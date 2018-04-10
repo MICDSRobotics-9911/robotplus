@@ -9,6 +9,7 @@ import android.util.Log;
  */
 public class TimeOffsetVoltage {
     // function is f(x) = 2.7669x + 108.852
+    // new function is f(x) = 5.6417x - 33.162
 
     /**
      * This will calculate the distance that the robot will travel in one second based on the voltage
@@ -17,7 +18,7 @@ public class TimeOffsetVoltage {
      */
     private static double calculateDistanceVoltage(double voltage) {
         Log.i("[TimeTest]", "Distance Voltage: " + String.valueOf((2.7669 * voltage) + 113.852));
-        return ((2.7669 * voltage) + 113.852);
+        return ((5.6417 * voltage) - 33.162);
     }
 
     /**
