@@ -53,7 +53,6 @@ public class FlipperIntake {
         //this.rotation.setMode(DcMotor.RunMode.STOP_AND_RESET_ENCODER);
         //this.rotation.setMode(DcMotor.RunMode.RUN_TO_POSITION);
         rotation.scaleRange(0, 0.65);
-
     }
 
     /**
@@ -67,7 +66,7 @@ public class FlipperIntake {
         this.rotation.setTargetPosition(-70);
         rotation.setPower(1);
         */
-        rotation.setPosition(0);
+        rotation.setPosition(0.95);
     }
 
     /**
@@ -81,7 +80,7 @@ public class FlipperIntake {
         rotation.setTargetPosition(80);
         rotation.setPower(1);
         */
-        rotation.setPosition(1);
+        rotation.setPosition(0.05);
     }
 
     /**
