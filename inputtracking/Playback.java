@@ -134,7 +134,7 @@ public class Playback extends LinearOpMode implements Filename{
 
             //TELEOP CODE GOES HERE
 
-            drivetrain.complexDrive(input.getLeftStickX(), input.getLeftStickY(), input.getRightStickX(), telemetry);
+            drivetrain.complexDrive(input.getLeftStickX(), iinput.getLeftStickY(), input.getRightStickX(), telemetry);
 
             //Raise outtake while the y button is held, lower it when a it held
             if(input.getButtonStates().a.isDown()){
