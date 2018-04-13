@@ -66,7 +66,7 @@ public class FlipperIntake {
         this.rotation.setTargetPosition(-70);
         rotation.setPower(1);
         */
-        rotation.setPosition(0.95);
+        rotation.setPosition(0.05);
     }
 
     /**
@@ -80,7 +80,7 @@ public class FlipperIntake {
         rotation.setTargetPosition(80);
         rotation.setPower(1);
         */
-        rotation.setPosition(0.05);
+        rotation.setPosition(0.95);
     }
 
     /**
