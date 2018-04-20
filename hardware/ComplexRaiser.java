@@ -45,14 +45,14 @@ public class ComplexRaiser {
      * Raises the lifter up
      */
     public void raiseUp() {
-        this.y.setPower(-1);
+        this.y.setPower(1);
     }
 
     /**
      * Lowers the lifter
      */
     public void lower() {
-        this.y.setPower(1);
+        this.y.setPower(-1);
     }
 
     /**
