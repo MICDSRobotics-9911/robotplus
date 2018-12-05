@@ -1,4 +1,4 @@
-package org.firstinspires.ftc.teamcode.robotplus.autonomous;
+package org.firstinspires.ftc.teamcode.robotplus.imagerecognition;
 
 import com.qualcomm.robotcore.hardware.HardwareMap;
 
