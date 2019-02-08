@@ -143,10 +143,10 @@ public class RecordingHardware extends OpMode implements Filename {
             inputs.add(input);
 
             //TELEOP CODE HERE
-            
+
             drivetrain.complexDrive(input.getLeftStickX(), -input.getLeftStickY(), input.getRightStickX(), telemetry);
 
-            //Raise outtake while the y button is held, lower it when a it held
+            //Raise outtake while the y button is held, lowerRobot it when a it held
             if(input.getButtonStates().a.isDown()){
                 raiser.raiseUp();
             } else if (input.getButtonStates().b.isDown()) {

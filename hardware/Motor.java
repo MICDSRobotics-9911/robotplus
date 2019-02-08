@@ -8,21 +8,21 @@ package org.firstinspires.ftc.teamcode.robotplus.hardware;
  * @author Blake Abel, Alex Migala
  */
 public enum Motor {
-    NEVERREST20 (20),
-    NEVERREST40 (40),
-    NEVERREST60 (60);
+    NEVERREST20 (20, 7),
+    NEVERREST40 (40, 7),
+    NEVERREST60 (60, 7),
+    CORE_HEX (72, 4);
 
     private final double countsPerRevolution;
     private final double gearBoxRatio;
 
-    private final double PULSES_PER_REVOLUTION = 7;
-
     /**
      * Creates a new motor
      * @param gearBoxRatio The gearbox ratio of the motor
+     * @param pulsesPerRevolution The amount of encoder pulses emitted per revolution
      */
-    Motor(int gearBoxRatio){
-        this.countsPerRevolution = PULSES_PER_REVOLUTION * gearBoxRatio * 4;
+    Motor(int gearBoxRatio, int pulsesPerRevolution){
+        this.countsPerRevolution = pulsesPerRevolution * gearBoxRatio;
         this.gearBoxRatio = gearBoxRatio;
     }
 

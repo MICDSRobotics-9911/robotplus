@@ -25,11 +25,12 @@ public class IMUWrapper {
         BNO055IMU.Parameters params = new BNO055IMU.Parameters();
         params.angleUnit            = BNO055IMU.AngleUnit.DEGREES;
         params.accelUnit            = BNO055IMU.AccelUnit.METERS_PERSEC_PERSEC;
-        params.calibrationDataFile  = "BNO055IMUCalibration.json"; // see the calibration sample opmode
+        params.calibrationDataFile  = "AdafruitIMUCalibration.json"; // see the calibration sample opmode
         params.loggingEnabled       = true;
         params.loggingTag           = "IMU";
         //trying to just use the bad but default one [NAH]
-        params.accelerationIntegrationAlgorithm = new IMUAccelerationIntegrator();
+        // Our custom IMUAccelerationIntegrator class is causing stack overflows and crashing the app
+        params.accelerationIntegrationAlgorithm = new JustLoggingAccelerationIntegrator();
 
         this.imu = map.get(BNO055IMU.class, "sensor_imu");
         this.imu.initialize(params);
