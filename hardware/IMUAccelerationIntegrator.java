@@ -33,8 +33,11 @@ THIS SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
 
 package org.firstinspires.ftc.teamcode.robotplus.hardware;
 
+/*
+There were issues with these imports
 import android.support.annotation.NonNull;
 import android.support.annotation.Nullable;
+*/
 
 import com.qualcomm.hardware.bosch.BNO055IMU;
 import com.qualcomm.robotcore.util.RobotLog;
@@ -78,7 +81,8 @@ public class IMUAccelerationIntegrator implements BNO055IMU.AccelerationIntegrat
     // Operations
     //------------------------------------------------------------------------------------------
 
-    @Override public void initialize(@NonNull BNO055IMU.Parameters parameters, @Nullable Position initialPosition, @Nullable Velocity initialVelocity)
+    // there was an issue with Nonnull and Nullables
+    @Override public void initialize(BNO055IMU.Parameters parameters, Position initialPosition, Velocity initialVelocity)
     {
         this.parameters = parameters;
         this.position = initialPosition != null ? initialPosition : this.position;
