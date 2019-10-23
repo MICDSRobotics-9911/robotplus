@@ -51,8 +51,10 @@ public class Robot {
 
 
         //change mecanum drive to have sides
-        main2.setDirection(DcMotorSimple.Direction.REVERSE);
-        minor2.setDirection(DcMotorSimple.Direction.REVERSE);
+        //main1.setDirection(DcMotorSimple.Direction.REVERSE);
+        main2.setDirection(DcMotorSimple.Direction.FORWARD); // forward
+        //minor1.setDirection(DcMotorSimple.Direction.REVERSE);
+        minor2.setDirection(DcMotorSimple.Direction.FORWARD);
 
         main1.setZeroPowerBehavior(DcMotor.ZeroPowerBehavior.BRAKE);
         main2.setZeroPowerBehavior(DcMotor.ZeroPowerBehavior.BRAKE);

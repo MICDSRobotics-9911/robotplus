@@ -158,7 +158,7 @@ public class MecanumDrive extends Drivetrain {
     public void complexDrive(double leftx, double lefty, double rightx, Telemetry telemetry){
         double velocityDesired = Math.min(1.0, Math.sqrt(leftx*leftx + lefty*lefty));
         double angleDesired = (!Double.isNaN(Math.atan2(lefty, leftx))) ? Math.atan2(lefty, leftx) : 0;
-        double rotation = Math.pow(rightx, 3); //just makes turning more or less sensitive
+        double rotation = -1 * Math.pow(rightx, 3); //just makes turning more or less sensitive
 
         majorDiagonal.getMotor1().setPower(velocityDesired * Math.sin(angleDesired + Math.PI/4) + rotation);
         minorDiagonal.getMotor1().setPower(velocityDesired * Math.cos(angleDesired + Math.PI/4) + rotation); //flipped from original equation
