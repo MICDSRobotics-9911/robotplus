@@ -32,7 +32,7 @@ public class IMUWrapper {
         // Our custom IMUAccelerationIntegrator class is causing stack overflows and crashing the app
         params.accelerationIntegrationAlgorithm = new JustLoggingAccelerationIntegrator();
 
-        this.imu = map.get(BNO055IMU.class, "sensor_imu");
+        this.imu = map.get(BNO055IMU.class, "imu");
         this.imu.initialize(params);
 
         this.imu.startAccelerationIntegration(new Position(), new Velocity(),5);
