@@ -13,7 +13,7 @@ import org.firstinspires.ftc.robotcore.external.navigation.Velocity;
 
 /**
  * Wrapper class for the REV's onboard IMU
- * @author Alex Migala, Nick Clifford, Blake Abel
+ * @author Alex Migala, Nick Clifford, Blake Abel, Sebastian Neumann
  * @since 9/28/17
  */
 
@@ -35,7 +35,7 @@ public class IMUWrapper {
         this.imu = map.get(BNO055IMU.class, "imu");
         this.imu.initialize(params);
 
-        this.imu.startAccelerationIntegration(new Position(), new Velocity(),5);
+        //this.imu.startAccelerationIntegration(new Position(), new Velocity(),5);
     }
 
     public BNO055IMU getIMU() { return this.imu; }
