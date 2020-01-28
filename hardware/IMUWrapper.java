@@ -5,6 +5,9 @@ import com.qualcomm.hardware.bosch.JustLoggingAccelerationIntegrator;
 import com.qualcomm.hardware.bosch.NaiveAccelerationIntegrator;
 import com.qualcomm.robotcore.hardware.HardwareMap;
 
+import org.firstinspires.ftc.robotcore.external.Telemetry;
+import org.firstinspires.ftc.robotcore.external.navigation.AngleUnit;
+import org.firstinspires.ftc.robotcore.external.navigation.AxesOrder;
 import org.firstinspires.ftc.robotcore.external.navigation.AxesReference;
 import org.firstinspires.ftc.robotcore.external.navigation.DistanceUnit;
 import org.firstinspires.ftc.robotcore.external.navigation.Orientation;
@@ -20,6 +23,7 @@ import org.firstinspires.ftc.robotcore.external.navigation.Velocity;
 public class IMUWrapper {
 
     private BNO055IMU imu;
+    private Orientation angles; // the angles
 
     public IMUWrapper(HardwareMap map) {
         BNO055IMU.Parameters params = new BNO055IMU.Parameters();
@@ -57,4 +61,18 @@ public class IMUWrapper {
         return params;
     }
 
+    /**
+     * Gets the data from the IMU. Must be called each iteration of code
+     */
+    public void updateAngles() {
+        this.angles = imu.getAngularOrientation(AxesReference.INTRINSIC, AxesOrder.ZYX, AngleUnit.DEGREES);
+    }
+
+    /**
+     * Gets the relative heading from the zero position (effective rotational position)
+     * @return the heading
+     */
+    public float getHeading() {
+        return this.angles.firstAngle;
+    }
 }
