@@ -39,7 +39,7 @@ public class IMUWrapper {
         this.imu = map.get(BNO055IMU.class, "imu");
         this.imu.initialize(params);
 
-        //this.imu.startAccelerationIntegration(new Position(), new Velocity(),5);
+        this.imu.startAccelerationIntegration(new Position(), new Velocity(),5);
     }
 
     public BNO055IMU getIMU() { return this.imu; }
