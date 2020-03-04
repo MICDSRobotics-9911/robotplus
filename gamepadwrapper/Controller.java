@@ -11,7 +11,7 @@ import com.qualcomm.robotcore.hardware.Gamepad;
  * @since 1/5/2018
  */
 
-@Disabled
+// @Disabled
 public class Controller {
 
     public enum Button{
