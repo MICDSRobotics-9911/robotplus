@@ -7,7 +7,7 @@ import android.view.View;
 import com.qualcomm.robotcore.hardware.ColorSensor;
 import com.qualcomm.robotcore.hardware.HardwareMap;
 
-import org.firstinspires.ftc.robotcontroller.external.samples.SensorREVColorDistance;
+//import org.firstinspires.ftc.robotcontroller.external.samples.SensorREVColorDistance;
 
 /**
  * Wraps color sensor output to something more sensible
